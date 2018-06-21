@@ -44,15 +44,8 @@ echo DATADIR     = "${DATADIR}"
 echo ASSEMBLYDIR = "${ASSEMBLYDIR}"
 echo ASSEMBLY    = "${ASSEMBLY}"
 echo PREFIX      = "${PREFIX}"
-#echo FOFN        = "${FOFN}"
-#echo "Number files in SEARCH PATH with EXTENSION:" $(ls -1 "${SEARCHPATH}"/*."${EXTENSION}" | wc -l)
-if [[ -n $1 ]]; then
-    echo "Last line of file specified as non-opt/last argument:"
-    tail -1 "$1"
-fi
 
 # First set up the environment parameters to 4 parallel chunks running all available cpus
-#pbsmrtpipe show-workflow-options -o preset.xml
 cp /root/Assemblosis/preset.xml preset.tmp
 NPROC=$((`nproc`/4))
 sed "s/NPROC/$NPROC/1" preset.tmp > preset.xml
