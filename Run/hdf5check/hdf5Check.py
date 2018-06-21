@@ -12,7 +12,7 @@ given result directory
 import os, sys, random, argparse, multiprocessing
 from multiprocessing import Process
 from os import walk
-from Utils import base
+import base
 
 #################################################
 def args():
