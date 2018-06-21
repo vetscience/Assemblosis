@@ -10,7 +10,8 @@ RUN conda config --add channels conda-forge
 RUN conda config --add channels bioconda
 RUN conda install samtools==1.6
 WORKDIR /root
-RUN git clone -b 'v0.0.1-beta' --single-branch --depth 1 https://github.com/vetscience/Assemblosis
+RUN git clone --recursive git://github.com/vetscience/Assemblosis
+#RUN git clone -b 'v0.0.1-beta' --single-branch --depth 1 https://github.com/vetscience/Assemblosis
 RUN cp Assemblosis/Run/samindex/samIndex.sh .
 RUN chmod uog+x /root && chmod uog+rwx samIndex.sh
 ENTRYPOINT ["/root/samIndex.sh"]

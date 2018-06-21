@@ -54,8 +54,8 @@ RUN chmod uog+x /usr/local/bin/trf
 # Install RepeatMasker
 WORKDIR /root
 WORKDIR /root
-#RUN git clone --recursive git://github.com/vetscience/Assemblosis
-RUN git clone -b 'v0.0.1-beta' --single-branch --depth 1 https://github.com/vetscience/Assemblosis
+RUN git clone --recursive git://github.com/vetscience/Assemblosis
+#RUN git clone -b 'v0.0.1-beta' --single-branch --depth 1 https://github.com/vetscience/Assemblosis
 RUN mv RepeatMasker-open-4-0-7.tar.gz /usr/local
 WORKDIR /usr/local
 RUN tar zxf RepeatMasker-open-4-0-7.tar.gz && rm -rf RepeatMasker-open-4-0-7.tar.gz
