@@ -7,7 +7,8 @@ RUN sh smrtlink_5.0.1.9585.run --rootdir smrtlink --smrttools-only
 RUN rm -f smrtlink_5.0.1.9585.zip smrtlink_5.0.1.9585.run*
 ENV PATH=/root/smrtlink/smrtcmds/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 RUN apt-get update && apt-get install -y git python
-RUN git clone -b 'v0.0.1-beta' --single-branch --depth 1 https://github.com/vetscience/Assemblosis
+RUN git clone --recursive git://github.com/vetscience/Assemblosis
+#RUN git clone -b 'v0.0.1-beta' --single-branch --depth 1 https://github.com/vetscience/Assemblosis
 WORKDIR /root/Assemblosis
 RUN chmod uog+x /root && chmod uog+rwx /root/Assemblosis
 RUN cp Run/arrow/smrtpipe.sh . && cp Run/arrow/preset.xml . && cp Run/arrow/createFofn.py . && chmod uog+rwx /root/Assemblosis/createFofn.py
