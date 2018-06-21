@@ -1,0 +1,72 @@
+pacBioDataDir:
+  class: Directory
+  location: /home/pakorhon/Images/TestEcoliData
+#assemblyDir: TestAssembly
+currentDir: /home/pakorhon/Workflows/Assemblosis/Run
+prefix: ecoli
+#hdf5results: ResultsEcoli
+genomeSize: 4m
+minReadLen: 6000
+corMaxEvidenceErate: 0.20
+readsPe1:
+  - class: File
+    format: edam:format_1930  # fastq
+    path: /home/pakorhon/Images/Ecoli/SRR6231918_1.fastq.gz
+  - class: File
+    format: edam:format_1930  # fastq
+    path: /home/pakorhon/Images/Ecoli/SRR6231919_1.fastq.gz
+  - class: File
+    format: edam:format_1930  # fastq
+    path: /home/pakorhon/Images/Ecoli/SRR6231920_1.fastq.gz
+readsPe2:
+  - class: File
+    format: edam:format_1930  # fastq
+    path: /home/pakorhon/Images/Ecoli/SRR6231918_2.fastq.gz
+  - class: File
+    format: edam:format_1930  # fastq
+    path: /home/pakorhon/Images/Ecoli/SRR6231919_2.fastq.gz
+  - class: File
+    format: edam:format_1930  # fastq
+    path: /home/pakorhon/Images/Ecoli/SRR6231920_2.fastq.gz
+phredsPe: ['33','33','33']
+slidingWindow:
+    windowSize: 4
+    requiredQuality: 25
+illuminaClip:
+    adapters:
+        class: File
+        path: /home/pakorhon/Images/Ecoli/illuminaClipping.fa
+    seedMismatches: 2
+    palindromeClipThreshold: 30
+    simpleClipThreshold: 10
+    minAdapterLength: 20
+    keepBothReads: true
+leading: 25
+trailing: 25
+minlen: 40
+threads: 24
+
+maxFragmentLens: [500, 500, 500]
+
+orientation: 'fr'
+polishedAssembly: ecoliPilon
+diploidOrganism: true
+fix: bases
+modifications: true
+
+database: /home/pakorhon/Images/Decon/nt
+taxons: [10239,4751,40674,81077] # viruses, fungi, mammals, artificial seqs
+partialMatch: 100
+
+repBaseLibrary:
+  class: File
+  path: /home/pakorhon/Images/RepBaseLibrary/RMRBSeqs.embl
+repeatWorkDir:
+  - class: Directory
+    location: RepeatCustom
+  - class: Directory
+    location: RepeatSimple
+  - class: Directory
+    location: RepeatTransp
+noInterspersed: [false, true, false]
+noLowComplexity: [true, false, true]

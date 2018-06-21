@@ -1,0 +1,46 @@
+class: SchemaDefRequirement
+types:
+  - type: enum
+    name: phred
+    symbols: [ '64', '33' ]
+  - type: record
+    name: slidingWindow
+    fields:
+     - name: windowSize
+       type: int
+     - name: requiredQuality
+       type: int
+  - type: record
+    name: illuminaClipping
+    fields:
+      - name: adapters
+        type: File
+      - name: seedMismatches
+        type: int
+      - name: palindromeClipThreshold
+        type: int
+      - name: simpleClipThreshold
+        type: int
+      - name: minAdapterLength
+        type: int?
+      - name: keepBothReads
+        type: boolean
+  - type: record
+    name: maxinfo
+    fields:
+      - name: targetLength
+        type: int
+      - name: strictness
+        type: int
+  - type: enum
+    name: end_mode
+    symbols: [ SE, PE ]
+  - type: enum
+    name: seedMismatches
+    symbols: [ '0', '1' ]
+  - type: enum
+    name: orientation
+    symbols: [ 'fr', 'rf' , 'ff']
+
+$namespaces: { edam: http://edamontology.org/ }
+$schemas: [ http://edamontology.org/EDAM_1.16.owl ]

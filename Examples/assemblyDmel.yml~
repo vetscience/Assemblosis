@@ -1,0 +1,60 @@
+dataDir:
+  class: Directory
+  location: /home/<username>/Dna/
+assemblyDir: DmelAssembly
+currentDir: /home/<username>/Assembler/Run
+prefix: dmel
+hdf5results: ResultsDmel
+genomeSize: 137m
+minReadLen: 6000
+corMaxEvidenceErate: 0.15
+readsPe1:
+  - class: File
+    format: edam:format_1930  # fastq
+    path: /home/<username>/Dna/SRR1211256_1.fastq.gz
+readsPe2:
+  - class: File
+    format: edam:format_1930  # fastq
+    path: /home/<username>/Dna/SRR1211256_2.fastq.gz
+phredsPe: ['33']
+slidingWindow:
+    windowSize: 4
+    requiredQuality: 25
+illuminaClip:
+    adapters:
+        class: File
+        path: illuminaClipping.fa
+    seedMismatches: 2
+    palindromeClipThreshold: 30
+    simpleClipThreshold: 10
+    minAdapterLength: 20
+    keepBothReads: true
+leading: 25
+trailing: 25
+minlen: 40
+threads: 32
+
+maxFragmentLens: [500]
+
+orientation: 'fr'
+polishedAssembly: dmelPilon
+diploidOrganism: true
+fix: bases
+modifications: true
+
+database: /home/<username>/nt
+taxons: [2,10239,4751,40674,81077] # Bacteria, viruses, fungi, mammals, artificial seqs
+partialMatch: 100
+
+repBaseLibrary:
+  class: File
+  path: /home/<username>/RepBaseLibrary/RMRBSeqs.embl
+repeatWorkDir:
+  - class: Directory
+    location: RepeatCustom
+  - class: Directory
+    location: RepeatSimple
+  - class: Directory
+    location: RepeatTransp
+noInterspersed: [false, true, false]
+noLowComplexity: [true, false, true]
