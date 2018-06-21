@@ -8,7 +8,8 @@ RUN mv Makefile Makefile.orig && sed 1,1d Makefile.orig | sed 's/\/usr\/local\/h
 RUN make && mv dextract /usr/local/bin
 WORKDIR /root
 RUN rm -rf DEXTRACTOR
-RUN git clone -b 'v0.0.1-beta' --single-branch --depth 1 https://github.com/vetscience/Assemblosis
+RUN git clone --recursive git://github.com/vetscience/Assemblosis
+#RUN git clone -b 'v0.0.1-beta' --single-branch --depth 1 https://github.com/vetscience/Assemblosis
 WORKDIR Assemblosis
 RUN chmod uog+x /root && chmod uog+rwx /root/Assemblosis && chmod uog+x /root/Assemblosis/Run && chmod uog+x /root/Assemblosis/Run/hdf5check && chmod uog+x /root/Assemblosis/Run/hdf5check/hdf5Check.py
 ENV PYTHONPATH /root/Assemblosis
