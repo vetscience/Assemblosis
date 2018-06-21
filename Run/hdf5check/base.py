@@ -104,7 +104,7 @@ class Base:
         if log == True:
             self.log.write("# %s\n" %myStr)
         if doPrint == True:
-            print("# " + myStr, file=sys.stderr) # is printed as comment line which is easy to remove
+            print >> sys.stderr, "# %s" %myStr # is printed as comment line which is easy to remove
         if myStdout == True:
             p = subprocess.Popen(myStr, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
         else:
@@ -113,7 +113,7 @@ class Base:
         if retVal != 0 and ignoreFailure == False:
             if log == True:
                 self.logger("# FAILED (%d): %s" %(retVal, myStr))
-            print("# FAILED (%d): %s" %(retVal, myStr), file = sys.stderr)
+            print >> sys.stderr, "# FAILED (%d): %s" %(retVal, myStr)
             sys.exit(retVal)
         return p
 
@@ -136,7 +136,7 @@ class Base:
             if log == True:
                 self.log.write("# %s\n" %cmd)
             if doPrint == True:
-                print("# " + cmd, file = sys.stderr) # is printed as comment line which is easy to remove
+                print >> sys.stderr, "# %s" %cdm # is printed as comment line which is easy to remove
             if myStdout == True:
                 proc = subprocess.Popen(shlex.split(cmd), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             else:
@@ -152,11 +152,11 @@ class Base:
                 retryCnt += 1
                 if retryCnt >= 3: # Tries three times
                     self.logger("## FAILED(%d): %s. Three failures. Exiting ..." %(proc.returncode, cmd))
-                    print("## FAILED(%d): %s. Three failures. Exiting ..." %(proc.returncode, cmd), file = sys.stderr)
+                    print >> sys.stderr, "## FAILED(%d): %s. Three failures. Exiting ..." %(proc.returncode, cmd)
                     sys.exit(proc.returncode)
                 if log == True:
                     self.logger("## FAILED(%d): %s. Retrying ..." %(proc.returncode, cmd))
-                print("## FAILED(%d): %s. Retrying ..." %(proc.returncode, cmd), file = sys.stderr)
+                print >> sys.stderr, "## FAILED(%d): %s. Retrying ..." %(proc.returncode, cmd)
                 time.sleep(120) # Wait 2 minutes before the next try
             else:
                 break
