@@ -44,4 +44,3 @@ outputs:
       glob: "$(inputs.prefix).contigs.arrowed.fasta"
 baseCommand: ["/root/Assemblosis/smrtpipe.sh"]
 arguments: []
-#stdout: out

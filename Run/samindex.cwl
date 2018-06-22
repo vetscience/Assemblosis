@@ -7,7 +7,6 @@ requirements:
 inputs:
   - id: inputBamFile
     type: File
-    #format: edam:format_2572  # BAM format
     inputBinding:
       position: 1
 
@@ -18,7 +17,6 @@ arguments:
 outputs:
   - id: bamIndexFile
     type: File[]
-    #format: edam:format_3327  # BAI format
     outputBinding:
       glob: "$(inputs.inputBamFile.basename).bai"
 

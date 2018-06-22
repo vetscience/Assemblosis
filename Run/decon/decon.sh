@@ -45,11 +45,6 @@ echo TAXONS         = "${TAXONS}"
 echo MAPPEDIDS      = "${MAPPEDIDS}"
 echo PARTIALMATCH      = "${PARTIALMATCH}"
 
-if [[ -n $1 ]]; then
-    echo "Last line of file specified as non-opt/last argument:"
-    tail -1 "$1"
-fi
-
 # First rename the trimmed reads to enable unique identification
 awk -v var="$PARTIALMATCH" 'NR>1{if ($6>=PARTIALMATCH) print $0"\t"$3}' $CLASSIFICATION > classification.converted
 touch taxon.ids

@@ -6,13 +6,9 @@ requirements:
   - class: InlineJavascriptRequirement
 hints:
   - class: DockerRequirement
-    dockerPull: pakorhon/haplomerger:v1.0.5-beta
+    #dockerPull: pakorhon/haplomerger:v1.0.5-beta
+    dockerPull: pakorhon/haplomerger:latest
 inputs:
-#  - id: workDir
-#    type: string
-#    inputBinding:
-#      position: 1
-#      prefix: -d
   - id: assembly
     type: File
     inputBinding:
@@ -42,16 +38,5 @@ outputs:
     type: File
     outputBinding:
       glob: "workDir/*.haplomerged.fa*"
-#  - id: assembled
-#    type:
-#      type: array
-#      items: [File, Directory]
-#    outputBinding:
-#      glob: "*"
-#      glob: "$inputs.workDir"
-#    outputBinding:
-#      #glob: "$(inputs.workDir)/$(inputs.prefix).contigs.fasta"
-#      glob: "*/$(inputs.prefix).contigs.fasta"
-#baseCommand: ["python","/root/haploMerger.py"]
 arguments: []
-#stdout: out
+

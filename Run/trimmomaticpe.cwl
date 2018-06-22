@@ -10,12 +10,6 @@ requirements:
       CLASSPATH: $(inputs.currentDir)/cwltool_deps/_conda/envs/__trimmomatic@0.36/share/trimmomatic/trimmomatic.jar
 
 inputs:
-#  - id: java_opts
-#    type: string
-#    #default: "-Xms8g Xmx32g"
-#    inputBinding:
-#      position: 0
-#      shellQuote: false
   - id: currentDir
     type: string
   - id: phred
@@ -125,7 +119,6 @@ outputs:
 
 baseCommand: [java,org.usadellab.trimmomatic.TrimmomaticPE]
 
-#stdout: out
 hints:
   SoftwareRequirement:
     packages:

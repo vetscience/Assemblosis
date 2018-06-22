@@ -5,13 +5,6 @@ doc: "Maps illumina reads to a genome"
 requirements:
   - $import: assembly-typedef.yml
   - class: InlineJavascriptRequirement
-#  - class: CreateFileRequirement
-#    fileDef: ["$(inputs.reads1.basename.slice(0,-9)).sam"]
-#  - class: EnvVarRequirement
-#    envDef:
-#      TMPDIR: /home/pakorhon/Images/Tmp
-#runtime:
-#  tmpdir: /home/pakorhon/Images/Tmp
 inputs:
   - id: seedMismatches
     type: assembly-typedef.yml#seedMismatches
@@ -59,30 +52,14 @@ inputs:
       - .rev.2.bt2
   - id: reads1
     type: File
-    #type:
-    #  type: array
-    #  items: File
     inputBinding:
       prefix: "-1"
-      #itemSeparator: ","
-      #separate: true
       position: 7
   - id: reads2
     type: File
-    #type:
-    #  type: array
-    #  items: File
     inputBinding:
       prefix: "-2"
-      #itemSeparator: ","
-      #separate: true
       position: 8
-#  - id: samOutputFile
-#    type: string
-#    inputBinding:
-#      prefix: "-S"
-#      position: 9
-
 
 outputs:
   - id: samFile

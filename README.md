@@ -24,6 +24,7 @@ After installing cwltool, apply following fix in the file site-packages/cwltool/
 >         for key in env:
 >             env_copy[key] = env[key]
 ```
+
 Download and extract RepBase database, Centrifuge version of NCBI nt database and create Illumina adapter FASTA file to your preferred location.
 
 ### Usage
@@ -37,6 +38,7 @@ You have to create a YAML (.yml) file for each assembly. This file defines the r
 > mkdir RepeatSimple; mkdir RepeatTransp; mkdir RepeatCustom
 > cwltool --tmpdir-prefix /home/<username>/Tmp --beta-conda-dependencies --cachedir /home/<username>/Cache --user-space-docker-cmd udocker --leave-tmpdir assembly.cwl assemblyCele.yml
 ```
+
 An annotated example of the YAML file for Caenorhabditis elegans assembly.
 ```
 # Root of the directory, which contains the PacBio raw data
@@ -106,6 +108,7 @@ repeatWorkDir:
 noInterspersed: [false, true, false]
 noLowComplexity: [true, false, true]
 ```
+
 
 ### Software tools used in this pipeline
 * [Dextractor v1.0](https://github.com/thegenemyers/DEXTRACTOR)

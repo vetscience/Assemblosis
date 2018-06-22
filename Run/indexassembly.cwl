@@ -6,12 +6,6 @@ requirements:
   - class: InlineJavascriptRequirement
  
 inputs:
-#  - id: name
-#    type: string
-#    default: $(self.scaffolds)
-#    inputBinding:
-#      prefix: -name
-#      position: 1
   - id: engine
     type: string
     default: ncbi
@@ -33,8 +27,6 @@ baseCommand: ["BuildDatabase"]
 arguments:
 - -name
 - valueFrom: $(inputs.scaffolds.basename)
-#stdout: out
-#stderr: err
 hints:
   SoftwareRequirement:
     packages:

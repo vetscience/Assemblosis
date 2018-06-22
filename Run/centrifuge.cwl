@@ -20,19 +20,19 @@ inputs:
     inputBinding:
       position: 4
       prefix: -p
-  - id : reportFile
+  - id: reportFile
     type: string
     default: report.txt
     inputBinding:
       position: 5
       prefix: --report-file
-  - id : classificationFile
+  - id: classificationFile
     type: string
     default: classification.txt
     inputBinding:
       position: 6
       prefix: -S
-  - id : partialMatch
+  - id: partialMatch
     type: int
     default: 100
     inputBinding:
@@ -49,7 +49,6 @@ outputs:
       glob: "$(inputs.classificationFile)"
 baseCommand: ["centrifuge","-f"]
 arguments: []
-#stdout: out
 hints:
   SoftwareRequirement:
     packages:

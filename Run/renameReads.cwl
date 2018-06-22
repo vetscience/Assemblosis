@@ -6,7 +6,8 @@ requirements:
   - class: InlineJavascriptRequirement
 hints:
   - class: DockerRequirement
-    dockerPull: pakorhon/renamereads:v1.0.5-beta
+    #dockerPull: pakorhon/renamereads:v1.0.5-beta
+    dockerPull: pakorhon/renamereads:latest
 inputs:
   - id: trimmedReads
     type: File
@@ -24,4 +25,3 @@ outputs:
       glob: "mapped.ids"
 baseCommand: ["/root/renamereads.sh"]
 arguments: []
-#stdout: out
