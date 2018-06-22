@@ -21,12 +21,6 @@ done
 set -- "${POSITIONAL[@]}" # restore positional parameters
 
 echo TRIMMEDREADS   = "${TRIMMEDREADS}"
-#echo "Number files in SEARCH PATH with EXTENSION:" $(ls -1 "${SEARCHPATH}"/*."${EXTENSION}" | wc -l)
-if [[ -n $1 ]]; then
-    echo "Last line of file specified as non-opt/last argument:"
-    tail -1 "$1"
-fi
 
 # First rename the trimmed reads to enable unique identification
-#zcat $TRIMMEDREADS | awk '{print $1""$4}' | sed 's/id=/_read_/1' | gzip > $(echo $TRIMMEDREADS | awk -F"/" '{print "rn_"$NF}')
 zcat $TRIMMEDREADS | python /root/renameFasta.py -i - -m mapped.ids | gzip > $(echo $TRIMMEDREADS | awk -F"/" '{print "rn_"$NF}')
