@@ -6,8 +6,8 @@ requirements:
   - class: InlineJavascriptRequirement
 hints:
   - class: DockerRequirement
-    #dockerPull: pakorhon/haplomerger:v1.0.5-beta
-    dockerPull: pakorhon/haplomerger:latest
+    dockerPull: pakorhon/haplomerger:v0.0.2-beta
+    #dockerPull: pakorhon/haplomerger:latest
 inputs:
   - id: assembly
     type: File

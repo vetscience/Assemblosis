@@ -6,8 +6,8 @@ requirements:
   - class: InlineJavascriptRequirement
 hints:
   - class: DockerRequirement
-    #dockerPull: pakorhon/arrow:v1.0.5-beta
-    dockerPull: pakorhon/arrow:latest
+    dockerPull: pakorhon/arrow:v0.0.2-beta
+    #dockerPull: pakorhon/arrow:latest
 inputs:
   - id: dataDir
     type: Directory

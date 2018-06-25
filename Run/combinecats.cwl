@@ -4,8 +4,8 @@ requirements:
   - class: InlineJavascriptRequirement
 hints:
   - class: DockerRequirement
-    #dockerPull: pakorhon/combinecats:v1.0.6-beta
-    dockerPull: pakorhon/combinecats:latest
+    dockerPull: pakorhon/combinecats:v0.0.2-beta
+    #dockerPull: pakorhon/combinecats:latest
 inputs:
   - id: assembly
     type: File
