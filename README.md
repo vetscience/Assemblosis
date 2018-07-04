@@ -5,6 +5,7 @@ The workflow is designed to use both PacBio long-reads and Illumina short-reads.
 Programs
 * [udocker v1.1.1](https://github.com/indigo-dc/udocker)
 * [cwltool v1.0.20180403145700](https://github.com/common-workflow-language/cwltool)
+* [python v2.7.14](https://www.python.org/downloads/release/python-2714)
 * [Python library galaxy-lib v18.5.7](https://pypi.org/project/galaxy-lib)
 
 Data
@@ -108,7 +109,10 @@ repeatWorkDir:
 noInterspersed: [false, true, false]
 noLowComplexity: [true, false, true]
 ```
-
+### Runtimes and hardware requirements
+The workflow was tested in Linux environment (CentOS Linux release 7.2.1511) in a server with 24 physical CPUs (48 hyperthreaded CPUs).
+Assemblies for *Caenorhabditis elegans*, *Drosophila melanogaster* and *Plasmodium falciparum* were created in 1-2 days.
+Maximum memory usage, ~125 GB, was required by the program Centrifuge.
 
 ### Software tools used in this pipeline
 * [Dextractor v1.0](https://github.com/thegenemyers/DEXTRACTOR)
