@@ -25,7 +25,14 @@ conda update -n base conda
 conda config --add channels defaults
 conda config --add channels conda-forge
 conda config --add channels bioconda
-conda install udocker==1.1.1
+conda install -p ~/miniconda3 udocker==1.1.1
+```
+Add following line to udocker script (~/miniconda3/bin/udocker):
+```
+2c2
+< CONDA_PREFIX=~/miniconda3
+---
+>
 ```
 
 Follow installation guidelines given for the programs cwltool, galaxy-lib and nodejs in their web-sites or use pip and conda:
