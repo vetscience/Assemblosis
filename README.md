@@ -1,5 +1,5 @@
 ## CWL based workflow to assemble haploid/diploid eukaryote genomes of non-model organisms
-The workflow is designed to use both PacBio long-reads and Illumina short-reads. The workflow first extracts, corrects, trims and decontaminates the long reads. Decontaminated trimmed reads are then used to assemble the genome and raw reads are used to polish it. Next, Illumina reads are cleaned and used to further polish the resultant assembly. Finally, the polished assembly is masked using inferred repeats and haplotypes are eliminated. The workflow uses BioConda and DockerHub to install required software and is therefore fully automated. In addition to final assembly, the workflow produces intermediate assemblies before and after polishing steps. The workflow follows the syntax for CWL v1.0 and has been tested using the reference implementations in Dell server of 24 CPUs.
+The workflow is designed to use both PacBio long-reads and Illumina short-reads. The workflow first extracts, corrects, trims and decontaminates the long reads. Decontaminated trimmed reads are then used to assemble the genome and raw reads are used to polish it. Next, Illumina reads are cleaned and used to further polish the resultant assembly. Finally, the polished assembly is masked using inferred repeats and haplotypes are eliminated. The workflow uses BioConda and DockerHub to install required software and is therefore fully automated. In addition to final assembly, the workflow produces intermediate assemblies before and after polishing steps. The workflow follows the syntax for CWL v1.0.
 
 ### Dependencies
 Programs
@@ -10,14 +10,16 @@ Programs
 Data
 * [Illumina adapters converted to FASTA format](http://sapac.support.illumina.com/downloads/illumina-adapter-sequences-document-1000000002694.html)
 * [NCBI nucleotide non-redundant sequences for decontamination with Centrifuge](http://www.ccb.jhu.edu/software/centrifuge)
-* [RepBase v17.02](https://www.girinst.org/repbase)
+* [RepBase v17.02 file RMRBSeqs.embly](https://www.girinst.org/repbase)
 
 ### Installation
-To avoid issues fetching docker images, install udocker from [BioConda: udocker v1.1.1](https://bioconda.github.io/recipes/udocker/README.html):
+To avoid issues fetching docker images, install udocker from [BioConda: udocker v1.1.1](https://bioconda.github.io/recipes/udocker/README.html).
+For instance:
 ```
+cd
 wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
-echo -e "\nyes\n" | bash Miniconda3-latest-Linux-x86_64.sh
-PATH=/root/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+echo -e "\nyes\n\nyes\n" | bash Miniconda3-latest-Linux-x86_64.sh
+export PATH=~/miniconda3/bin:$PATH
 conda update -n base conda
 conda config --add channels defaults
 conda config --add channels conda-forge
@@ -31,7 +33,7 @@ pip install galaxy-lib==18.5.7
 pip install cwltool==v1.0.20180403145700
 ```
 
-For cwltool, apply following fix in the file site-packages/cwltool/job.py
+For cwltool, apply following fix in the file ~/miniconda3/.../site-packages/cwltool/job.py
 ```
 471,473c471,472
 <         if env != None: # This is the fix
@@ -127,8 +129,8 @@ noInterspersed: [false, true, false]
 noLowComplexity: [true, false, true]
 ```
 ### Runtimes and hardware requirements
-The workflow was tested in Linux environment (CentOS Linux release 7.2.1511) in a server with 24 physical CPUs (48 hyperthreaded CPUs).
-Assemblies for *Caenorhabditis elegans*, *Drosophila melanogaster* and *Plasmodium falciparum* were created in 1-5 days.
+The workflow was tested in Linux environment (CentOS Linux release 7.2.1511) in a server with 24 physical CPUs (48 hyperthreaded CPUs) and 512 GB RAM.
+Assemblies for *Caenorhabditis elegans*, *Drosophila melanogaster* and *Plasmodium falciparum* were created in 1-5 days each and compared to respective reference assemblies.
 Maximum memory usage, ~125 GB, was required by the program Centrifuge.
 
 ### Software tools used in this pipeline
