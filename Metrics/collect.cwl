@@ -6,8 +6,8 @@ requirements:
   - class: InlineJavascriptRequirement
 hints:
   - class: DockerRequirement
-    #dockerPull: pakorhon/collect:latest
-    dockerPull: collect:latest
+    dockerPull: pakorhon/collect:v0.0.3-beta
+    #dockerPull: collect:latest
 inputs:
   - id: reference
     type: File

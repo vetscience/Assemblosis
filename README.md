@@ -10,7 +10,7 @@ Programs
 Data
 * [Illumina adapters converted to FASTA format](http://sapac.support.illumina.com/downloads/illumina-adapter-sequences-document-1000000002694.html)
 * [NCBI nucleotide non-redundant sequences for decontamination with Centrifuge](http://www.ccb.jhu.edu/software/centrifuge)
-* [RepBase v17.02 file RMRBSeqs.embly](https://www.girinst.org/repbase)
+* [RepBase v17.02 file RMRBSeqs.embl](https://www.girinst.org/repbase)
 
 ### Installation
 To avoid issues fetching docker images, install udocker from [BioConda: udocker v1.1.1](https://bioconda.github.io/recipes/udocker/README.html).
