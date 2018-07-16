@@ -52,7 +52,7 @@ RUN cp -r /root/Assemblosis/Run/repeatmodeler/RepeatModelerConf/* .
 #COPY RepeatModelerConf/RepModelConfig.pm .
 
 WORKDIR /root
-RUN cp Assemblosis/Run/repeatmodeler/inputRepeatModeler && cp Assemblosis/Run/repeatmodeler/inputRepeatMasker .
+RUN cp Assemblosis/Run/repeatmodeler/inputRepeatModeler . && cp Assemblosis/Run/repeatmodeler/inputRepeatMasker .
 #COPY inputRepeatMasker .
 #COPY inputRepeatModeler .
 RUN cp /root/Assemblosis/Run/repeatmodeler/initReps.sh . && cp /root/Assemblosis/Run/repeatmodeler/repeatModeler.sh .
