@@ -56,7 +56,7 @@ BEGIN
 ## =====================
 ## The path to the RepeatMasker directory and libraries.
 ##
-  $REPEATMASKER_DIR = "/usr/local/RepeatMasker";
+  $REPEATMASKER_DIR = "/root/miniconda3/pkgs/repeatmasker-4.0.7-pl5.22.0_11/share/RepeatMasker";
   $REPEATMASKER_LIB = "$REPEATMASKER_DIR/Libraries/RepeatMasker.lib";
 
 ##
@@ -64,7 +64,7 @@ BEGIN
 ## ================
 ## Set the location of the RMBLAST programs and support utilities.
 ##
-  $RMBLAST_DIR      = "/usr/local/rmblast/bin";
+  $RMBLAST_DIR      = "/root/miniconda3/bin";
   $RMBLASTN_PRGM    = "$RMBLAST_DIR/rmblastn";
   $NCBIBLASTP_PRGM  = "$RMBLAST_DIR/blastp";
   $NCBIBLASTX_PRGM  = "$RMBLAST_DIR/blastx";
@@ -97,27 +97,27 @@ BEGIN
 ## ==============
 ## Zhirong Bao's RECON program suite
 ##
-  $RECON_DIR = "/root/RECON-1.08/bin";
+  $RECON_DIR = "/root/miniconda3/bin";
 
 ##
 ## TRF Location
 ## ============
 ## Tandem Repeat Finder program.
 ##
-  $TRF_PRGM = "/usr/local/bin/trf";
+  $TRF_PRGM = "/root/miniconda3/bin/trf";
 
 ##
 ## NSEG Location
 ## =============
 ## Location of the NCBI nseg program
-  $NSEG_PRGM = "/usr/local/bin/nseg";
+  $NSEG_PRGM = "/root/miniconda3/bin/nseg";
 
 ##
 ## RepeatScout Location
 ## ====================
 ## Alkes Price RepeatScout DeNovo Repeat Finder
 ##
-  $RSCOUT_DIR = "/usr/local/bin";
+  $RSCOUT_DIR = "/root/miniconda3/bin";
 
 ##
 ## Turns on debugging in all RepeatModeler modules/scripts

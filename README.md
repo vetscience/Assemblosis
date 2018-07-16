@@ -5,7 +5,6 @@ The workflow is designed to use both PacBio long-reads and Illumina short-reads.
 Programs
 * [udocker v1.1.1](https://github.com/indigo-dc/udocker)
 * [cwltool v1.0.20180403145700](https://github.com/common-workflow-language/cwltool)
-* [python v2.7.14](https://www.python.org/downloads/release/python-2714)
 * [Python library galaxy-lib v18.5.7](https://pypi.org/project/galaxy-lib)
 
 Data
@@ -14,8 +13,25 @@ Data
 * [RepBase v17.02](https://www.girinst.org/repbase)
 
 ### Installation
-Follow installation guidelines given for each program (udocker, cwltool and galaxy-lib) in their web-sites.
-After installing cwltool, apply following fix in the file site-packages/cwltool/job.py
+To avoid issues fetching docker images, install udocker from [BioConda: udocker v1.1.1](https://bioconda.github.io/recipes/udocker/README.html):
+```
+wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
+echo -e "\nyes\n" | bash Miniconda3-latest-Linux-x86_64.sh
+PATH=/root/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+conda update -n base conda
+conda config --add channels defaults
+conda config --add channels conda-forge
+conda config --add channels bioconda
+conda install udocker==1.1.1
+```
+
+Follow installation guidelines given for the programs cwltool and galaxy-lib in their web-sites or use pip:
+```
+pip install galaxy-lib==18.5.7
+pip install cwltool==v1.0.20180403145700
+```
+
+For cwltool, apply following fix in the file site-packages/cwltool/job.py
 ```
 471,473c471,472
 <         if env != None: # This is the fix
@@ -26,7 +42,8 @@ After installing cwltool, apply following fix in the file site-packages/cwltool/
 >             env_copy[key] = env[key]
 ```
 
-Download and extract RepBase database, Centrifuge version of NCBI nt database and create Illumina adapter FASTA file to your preferred location.
+Download and extract RepBase database, Centrifuge version of NCBI nt database and create Illumina adapter FASTA file to your preferred locations.
+The location of these data will be defined in the configuration (.yml) file.
 
 ### Usage
 You have to create a YAML (.yml) file for each assembly. This file defines the required parameters and the location for both PacBio and Illumina raw-reads.
@@ -111,7 +128,7 @@ noLowComplexity: [true, false, true]
 ```
 ### Runtimes and hardware requirements
 The workflow was tested in Linux environment (CentOS Linux release 7.2.1511) in a server with 24 physical CPUs (48 hyperthreaded CPUs).
-Assemblies for *Caenorhabditis elegans*, *Drosophila melanogaster* and *Plasmodium falciparum* were created in 1-2 days.
+Assemblies for *Caenorhabditis elegans*, *Drosophila melanogaster* and *Plasmodium falciparum* were created in 1-5 days.
 Maximum memory usage, ~125 GB, was required by the program Centrifuge.
 
 ### Software tools used in this pipeline

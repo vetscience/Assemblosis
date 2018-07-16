@@ -1,5 +1,5 @@
 minContigLen: 500
-genomeSize: 100200000
+genomeSize: 100286401
 maxCumulativeLen: 150000000
 reference:
   class: File

@@ -4,7 +4,7 @@ requirements:
   - class: InlineJavascriptRequirement
 hints:
   - class: DockerRequirement
-    dockerPull: pakorhon/combinecats:v0.0.2-beta
+    dockerPull: pakorhon/combinecats:v0.0.3-beta
     #dockerPull: pakorhon/combinecats:latest
 inputs:
   - id: assembly

@@ -6,7 +6,7 @@ requirements:
   - class: InlineJavascriptRequirement
 hints:
   - class: DockerRequirement
-    dockerPull: pakorhon/repeatmodeler:v1.0.12-beta
+    dockerPull: pakorhon/repeatmodeler:v0.0.3-beta
     #dockerPull: repeatmodeler:latest
 inputs:
   - id: repBaseLibrary

@@ -1,7 +1,6 @@
 FROM ubuntu:16.04
 RUN apt-get update && apt-get install -y wget build-essential cpio less git
 WORKDIR /root
-
 LABEL about.license="BSD 3-clause License"
 LABEL about.license_file="https://conda.io/docs/license.html"
 LABEL about.license_file="https://repo.continuum.io/EULA/Anaconda+End+User+License+Agreement.txt"
@@ -38,8 +37,8 @@ RUN wget http://www.repeatmasker.org/libraries/RepeatMaskerMetaData-20170127.tar
 RUN tar zxf RepeatMaskerMetaData-20170127.tar.gz && rm -f RepeatMaskerMetaData-20170127.tar.gz
 
 # Changes for docker: does not work with udocker
-#RUN cp -r /root/miniconda3/pkgs/repeatmasker-4.0.7-pl5.22.0_11/share/RepeatMasker/Libraries /root
-#RUN cd /root/miniconda3/pkgs/repeatmasker-4.0.7-pl5.22.0_11/share/RepeatMasker && rm -r Libraries && ln -s /var/spool/cwl/Libraries
+RUN cp -r /root/miniconda3/pkgs/repeatmasker-4.0.7-pl5.22.0_11/share/RepeatMasker/Libraries /root
+RUN cd /root/miniconda3/pkgs/repeatmasker-4.0.7-pl5.22.0_11/share/RepeatMasker && rm -r Libraries && ln -s /var/spool/cwl/Libraries
 
 ## Install RepeatModeler
 LABEL about.license_file=https://opensource.org/licenses/osl-2.1.php

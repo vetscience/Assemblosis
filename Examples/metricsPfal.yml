@@ -1,0 +1,29 @@
+minContigLen: 500
+genomeSize: 23292622
+maxCumulativeLen: 30000000
+reference:
+  class: File
+  path: /home/<username>/References/pfal.ref.fa
+assemblies:
+  - class: File
+    path: /home/<username>/References/pfal.ref.fa
+  - class: File
+    path: /home/<username>/Assemblosis/Run/pfal.contigs.fasta
+  - class: File
+    path: /home/<username>/Assemblosis/Run/pfal.contigs.arrowed.fasta
+  - class: File
+    path: /home/<username>/Assemblosis/Run/pfalPilon.fasta
+labels: ["Reference","Canu contigs","Arrow-polished contigs","Pilon-polished contigs"]
+threads: 12
+threadsBusco: 1
+minIdentity: 99.5
+extensiveMisSize: 12000
+currentDir: /home/<username>/Assemblosis/Metrics
+lineage:
+  class: Directory
+  path: /home/<username>/Lineages/protists_ensembl
+buscoMode: geno
+buscoName: buscoPfal
+refGff:
+  class: File
+  path: /home/<username>/References/pfal.ref.gff

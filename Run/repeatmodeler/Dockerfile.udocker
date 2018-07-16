@@ -1,7 +1,6 @@
 FROM ubuntu:16.04
 RUN apt-get update && apt-get install -y wget build-essential cpio less git
 WORKDIR /root
-
 LABEL about.license="BSD 3-clause License"
 LABEL about.license_file="https://conda.io/docs/license.html"
 LABEL about.license_file="https://repo.continuum.io/EULA/Anaconda+End+User+License+Agreement.txt"

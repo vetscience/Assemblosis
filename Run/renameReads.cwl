@@ -6,7 +6,7 @@ requirements:
   - class: InlineJavascriptRequirement
 hints:
   - class: DockerRequirement
-    dockerPull: pakorhon/renamereads:v0.0.2-beta
+    dockerPull: pakorhon/renamereads:v0.0.3-beta
     #dockerPull: pakorhon/renamereads:latest
 inputs:
   - id: trimmedReads

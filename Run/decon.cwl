@@ -6,7 +6,7 @@ requirements:
   - class: InlineJavascriptRequirement
 hints:
   - class: DockerRequirement
-    dockerPull: pakorhon/decon:v0.0.2-beta
+    dockerPull: pakorhon/decon:v0.0.3-beta
     #dockerPull: pakorhon/decon:latest
 inputs:
   - id: trimmedReads

@@ -1,0 +1,31 @@
+minContigLen: 500
+genomeSize: 137567484
+maxCumulativeLen: 200000000
+reference:
+  class: File
+  path: /home/<username>/References/dmel.ref.fa
+assemblies:
+  - class: File
+    path: /home/<username>/References/dmel.ref.fa
+  - class: File
+    path: /home/<username>/Assemblosis/Run/dmel.contigs.fasta
+  - class: File
+    path: /home/<username>/Assemblosis/Run/dmel.contigs.arrowed.fasta
+  - class: File
+    path: /home/<username>/Assemblosis/Run/dmelPilon.fasta
+  - class: File
+    path: /home/<username>/Assemblosis/Run/dmelPilon.haplomerged.fa
+labels: ["Reference","Canu contigs","Arrow-polished contigs","Pilon-polished contigs","HaploMerger2-merged contigs"]
+threads: 12
+threadsBusco: 1
+minIdentity: 99.5
+extensiveMisSize: 12000
+currentDir: /home/<username>/Assemblosis/Metrics
+lineage:
+  class: Directory
+  path: /home/<username>/Lineages/insecta_odb9
+buscoMode: geno
+buscoName: buscoDmel
+refGff:
+  class: File
+  path: /home/<username>/References/dmel.ref.gff
