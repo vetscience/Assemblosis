@@ -3,10 +3,10 @@ RUN apt-get update && apt-get install -y python git wget build-essential
 WORKDIR /root
 
 LABEL about.license="Artistic License 2.0"
-RUN git clone -b 'v0.10.3' --single-branch --depth 1 https://github.com/gpertea/gclib
 LABEL about.license="MIT License"
-RUN git clone -b 'v0.9.12' --single-branch --depth 1 https://github.com/gpertea/gffread
-WORKDIR /root/gffread
+RUN wget http://ccb.jhu.edu/software/stringtie/dl/gffread-0.9.12.tar.gz
+RUN tar xvfz gffread-0.9.12.tar.gz
+WORKDIR /root/gffread-0.9.12
 RUN make && mv gffread /usr/local/bin
 WORKDIR /root
 
