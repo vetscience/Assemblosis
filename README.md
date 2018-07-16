@@ -6,6 +6,7 @@ Programs
 * [udocker v1.1.1](https://github.com/indigo-dc/udocker)
 * [cwltool v1.0.20180403145700](https://github.com/common-workflow-language/cwltool)
 * [Python library galaxy-lib v18.5.7](https://pypi.org/project/galaxy-lib)
+* [nodejs v10.4.1 required by cwltool](https://nodejs.org/en)
 
 Data
 * [Illumina adapters converted to FASTA format](http://sapac.support.illumina.com/downloads/illumina-adapter-sequences-document-1000000002694.html)
@@ -27,13 +28,14 @@ conda config --add channels bioconda
 conda install udocker==1.1.1
 ```
 
-Follow installation guidelines given for the programs cwltool and galaxy-lib in their web-sites or use pip:
+Follow installation guidelines given for the programs cwltool, galaxy-lib and nodejs in their web-sites or use pip and conda:
 ```
 pip install galaxy-lib==18.5.7
+conda install -c conda-forge nodejs==10.4.1
 pip install cwltool==v1.0.20180403145700
 ```
 
-For cwltool, apply following fix in the file ~/miniconda3/.../site-packages/cwltool/job.py
+For cwltool, apply following fix in the file ~/miniconda3/lib/python2.7/site-packages/cwltool/job.py
 ```
 471,473c471,472
 <         if env != None: # This is the fix
