@@ -4,7 +4,7 @@ WORKDIR /root
 
 LABEL about.license="MIT License"
 RUN wget https://github.com/gpertea/gffread/archive/v0.9.12.tar.gz
-RUN tar xvfz gffread-0.9.12.tar.gz
+RUN tar xvfz v0.9.12.tar.gz
 WORKDIR /root/gffread-0.9.12
 RUN make && mv gffread /usr/local/bin
 WORKDIR /root
