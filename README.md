@@ -33,7 +33,7 @@ Add following line to 2nd line of udocker script (~/miniconda3/bin/udocker):
 ---
 >
 ```
-Note that udocker may require fairly recent Linux distribution to run: [https://indigo-dc.gitbooks.io/udocker/content/doc/user_manual.html](https://indigo-dc.gitbooks.io/udocker/content/doc/user_manual.html).
+Note that udocker may require fairly recent Linux distribution: [https://indigo-dc.gitbooks.io/udocker/content/doc/user_manual.html](https://indigo-dc.gitbooks.io/udocker/content/doc/user_manual.html).
 
 Follow installation guidelines given for the programs cwltool, galaxy-lib and nodejs in their web-sites or use pip and conda:
 ```
