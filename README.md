@@ -71,6 +71,7 @@ You have to create a YAML (.yml) file for each assembly. This file defines the r
 An annotated example of the YAML file for Caenorhabditis elegans assembly.
 ```
 # Root of the directory, which contains the PacBio raw data
+# The script looks for all .hdf5 files recursively in given directory
 pacBioDataDir:
   class: Directory
   location: /home/<username>/Dna
@@ -79,7 +80,7 @@ prefix: cele # Prefix for the resultant assembly files
 genomeSize: 100m # Expected genome size
 minReadLen: 6000 # Minimum length for the reads used for the assembly
 corMaxEvidenceErate: 0.20  # Parameter for Canu assembler to adjust to GC-content. Should be 0.15 for high or log GC content.
-# Paired-end (PE) reads for Illumina data
+# Paired-end (PE) reads of Illumina raw data
 readsPe1:
   - class: File
     format: edam:format_1930  # fastq
