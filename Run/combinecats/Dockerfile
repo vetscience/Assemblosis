@@ -20,4 +20,4 @@ LABEL about.license="BSD 3-Clause License"
 RUN git clone -b 'v0.0.3-beta' --single-branch --depth 1 https://github.com/vetscience/Assemblosis
 RUN cp Assemblosis/Run/combinecats/combine.sh .
 RUN chmod uog+x combine.sh /root
-ENTRYPOINT ["/root/combine.sh"]
+ENTRYPOINT ["bash","/root/combine.sh"]

@@ -61,4 +61,4 @@ RUN cp /root/Assemblosis/Run/repeatmodeler/initReps.sh . && cp /root/Assemblosis
 RUN chmod uog+x /root && chmod uog+x initReps.sh && chmod uog+x repeatModeler.sh && chmod uog+x repeatModeler.sh
 ENV PATH=$PATH:/usr/local/RepeatMasker:/usr/local/RepeatModeler:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 ENV TERM=xterm
-ENTRYPOINT ["/root/repeatModeler.sh"]
+ENTRYPOINT ["bash","/root/repeatModeler.sh"]
