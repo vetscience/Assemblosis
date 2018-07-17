@@ -18,4 +18,4 @@ RUN git clone -b 'v0.0.3-beta' --single-branch --depth 1 https://github.com/vets
 WORKDIR Assemblosis
 RUN chmod uog+x /root && chmod uog+x /root/Assemblosis && chmod uog+x /root/Assemblosis/Run && chmod uog+x /root/Assemblosis/Run/hdf5check && chmod uog+x /root/Assemblosis/Run/hdf5check/hdf5Check.py
 ENV PYTHONPATH /root/Assemblosis
-ENTRYPOINT ["/root/Assemblosis/Run/hdf5check/hdf5Check.py"]
+ENTRYPOINT ["python", "/root/Assemblosis/Run/hdf5check/hdf5Check.py"]
