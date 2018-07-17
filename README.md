@@ -14,8 +14,7 @@ Data
 * [RepBase v17.02 file RMRBSeqs.embl](https://www.girinst.org/repbase)
 
 ### Installation
-To avoid issues fetching docker images, install udocker from [BioConda: udocker v1.1.1](https://bioconda.github.io/recipes/udocker/README.html).
-For instance:
+Install udocker from [BioConda: udocker v1.1.1](https://bioconda.github.io/recipes/udocker/README.html). For instance:
 ```
 cd
 wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
@@ -27,13 +26,14 @@ conda config --add channels conda-forge
 conda config --add channels bioconda
 conda install -p ~/miniconda3 udocker==1.1.1
 ```
-Add following line to udocker script (~/miniconda3/bin/udocker):
+Add following line to 2nd line of udocker script (~/miniconda3/bin/udocker):
 ```
 2c2
-< CONDA_PREFIX=~/miniconda3
+< export CONDA_PREFIX=~/miniconda3
 ---
 >
 ```
+Note that udocker may require fairly recent Linux distribution to run: [https://indigo-dc.gitbooks.io/udocker/content/doc/user_manual.html](https://indigo-dc.gitbooks.io/udocker/content/doc/user_manual.html).
 
 Follow installation guidelines given for the programs cwltool, galaxy-lib and nodejs in their web-sites or use pip and conda:
 ```
@@ -70,7 +70,7 @@ You have to create a YAML (.yml) file for each assembly. This file defines the r
 
 An annotated example of the YAML file for Caenorhabditis elegans assembly.
 ```
-# Root of the directory, which contains the PacBio raw data
+# Top level directory, which contains the PacBio raw data
 # The script looks for all .h5 files recursively in given directory
 pacBioDataDir:
   class: Directory
@@ -78,7 +78,7 @@ pacBioDataDir:
 currentDir: /home/<username>/Assembler/Run # The directory where the assembly is run from
 prefix: cele # Prefix for the resultant assembly files
 genomeSize: 100m # Expected genome size
-minReadLen: 6000 # Minimum length for the reads used for the assembly
+[minReadLen: 6000 # Minimum length for the PacBio reads used for the assembly
 corMaxEvidenceErate: 0.20  # Parameter for Canu assembler to adjust to GC-content. Should be 0.15 for high or log GC content.
 # Paired-end (PE) reads of Illumina raw data
 readsPe1:
