@@ -16,6 +16,6 @@ LABEL about.license="BSD 3-Clause License"
 #RUN git clone --recursive git://github.com/vetscience/Assemblosis
 RUN git clone -b 'v0.0.3-beta' --single-branch --depth 1 https://github.com/vetscience/Assemblosis
 WORKDIR Assemblosis
-RUN chmod uog+x /root && chmod uog+rwx /root/Assemblosis && chmod uog+x /root/Assemblosis/Run && chmod uog+x /root/Assemblosis/Run/hdf5check && chmod uog+x /root/Assemblosis/Run/hdf5check/hdf5Check.py
+RUN chmod uog+x /root && chmod uog+x /root/Assemblosis && chmod uog+x /root/Assemblosis/Run && chmod uog+x /root/Assemblosis/Run/hdf5check && chmod uog+x /root/Assemblosis/Run/hdf5check/hdf5Check.py
 ENV PYTHONPATH /root/Assemblosis
-ENTRYPOINT ["/root/Assemblosis/Run/hdf5check/hdf5Check.py"]
+ENTRYPOINT ["python","/root/Assemblosis/Run/hdf5check/hdf5Check.py"]
