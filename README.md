@@ -141,7 +141,7 @@ noLowComplexity: [true, false, true]
 ### Runtimes and hardware requirements
 The workflow was tested in Linux environment (CentOS Linux release 7.2.1511) in a server with 24 physical CPUs (48 hyperthreaded CPUs) and 512 GB RAM.
 Assemblies for *Caenorhabditis elegans*, *Drosophila melanogaster* and *Plasmodium falciparum* were created in 1-5 days each and compared to respective reference assemblies.
-Maximum memory usage, ~125 GB, was required by the program Centrifuge.
+Maximum memory usage, ~135 GB, was required by the program Centrifuge.
 
 ### Software tools used in this pipeline
 * [Dextractor v1.0](https://github.com/thegenemyers/DEXTRACTOR)
