@@ -14,8 +14,8 @@ ENV PATH=/root/smrtlink/smrtcmds/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/u
 RUN apt-get update && apt-get install -y git python
 
 LABEL about.license="BSD 3-Clause License"
-#RUN git clone --recursive git://github.com/vetscience/Assemblosis
-RUN git clone -b 'v0.0.3-beta' --single-branch --depth 1 https://github.com/vetscience/Assemblosis
+RUN git clone --recursive git://github.com/vetscience/Assemblosis
+#RUN git clone -b 'v0.0.3-beta' --single-branch --depth 1 https://github.com/vetscience/Assemblosis
 WORKDIR /root/Assemblosis
 RUN chmod uog+x /root && chmod uog+rwx /root/Assemblosis
 RUN cp Run/arrow/smrtpipe.sh . && cp Run/arrow/preset.xml . && cp Run/arrow/createFofn.py . && chmod uog+rwx /root/Assemblosis/createFofn.py
