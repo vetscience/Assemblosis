@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pbds:ReferenceSet xmlns:pbbase="http://pacificbiosciences.com/PacBioBaseDataModel.xsd" xmlns:pbdm="http://pacificbiosciences.com/PacBioDataModel.xsd" xmlns:pbds="http://pacificbiosciences.com/PacBioDatasets.xsd" xmlns:pbrk="http://pacificbiosciences.com/PacBioReagentKit.xsd" xmlns:pbsample="http://pacificbiosciences.com/PacBioSampleInfo.xsd" xmlns:pbpn="http://pacificbiosciences.com/PacBioPartNumbers.xsd" xmlns:pbmeta="http://pacificbiosciences.com/PacBioCollectionMetadata.xsd" Name="ecol" Description="Converted ReferenceSet ecol" Tags="converted, sv, reference" Version="4.0.1" CreatedAt="2018-07-19T02:25:14.069Z" ModifiedAt="2018-07-19T02:25:14.069Z" UniqueId="4e494f03-ce5c-4bcc-a232-f4000b756669" MetaType="PacBio.DataSet.ReferenceSet" TimeStampedName="referenceset_180719_022514">
+   <pbbase:ExternalResources>
+      <pbbase:ExternalResource Name="Fasta ecol" Description="Converted with fasta-to-reference" Tags="converted, sv, reference" ResourceId="sequence/ecol.fasta" CreatedAt="2018-07-19T02:25:14.069Z" ModifiedAt="2018-07-19T02:25:14.069Z" UniqueId="3b79d799-9351-4db9-b75a-841d75458ba7" MetaType="PacBio.ReferenceFile.ReferenceFastaFile" TimeStampedName="fasta_180719_022514">
+         <pbbase:FileIndices>
+            <pbbase:FileIndex ResourceId="sequence/ecol.fasta.fai" UniqueId="9a9438b0-4038-49ee-a975-d0188fddefc8" MetaType="PacBio.Index.SamIndex" TimeStampedName="index_180719_022514"/>
+            <pbbase:FileIndex ResourceId="sequence/ecol.fasta.sa" UniqueId="bff64dc2-1c8c-4ccc-b39b-da2debb54416" MetaType="PacBio.Index.SaWriterIndex" TimeStampedName="index_180719_022514"/>
+            <pbbase:FileIndex ResourceId="sequence/ecol.fasta-enc.2.ngm" UniqueId="0a37ef06-5224-43b6-869d-be7508f6924d" MetaType="PacBio.Index.NgmlrRefEncoded" TimeStampedName="index_180719_022514"/>
+            <pbbase:FileIndex ResourceId="sequence/ecol.fasta-ht-13-2.2.ngm" UniqueId="bc0bd2e2-5612-45d4-b12f-24368e60d78a" MetaType="PacBio.Index.NgmlrRefTable" TimeStampedName="index_180719_022514"/>
+         </pbbase:FileIndices>
+      </pbbase:ExternalResource>
+   </pbbase:ExternalResources>
+   <pbds:DataSetMetadata>
+      <pbds:TotalLength>4670116</pbds:TotalLength>
+      <pbds:NumRecords>1</pbds:NumRecords>
+      <pbds:Organism></pbds:Organism>
+      <pbds:Ploidy></pbds:Ploidy>
+   </pbds:DataSetMetadata>
+</pbds:ReferenceSet>
