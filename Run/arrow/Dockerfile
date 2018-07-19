@@ -18,8 +18,8 @@ RUN git clone --recursive git://github.com/vetscience/Assemblosis
 #RUN git clone -b 'v0.0.3-beta' --single-branch --depth 1 https://github.com/vetscience/Assemblosis
 WORKDIR /root/Assemblosis
 RUN chmod uog+x /root && chmod uog+rwx /root/Assemblosis
-RUN cp Run/arrow/smrtpipe.sh . && cp Run/arrow/preset.xml . && cp Run/arrow/createFofn.py . && chmod uog+rwx /root/Assemblosis/createFofn.py
-RUN chmod uog+x smrtpipe.sh && chmod uog+rwx preset.xml
+RUN cp Run/arrow/smrtpipe.sh . && cp Run/arrow/preset.xml . && cp Run/arrow/createFofn.py . && cp Run/arrow/referenceset.xml .
+RUN chmod uog+x /root/Assemblosis/createFofn.py && chmod uog+x smrtpipe.sh && chmod uog+x preset.xml
 ENV PYTHONPATH=/root/Assemblosis
 #RUN mv /root/smrtlink/install/smrtlink-release_5.0.1.9585/bundles/smrttools/install/smrttools-release_5.0.1.9578/private/pacbio/pythonpkgs/pbcore/lib/python2.7/site-packages/pbcore/data/datasets /root/smrtlink/
 #RUN ln -s /var/spool/cwl/datasets /root/smrtlink/install/smrtlink-release_5.0.1.9585/bundles/smrttools/install/smrttools-release_5.0.1.9578/private/pacbio/pythonpkgs/pbcore/lib/python2.7/site-packages/pbcore/data/datasets
