@@ -57,8 +57,16 @@ rm preset.tmp
 #bash /root/smrtlink/smrtcmds/bin/fasta-to-reference $ASSEMBLY /var/spool/cwl/datasets $PREFIX
 echo "fasta-to-reference $ASSEMBLY /root/smrtlink/install/smrtlink-release_5.0.1.9585/bundles/smrttools/install/smrttools-release_5.0.1.9578/private/pacbio/pythonpkgs/pbcore/lib/python2.7/site-packages/pbcore/data/datasets $PREFIX"
 #fasta-to-reference $ASSEMBLY /var/spool/cwl/datasets $PREFIX
-fasta-to-reference $ASSEMBLY /root/smrtlink/install/smrtlink-release_5.0.1.9585/bundles/smrttools/install/smrttools-release_5.0.1.9578/private/pacbio/pythonpkgs/pbcore/lib/python2.7/site-packages/pbcore/data/datasets $PREFIX
-                             
+#fasta-to-reference $ASSEMBLY /root/smrtlink/install/smrtlink-release_5.0.1.9585/bundles/smrttools/install/smrttools-release_5.0.1.9578/private/pacbio/pythonpkgs/pbcore/lib/python2.7/site-packages/pbcore/data/datasets $PREFIX
+mkdir -p /root/smrtlink/install/smrtlink-release_5.0.1.9585/bundles/smrttools/install/smrttools-release_5.0.1.9578/private/pacbio/pythonpkgs/pbcore/lib/python2.7/site-packages/pbcore/data/datasets/$PREFIX
+mkdir -p /root/smrtlink/install/smrtlink-release_5.0.1.9585/bundles/smrttools/install/smrttools-release_5.0.1.9578/private/pacbio/pythonpkgs/pbcore/lib/python2.7/site-packages/pbcore/data/datasets/$PREFIX/sequence
+cp $ASSEMBLY /root/smrtlink/install/smrtlink-release_5.0.1.9585/bundles/smrttools/install/smrttools-release_5.0.1.9578/private/pacbio/pythonpkgs/pbcore/lib/python2.7/site-packages/pbcore/data/datasets/$PREFIX/sequence/$PREFIX.fasta
+sawriter /root/smrtlink/install/smrtlink-release_5.0.1.9585/bundles/smrttools/install/smrttools-release_5.0.1.9578/private/pacbio/pythonpkgs/pbcore/lib/python2.7/site-packages/pbcore/data/datasets/$PREFIX/sequence/$PREFIX.fasta.sa /root/smrtlink/install/smrtlink-release_5.0.1.9585/bundles/smrttools/install/smrttools-release_5.0.1.9578/private/pacbio/pythonpkgs/pbcore/lib/python2.7/site-packages/pbcore/data/datasets/$PREFIX/sequence/$PREFIX.fasta -blt 8 -welter
+samtools faidx /root/smrtlink/install/smrtlink-release_5.0.1.9585/bundles/smrttools/install/smrttools-release_5.0.1.9578/private/pacbio/pythonpkgs/pbcore/lib/python2.7/site-packages/pbcore/data/datasets/$PREFIX/sequence/$PREFIX.fasta
+touch dummy.fastq
+ngmlr -r /root/smrtlink/install/smrtlink-release_5.0.1.9585/bundles/smrttools/install/smrttools-release_5.0.1.9578/private/pacbio/pythonpkgs/pbcore/lib/python2.7/site-packages/pbcore/data/datasets/$PREFIX/sequence/$PREFIX.fasta -q dummy.fastq -o dummy.bam -t 1
+sed "s/ecol/$PREFIX/g" /root/Assemblosis/referenceset.xml > /root/smrtlink/install/smrtlink-release_5.0.1.9585/bundles/smrttools/install/smrttools-release_5.0.1.9578/private/pacbio/pythonpkgs/pbcore/lib/python2.7/site-packages/pbcore/data/datasets/$PREFIX/referenceset.xml
+
 # Convert hdf5 files to subread format understood by pbsmrtpipe
 echo "python /root/Assemblosis/createFofn.py -d $DATADIR -f baxFiles.fofn"
 python /root/Assemblosis/createFofn.py -d $DATADIR -f baxFiles.fofn
