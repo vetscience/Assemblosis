@@ -22,8 +22,8 @@ RUN conda install repeatscout==1.0.5
 
 # Install required perl modules
 LABEL about.license="BSD 3-Clause License"
-#RUN git clone --recursive git://github.com/vetscience/Assemblosis
-RUN git clone -b 'v0.0.3-beta' --single-branch --depth 1 https://github.com/vetscience/Assemblosis
+RUN git clone --recursive git://github.com/vetscience/Assemblosis
+#RUN git clone -b 'v0.0.3-beta' --single-branch --depth 1 https://github.com/vetscience/Assemblosis
 RUN cp /root/Assemblosis/Run/repeatmodeler/inputJson .
 RUN perl -MCPAN -e 'install JSON' < inputJson
 RUN cpan install LWP::UserAgent
