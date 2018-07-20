@@ -62,7 +62,7 @@ outputs:
     outputBinding:
       glob: $(inputs.output).changes
 
-baseCommand: [java,com.simontuffs.onejar.Boot]
+baseCommand: [java,"-cp","$(inputs.currentDir)/cwltool_deps/_conda/envs/__pilon@1.22/share/pilon-1.22-0/pilon-1.22.jar",com.simontuffs.onejar.Boot]
 hints:
   SoftwareRequirement:
     packages:
