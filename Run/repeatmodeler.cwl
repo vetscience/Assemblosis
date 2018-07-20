@@ -50,5 +50,5 @@ outputs:
     outputBinding:
       glob: "RM*/consensi.fa.classified"
 
-baseCommand: ["RepeatModeler"]
+baseCommand: ["/root/repeatModeler.sh"]
 arguments: []
