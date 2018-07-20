@@ -68,4 +68,4 @@ hints:
     packages:
     - package: pilon
       version:
-      - "1.22"
+      - "1.22_0"
