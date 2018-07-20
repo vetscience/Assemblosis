@@ -1,6 +1,8 @@
 #!/bin/bash
+
+mkdir -p /var/spool/cwl/Libraries
+
 # Changes for docker: does not work with udocker
-#mkdir /var/spool/cwl/Libraries
 #cp -r /root/Libraries/* /var/spool/cwl/Libraries
 
 # This copy circumvents the issue encountered with CWL InitialWorkDir and udocker
