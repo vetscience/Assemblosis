@@ -71,7 +71,7 @@ You have to create a YAML (.yml) file for each assembly. This file defines the r
 An annotated example of the YAML file for Caenorhabditis elegans assembly.
 ```
 # Top level directory, which contains the PacBio raw data
-# The script looks for all .h5 files recursively in given directory
+# NOTE! The script looks for all .h5 files recursively in given directory
 pacBioDataDir:
   class: Directory
   location: /home/<username>/Dna
@@ -80,16 +80,22 @@ prefix: cele # Prefix for the resultant assembly files
 genomeSize: 100m # Expected genome size
 [minReadLen: 6000 # Minimum length for the PacBio reads used for the assembly
 corMaxEvidenceErate: 0.20  # Parameter for Canu assembler to adjust to GC-content. Should be 0.15 for high or log GC content.
-# Paired-end (PE) reads of Illumina raw data
+# Paired-end (PE) reads of Illumina raw data. NOTE! Two pairs given below.
 readsPe1:
   - class: File
     format: edam:format_1930  # fastq
     path: /home/<username>/Dna/SRR2598966_1.fastq.gz
+  - class: File
+    format: edam:format_1930  # fastq
+    path: /home/<username>/Dna/SRR2598967_1.fastq.gz
 readsPe2:
   - class: File
     format: edam:format_1930  # fastq
-    path: /home/<username>/Dna/SRR2598966_2.r.fastq.gz # Reversed reads
-phredsPe: ['33'] # Phred coding of Illumina data
+    path: /home/<username>/Dna/SRR2598966_2.fastq.gz
+  - class: File
+    format: edam:format_1930  # fastq
+    path: /home/<username>/Dna/SRR2598967_2.fastq.gz
+phredsPe: ['33','33'] # Phred coding of Illumina data. NOTE! Each pair needs one phred value.
 # Sliding window and illuminaClip parameters for Trimmomatic
 slidingWindow:
     windowSize: 4
@@ -110,7 +116,7 @@ minlen: 40
 
 threads: 24 # Maximum number of threads used in the pipeline
 
-maxFragmentLens: [500] # Illumina PE fragment length
+maxFragmentLens: [500, 600] # Illumina PE fragment length. NOTE! Each pair needs one phred value.
 
 # Parameters for the program Pilon
 orientation: 'fr'
@@ -156,6 +162,15 @@ Maximum memory usage, ~135 GB, was required by the program Centrifuge.
 * [RepeatModeler v1.0.11](http://www.repeatmasker.org)
 * [RepBase v17.02](https://www.girinst.org/repbase)
 * [HaploMerger2 build_20160512](https://github.com/mapleforest/HaploMerger2)
+
+### Troubleshooting
+Issue: Sometimes udocker fails to download the docker image. For instance:
+```
+Error: file size mismatch: /home/pakorhon/.udocker/layers/sha256:302e0c0de2a0989628fd78e574ccf4da76e2e14840bdf2199bb3bff951fbe739 2104908521 143291913
+Error: no files downloaded
+Error: image or container not available
+```
+Solution: Restart cwltool. Run should continue from the failed step when --leave-tmpdir option was used.
 
 ### Cite
 If you use the pipeline, please cite: TBD
