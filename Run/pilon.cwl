@@ -6,7 +6,7 @@ requirements:
   - class: InlineJavascriptRequirement
   - class: EnvVarRequirement
     envDef:
-      CLASSPATH: $(inputs.currentDir)/cwltool_deps/_conda/envs/__pilon@1.22/share/pilon-1.22-0/pilon-1.22.jar
+      CLASSPATH: $(inputs.currentDir)/cwltool_deps/_conda/envs/__pilon@1.22/share/pilon-1.22-1/pilon-1.22.jar
  
 inputs:
   - id: currentDir
@@ -68,4 +68,4 @@ hints:
     packages:
     - package: pilon
       version:
-      - "1.22_0"
+      - "1.22"
