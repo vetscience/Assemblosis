@@ -29,3 +29,4 @@ outputs:
     type: File
     outputBinding:
       glob: "*/pbReads.fastq"
+baseCommand: ["python","/root/Assemblosis/Run/hdf5check/hdf5Check.py"]
