@@ -1,6 +1,7 @@
 FROM ubuntu:16.04
 RUN apt-get update && apt-get install -y wget build-essential cpio less git
 WORKDIR /root
+
 LABEL about.license="BSD 3-clause License"
 LABEL about.license_file="https://conda.io/docs/license.html"
 LABEL about.license_file="https://repo.continuum.io/EULA/Anaconda+End+User+License+Agreement.txt"
@@ -22,7 +23,7 @@ RUN conda install repeatscout==1.0.5
 # Install required perl modules
 LABEL about.license="BSD 3-Clause License"
 #RUN git clone --recursive git://github.com/vetscience/Assemblosis
-RUN git clone -b 'v0.0.3-beta' --single-branch --depth 1 https://github.com/vetscience/Assemblosis
+RUN git clone -b 'v0.0.4-beta' --single-branch --depth 1 https://github.com/vetscience/Assemblosis
 RUN cp /root/Assemblosis/Run/repeatmodeler/inputJson .
 RUN perl -MCPAN -e 'install JSON' < inputJson
 RUN cpan install LWP::UserAgent
@@ -51,7 +52,7 @@ RUN cp -r /root/Assemblosis/Run/repeatmodeler/RepeatModelerConf/* .
 #COPY RepeatModelerConf/RepModelConfig.pm .
 
 WORKDIR /root
-RUN cp Assemblosis/Run/repeatmodeler/inputRepeatModeler && cp Assemblosis/Run/repeatmodeler/inputRepeatMasker .
+RUN cp Assemblosis/Run/repeatmodeler/inputRepeatModeler . && cp Assemblosis/Run/repeatmodeler/inputRepeatMasker .
 #COPY inputRepeatMasker .
 #COPY inputRepeatModeler .
 RUN cp /root/Assemblosis/Run/repeatmodeler/initReps.sh . && cp /root/Assemblosis/Run/repeatmodeler/repeatModeler.sh .
@@ -60,4 +61,4 @@ RUN cp /root/Assemblosis/Run/repeatmodeler/initReps.sh . && cp /root/Assemblosis
 RUN chmod uog+x /root && chmod uog+x initReps.sh && chmod uog+x repeatModeler.sh && chmod uog+x repeatModeler.sh
 ENV PATH=$PATH:/usr/local/RepeatMasker:/usr/local/RepeatModeler:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 ENV TERM=xterm
-ENTRYPOINT ["/root/repeatModeler.sh"]
+#ENTRYPOINT ["bash","/root/repeatModeler.sh"]
