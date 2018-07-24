@@ -77,11 +77,11 @@ An annotated example of the YAML file for Caenorhabditis elegans assembly.
 pacBioDataDir:
   class: Directory
   location: /home/<username>/Dna
-currentDir: /home/<username>/Assembler/Run # The directory where the assembly is run from
+currentDir: /home/<username>/Assemblosis/Run # The directory where the assembly is run from
 prefix: cele # Prefix for the resultant assembly files
 genomeSize: 100m # Expected genome size
 [minReadLen: 6000 # Minimum length for the PacBio reads used for the assembly
-corMaxEvidenceErate: 0.20  # Parameter for Canu assembler to adjust to GC-content. Should be 0.15 for high or log GC content.
+corMaxEvidenceErate: 0.20  # Parameter for Canu assembler to adjust to GC-content. Should be 0.15 for high or low GC content.
 # Paired-end (PE) reads of Illumina raw data. NOTE! Two pairs given below.
 readsPe1:
   - class: File

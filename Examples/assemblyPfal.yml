@@ -1,7 +1,7 @@
 pacBioDataDir:
   class: Directory
   location: /home/<username>/Dna
-currentDir: /home/<username>/Assembler/Run
+currentDir: /home/<username>/Assemblosis/Run
 prefix: pfal
 genomeSize: 23m
 minReadLen: 6000
