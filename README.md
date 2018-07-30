@@ -35,11 +35,12 @@ Add following line to 2nd line of udocker script (~/miniconda3/bin/udocker):
 ```
 Note that udocker may require fairly recent Linux distribution: [https://indigo-dc.gitbooks.io/udocker/content/doc/user_manual.html](https://indigo-dc.gitbooks.io/udocker/content/doc/user_manual.html).
 
-Follow installation guidelines given for the programs cwltool, galaxy-lib and nodejs in their web-sites or use pip and conda:
+Follow installation guidelines given for the programs cwltool, galaxy-lib, nodejs and git in their web-sites or use pip and conda:
 ```
 pip install galaxy-lib==18.5.7
 conda install -c conda-forge nodejs==10.4.1
 pip install cwltool==v1.0.20180403145700
+conda install -c conda-forge git==2.18.0
 ```
 
 For cwltool, apply following fix in the file ~/miniconda3/lib/python2.7/site-packages/cwltool/job.py

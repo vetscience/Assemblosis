@@ -48,6 +48,13 @@ inputs:
       position: 10
       separate: false
       prefix: useGrid=
+  - id: ovsMethod
+    type: string
+    default: "sequential"
+    inputBinding:
+      position: 11
+      separate: false
+      prefix: ovsMethod=
 outputs:
   - id: correctedReads
     type: File
