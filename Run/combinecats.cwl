@@ -28,4 +28,4 @@ outputs:
     type: File
     outputBinding:
       glob: "*/$(inputs.assembly.basename).masked"
-baseCommand: ["/root/combine.sh"]
+baseCommand: ["bash","/root/combine.sh"]

@@ -38,5 +38,5 @@ outputs:
     type: File
     outputBinding:
       glob: "workDir/*.haplomerged.fa*"
+baseCommand: ["python", "/root/haploMerger.py"]
 arguments: []
-

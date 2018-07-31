@@ -61,5 +61,5 @@ outputs:
     type: File
     outputBinding:
       glob: "classification.converted"
-baseCommand: ["/root/decon.sh"]
+baseCommand: ["bash","/root/decon.sh"]
 arguments: []

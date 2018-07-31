@@ -12,4 +12,4 @@ LABEL about.license_file=https://www.ncbi.nlm.nih.gov/home/about/policies
 RUN wget ftp://ftp.ncbi.nlm.nih.gov/pub/taxonomy/taxdump.tar.gz
 RUN tar xvfz taxdump.tar.gz
 RUN chmod uog+x decon.sh && chmod uog+x /root
-ENTRYPOINT ["bash","/root/decon.sh"]
+#ENTRYPOINT ["bash","/root/decon.sh"]

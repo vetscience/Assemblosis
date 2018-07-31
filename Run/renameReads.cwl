@@ -23,5 +23,5 @@ outputs:
     type: File
     outputBinding:
       glob: "mapped.ids"
-baseCommand: ["/root/renamereads.sh"]
+baseCommand: ["bash","/root/renamereads.sh"]
 arguments: []
