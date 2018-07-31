@@ -15,4 +15,4 @@ LABEL about.license="BSD 3-Clause License"
 RUN git clone -b 'v0.0.3-beta' --single-branch --depth 1 https://github.com/vetscience/Assemblosis
 RUN cp /root/Assemblosis/Metrics/collect/*.py .
 RUN chmod uog+x /root/*.py /root
-ENTRYPOINT ["python", "/root/createTables.py"]
+#ENTRYPOINT ["python", "/root/createTables.py"]

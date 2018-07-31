@@ -66,6 +66,6 @@ outputs:
     type: File
     outputBinding:
       glob: "metrics.txt"
-#baseCommand: ["quast"]
+baseCommand: ["python", "/root/createTables.py"]
 #arguments: []
 stdout: metrics.txt
