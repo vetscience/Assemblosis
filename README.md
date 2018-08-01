@@ -61,7 +61,7 @@ The location of these data will be defined in the configuration (.yml) file.
 You have to create a YAML (.yml) file for each assembly. This file defines the required parameters and the location for both PacBio and Illumina raw-reads.
 ```
 > cd
-> git clone -b 'v0.0.5-beta' --single-branch --depth 1 https://github.com/vetscience/Assemblosis
+> git clone -b 'v0.0.6-beta' --single-branch --depth 1 https://github.com/vetscience/Assemblosis
 > cd Assemblosis/Run
 > cp ../Examples/assemblyCele.yml
 
