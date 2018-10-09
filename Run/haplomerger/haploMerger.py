@@ -309,6 +309,7 @@ class HaploMerger(Base):
         fasta = Fasta(trimmedReads)
         iterCnt, seqCnt = 300, 1000
         self.shell("rm -f *.q runs.txt subset*")
+        random.seed(0)
         with open("runs.txt", "w") as handle:
             for i in xrange(iterCnt):
                 subFasta = Fasta()
