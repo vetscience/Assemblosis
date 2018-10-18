@@ -98,7 +98,6 @@ class Base:
             p = subprocess.Popen(mystr, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
         else:
             p = subprocess.Popen(mystr, stdout=self.log, stderr=subprocess.STDOUT, shell=True)
-            #p = subprocess.Popen(mystr, stdout=self.log, stderr=subprocess.PIPE, shell=True)
         retVal = p.wait()
         if retVal != 0 and ignoreFailure == False:
             print "FAILED (%d): %s" %(retVal, mystr)
@@ -121,10 +120,8 @@ class Base:
                 print >> sys.stderr, "# " + cmd # is printed as comment line which is easy to remove
             if mystdout == True:
                 proc = subprocess.Popen(shlex.split(cmd), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-                #proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             else:
                 proc = subprocess.Popen(shlex.split(cmd), stdout=self.log, stderr=subprocess.PIPE)
-                #proc = subprocess.Popen(cmd, stdout=self.log, stderr=subprocess.PIPE)
             if timeout_sec != None:
                 timeout = {"value": False}
                 timer = Timer(timeout_sec, self._kill_proc, [proc, timeout])
@@ -142,7 +139,6 @@ class Base:
             else:
                 break
         return proc
-            #return proc.returncode, stdout.decode("utf-8"), stderr.decode("utf-8"), timeout["value"]
 
 
     def readSection(self, config, section, sep=None):

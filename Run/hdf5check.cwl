@@ -5,7 +5,6 @@ requirements:
 hints:
   - class: DockerRequirement
     dockerPull: pakorhon/hdf5check:v0.0.4-beta
-    #dockerPull: pakorhon/hdf5check:latest
 inputs:
   - id: directory
     type: Directory

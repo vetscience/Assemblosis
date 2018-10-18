@@ -6,11 +6,9 @@ requirements:
   - class: InlineJavascriptRequirement
   - class: EnvVarRequirement
     envDef:
-      CLASSPATH: $(inputs.currentDir)/cwltool_deps/_conda/envs/__pilon@1.22/share/pilon-1.22-1/pilon-1.22.jar
+      CLASSPATH: /usr/local/share/pilon-1.22-1/pilon-1.22.jar
  
 inputs:
-  - id: currentDir
-    type: string
   - id: reference
     type: File
     inputBinding:
@@ -37,6 +35,7 @@ inputs:
       position: 5
   - id: modifications
     type: boolean
+    default: true
     inputBinding:
       prefix: --changes
       position: 6
@@ -64,8 +63,5 @@ outputs:
 
 baseCommand: [java,com.simontuffs.onejar.Boot]
 hints:
-  SoftwareRequirement:
-    packages:
-    - package: pilon
-      version:
-      - "1.22"
+  - class: DockerRequirement
+    dockerPull: quay.io/biocontainers/pilon:1.22--py36_0

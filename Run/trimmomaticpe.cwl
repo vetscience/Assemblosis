@@ -7,11 +7,9 @@ requirements:
   - class: InlineJavascriptRequirement
   - class: EnvVarRequirement
     envDef:
-      CLASSPATH: $(inputs.currentDir)/cwltool_deps/_conda/envs/__trimmomatic@0.36/share/trimmomatic/trimmomatic.jar
+      CLASSPATH: /usr/local/share/trimmomatic-0.36-5/trimmomatic.jar
 
 inputs:
-  - id: currentDir
-    type: string
   - id: phred
     type: assembly-typedef.yml#phred
     default: '33'
@@ -118,10 +116,6 @@ outputs:
     label: Trimmomatic log
 
 baseCommand: [java,org.usadellab.trimmomatic.TrimmomaticPE]
-
 hints:
-  SoftwareRequirement:
-    packages:
-    - package: trimmomatic
-      version:
-      - "0.36"
+  - class: DockerRequirement
+    dockerPull: quay.io/biocontainers/trimmomatic:0.36--5

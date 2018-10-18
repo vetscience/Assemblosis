@@ -13,15 +13,11 @@ def options():
     parser.add_option('-s', '--scaffolds', dest='scafs', help='Genome scaffolds in fasta format (nt)', metavar='SCAFFOLDS', default='')
     parser.add_option('-g', '--genes', dest='genes', help='Genome genes in fasta format (nt)', metavar='GENES', default='')
     parser.add_option('-r', '--refgen', dest='refGen', help='Reference genome FASTA file', metavar='REFGENOME', default='')
-    #parser.add_option('-f', '--gff', dest='gff', help='Maker gff file to infer exons and intron stats', metavar='GFF', default='')
     parser.add_option('-c', '--contamination', dest='contamination', help='File containing identifiers of contaminated genes', metavar='CONTAMINATION', default='')
-    #parser.add_option('-p', '--postfix', dest='postfix', help='Postfix in mRNA identifier', metavar='POSTFIX', default='-mRNA')
-    #parser.add_option('-m', '--mfile', dest='mfile', help='', metavar='MAPFILE', default='-')
     options, args = parser.parse_args()
     if options.scafs == '' and options.genes == '' and options.gff == '':
         print '\nPlease, give at least one of genome, gene or gff files:'
         parser.print_help()
-        #print options
         sys.exit(1)
     return options
 
@@ -31,7 +27,6 @@ def genomeStats(gff, geneIds):
     '''
     '''
     # First remove redundancy from the collected gff file
-    #print len(gff.lines)
     (lenExon, cntExon), (lenIntron, cntIntron), (lenRna, cntRna), (lenGene, cntGene), (lenCds, cntCds) = gff.stats(geneIds)
     print "\n##############################"
     print "Genomic statistics\n"
@@ -87,9 +82,6 @@ def detailsFasta(title, fasta, refSize = 0, refSeqCnt = 0):
         newGapCnt = len(re.findall("[N]+", seq))
         if newGapCnt == 0:
             noGapSeqsCnt += 1
-        #else:
-        #    print ">%s" %fasta.headers[i]
-        #    print "%s" %seq
         gapCnt += newGapCnt
 
     ntCnt = aCnt + tCnt + gCnt + cCnt
@@ -219,11 +211,6 @@ def main():
         fastaG.rmGenes(geneIds)
         myGeneIds = set([header.split()[0] for header in fastaG.headers])
         detailsFasta("Genome genes", fastaG)
-    #if opts.gff != '':
-    #    gff = Gff(opts.gff, opts.postfix)
-    #    gff.rmGenes(geneIds)
-    #    gff.genomeSize = genomeSize
-    #    detailsF = genomeStats(gff, myGeneIds)
 
 
 #################################################

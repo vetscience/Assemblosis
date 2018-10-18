@@ -15,11 +15,7 @@ def options():
     parser.add_option('-s', '--quastSnpsZipped', dest='quastSnpsZipped', help='QUAST nucleotide differences (gzipped)', metavar='QUASTSNPS', default='')
     parser.add_option('-b', '--busco', dest='busco', help='BUSCO report', metavar='BUSCO', default='')
     parser.add_option('-l', '--labels', dest='labels', help='Labels for the reference and the assemblies', metavar='LABELS', default='')
-    #parser.add_option('-a', '--assemble', dest='assemble', action='store_true', help='Do assembly', default=False)
     options, args = parser.parse_args()
-    #if options.fasta == '':
-    #    parser.print_help()
-    #    sys.exit(1)
     return options
 
 
@@ -77,15 +73,10 @@ def main():
                     dGenomes[asms[i]].append(("Shortest sequence (nt)", "{:,}".format(int(items[-1]))))
 
     for i in xrange(len(asms)):
-        #with open("%s/report.txt" %metrics[i]) as handle:
         with open("%s" %quasts[i]) as handle:
             for line in handle:
                line = line.strip()
                items = line.split()
-               #if "Reference length" in line:
-               #    dGenomes[asms[i]].append(("Reference size (nt)", "{:,}".format(int(items[-1]))))
-               #if "Reference GC" in line:
-               #    dGenomes[asms[i]].append(("Reference GC content (%)", items[-1]))
                if "NG50" in line:
                    dGenomes[asms[i]].append(("Quast NG50 (nt)", "{:,}".format(int(items[-1]))))
                if "# misassemblies" in line:
@@ -104,7 +95,6 @@ def main():
                    dGenomes[asms[i]].append(("Quast aligned length (nt)", "{:,}".format(int(items[-1]))))
 
     for i in xrange(len(asms)):
-        #with open("%s/contigs_reports/misassemblies_report.txt" %metrics[i]) as handle:
         with open("%s" %quastMisAsms[i]) as handle:
             for line in handle:
                 line = line.strip()
@@ -132,7 +122,6 @@ def main():
                     dGenomes[asms[i]].append(("Quast indels length", "%s" %bases))
 
     for i in xrange(len(asms)):
-        #with open("%s/gage_report.txt" %metrics[i]) as handle:
         with open("%s" %gages[i]) as handle:
             for line in handle:
                line = line.strip()
@@ -165,7 +154,6 @@ def main():
                    dGenomes[asms[i]].append(("GAGE translocations", items[-1]))
 
     for i in xrange(len(asms)):
-        #with open("%s/%s" %(metrics[i], buscoFile)) as handle:
         with open("%s" %buscoFiles[i]) as handle:
             for line in handle:
                line = line.strip()
@@ -259,14 +247,10 @@ def main():
     print "Metrics\t%s" %'\t'.join(genomeLabels)
     for metricName in metricOrder:
         dMetrics[metricName] = []
-    #for i in xrange(len(dGenomes[asms[0]])):
-    #    metricName, metric = dGenomes[asms[0]][i]
-    #    dMetrics[metricName] = []
     for i in xrange(len(asms)):
         for j in xrange(len(dGenomes[asms[i]])):
             metricName, metric = dGenomes[asms[i]][j]
             dMetrics[metricName].append(metric)
-    #for metricName in sorted(dMetrics.iterkeys()):
     for metricName in metricOrder:
         print "%s\t%s" %(metricName, '\t'.join(dMetrics[metricName]))
 

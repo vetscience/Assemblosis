@@ -28,8 +28,5 @@ arguments:
 - -name
 - valueFrom: $(inputs.scaffolds.basename)
 hints:
-  SoftwareRequirement:
-    packages:
-    - package: repeatmodeler
-      version:
-      - "1.0.11"
+  - class: DockerRequirement
+    dockerPull: quay.io/biocontainers/repeatmodeler:1.0.11--pl526_1

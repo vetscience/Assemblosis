@@ -7,7 +7,6 @@ requirements:
 hints:
   - class: DockerRequirement
     dockerPull: pakorhon/renamereads:v0.0.3-beta
-    #dockerPull: pakorhon/renamereads:latest
 inputs:
   - id: trimmedReads
     type: File

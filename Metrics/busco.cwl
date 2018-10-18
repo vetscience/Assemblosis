@@ -6,7 +6,7 @@ requirements:
   - class: InlineJavascriptRequirement
   - class: EnvVarRequirement
     envDef:
-      AUGUSTUS_CONFIG_PATH: $(inputs.currentDir)/cwltool_deps/_conda/envs/__busco@3.0.2/config
+      AUGUSTUS_CONFIG_PATH: /usr/local/config
 inputs:
   - id: currentDir
     type: string
@@ -37,22 +37,12 @@ inputs:
       prefix: -c
       position: 1
 outputs:
-#  - id: assembled
-#    type:
-#      type: array
-#      items: [File, Directory]
-#    outputBinding:
-#      glob: "*"
   - id: buscoResult
     type: File
     outputBinding:
       glob: run_*/short_summary_*.txt
 baseCommand: ["run_BUSCO.py", "-f"]
 arguments: []
-#stdout: out
 hints:
-  SoftwareRequirement:
-    packages:
-    - package: busco
-      version:
-      - "3.0.2"
+  - class: DockerRequirement
+    dockerPull: quay.io/biocontainers/busco:3.0.2--py35_6

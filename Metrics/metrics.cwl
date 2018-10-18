@@ -21,27 +21,6 @@ inputs:
   refGff: File
 
 outputs:
-  #gageResults:
-  #  type: File[]
-  #  outputSource: quastMetrics/gageResult
-  #quastResults:
-  #  type: File[]
-  #  outputSource: quastMetrics/quastResult
-  #icarusDir:
-  #  type: Directory[]
-  #  outputSource: quastMetrics/icarusDir
-  #icarusHtml:
-  #  type: File[]
-  #  outputSource: quastMetrics/icarusHtml
-  #quastHtml:
-  #  type: File[]
-  #  outputSource: quastMetrics/quastHtml
-  #quastLog:
-  #  type: File[]
-  #  outputSource: quastMetrics/quastLog
-  #buscoResult:
-  #  type: File[]
-  #  outputSource: buscoMetrics/buscoResult
   metrics:
     type: File
     outputSource: collectMetrics/table

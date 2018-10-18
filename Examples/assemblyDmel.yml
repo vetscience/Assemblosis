@@ -1,11 +1,10 @@
 pacBioDataDir:
   class: Directory
   location: /home/<username>/Dna/
-currentDir: /home/<username>/Assemblosis/Run
 prefix: dmel
 genomeSize: 137m
 minReadLen: 6000
-corMaxEvidenceErate: 0.15
+corMaxEvidenceErate: 0.20
 readsPe1:
   - class: File
     format: edam:format_1930  # fastq
@@ -38,9 +37,10 @@ orientation: 'fr'
 polishedAssembly: dmelPilon
 diploidOrganism: true
 fix: bases
-modifications: true
 
-database: /home/<username>/nt
+database:
+  class: Directory
+  path: /home/<username>/centrifugeNt
 taxons: [2,10239,4751,40674,81077] # Bacteria, viruses, fungi, mammals, artificial seqs
 partialMatch: 100
 

@@ -9,12 +9,7 @@ def options():
     parser.add_option('-i', '--fasta', dest='fasta', help='FASTA reference', metavar='FASTA', default='')
     parser.add_option('-g', '--gff', dest='gff', help='GFF reference', metavar='GFF', default='')
     parser.add_option('-n', '--snps', dest='snps', help='Nucleotide differences', metavar='SNPS', default='')
-    #parser.add_option('-r', '--order', dest='order', action='store_true', help='Longest first (default=FALSE)', default=False)
-    #parser.add_option('-a', '--assemble', dest='assemble', action='store_true', help='Do assembly', default=False)
     options, args = parser.parse_args()
-    #if options.fasta == '':
-    #    parser.print_help()
-    #    sys.exit(1)
     return options
 
 

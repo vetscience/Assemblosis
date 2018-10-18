@@ -106,20 +106,13 @@ class WbTree(Tree):
     def _createIntrons(self, geneParent, dExons):
         ''' geneParent is the tree node to add the introns to
         '''
-        #print "###############"
-        #print geneParent.object.id
-        #print dExons
         dSeq = {}
         start, end = geneParent.object.start, geneParent.object.end
         for i in xrange(start, end + 1): dSeq[i] = 0
         for mRnaId in dExons.iterkeys(): # Fetch coordinates from all mRNAs
             for exon in dExons[mRnaId]:
                 for i in xrange(exon.start, exon.end + 1): dSeq[i] = 1
-            #pairs = [(exon.start, exon.end) for exon in dExons[mRnaId]]
-        # Create intron object
         idxs = sorted(dSeq.iterkeys())
-        #for i in idxs: print "%d" %(dSeq[i]),
-        #print 
         if idxs[0] == 0 or idxs[-1] == 0:
             print "Exons expected at the ends of the genes. Exiting..."
             sys.exit(0)
@@ -159,11 +152,6 @@ class WbTree(Tree):
                 for i in xrange(cds.start, cds.end + 1): dSeq[i] = 1
         # Create intron object
         idxs = sorted(dSeq.iterkeys())
-        #for i in idxs: print "%d" %(dSeq[i]),
-        #print 
-        #if idxs[0] == 0 or idxs[-1] == 0:
-        #    print "CDSs expected at the ends of the genes. Exiting..."
-        #    sys.exit(0)
         inIntron, start = False, 0
         cdsStart, cdsEnd = geneParent.object.start, 0
         for i in xrange(len(idxs)):
@@ -177,16 +165,10 @@ class WbTree(Tree):
                 cdsEnd = i - 1
                 self.cdsCnt += 1
                 cdsId = "Cds%d" %self.cdsCnt
-                #print "%d - %d" %(cdsStart, cdsEnd)
                 cds = CdsUnique(cdsId, cdsStart, cdsEnd)
                 self.addChild(geneParent, cdsId, cds)
             if dSeq[i] == 1 and inIntron == True:
                 inIntron, end = False, i - 1
-                #self.intronCnt += 1
-                #intronId = "Intron%d" %self.intronCnt
-                #print "%s\t%d\t%d" %(intronId, start, end)
-                #intron = Intron(intronId, start, end)
-                #self.addChild(geneParent, intronId, intron)
                 cdsStart = i # Concerns CDSs
         if dSeq[idxs[-1]] == 1:
             cdsEnd = geneParent.object.end
@@ -203,17 +185,12 @@ class WbTree(Tree):
         dMrnas, dExons, dCdss = {}, {}, {}
         geneParent = None
         handle = open(makerGffFilename, 'r')
-        #tree = Tree() # Root object in None
         root = self.root
         for line in handle:
             items = line.strip().split('\t')
-            #print items
-            #print >> sys.stderr, items
-            if len(items) > 1: # and items[1] == "RefSeq":
+            if len(items) > 1:
                 if len(items) > 2 and items[2] == "gene":
                     geneId = items[8].split(';')[0].split('=')[1]
-                    #print geneId
-                    #print line,
                     start, end = int(items[3]), int(items[4])
                     strand = items[6]
                     scafId = items[0]
@@ -222,23 +199,14 @@ class WbTree(Tree):
                         self._createIntrons(geneParent, dExons)
                         self._createUniqueCdss(geneParent, dCdss)
                     geneParent = self.addChild(root, geneId, gene)
-                    #print "%s\t%s\t%s" %(geneId, start, end)
                     dMrnas, dExons, dCdss = {}, {}, {}
                     mRnaParent = None
                 elif len(items) > 2 and items[2] == "mRNA":
                     mRnaId = items[8].split(';')[0].split('=')[1]
-                    #print mRnaId
                     aed, eAed, qi = "-", "-", "-"
-                    #try:
-                    #    aed = items[8].split(';')[3].split('=')[1]
-                    #    eAed = items[8].split(';')[4].split('=')[1]
-                    #    qi = items[8].split(';')[5].split('=')[1]
-                    #except IndexError:
-                    #    pass
                     start, end = int(items[3]), int(items[4])
                     strand = items[6]
                     mRna = Mrna(mRnaId, start, end, strand, aed, eAed, qi)
-                    #print "%s\t%s\t%s\t%s" %(mRnaId, start, end, aed)
                     mRnaParent = self.addChild(geneParent, mRnaId, mRna)
                     dMrnas[mRnaId] = mRnaParent # Add mRNA identifier to sort exons right
                     dExons[mRnaId] = [] # Repository for exons to sort introns out
@@ -246,7 +214,6 @@ class WbTree(Tree):
                 elif len(items) > 2 and items[2] == "exon":
                     if mRnaParent == None: continue
                     exonId = items[8].split(';')[0].split('=')[1]
-                    #print >> sys.stderr, exonId
                     parentIds = []
                     # Next line is needed only for the rare case of exon line not having parent info
                     try:
@@ -257,7 +224,6 @@ class WbTree(Tree):
                     if len(subItems[1]) > 1:
                         try:
                             parentIds = subItems[1].split('=')[1].split(',')
-                            #parentIds = items[8].split(';')[1].split('=')[1].split(',')
                         except IndexError:
                             print >> sys.stderr, "FATAL ERROR 1: %s" %line
                             print >> sys.stderr, subItems
@@ -278,17 +244,11 @@ class WbTree(Tree):
                 elif len(items) > 2 and items[2] == "CDS":
                     if mRnaParent == None: continue
                     cdsId = items[8].split(';')[0].split('=')[1]
-                    #print cdsId
-                    #print mRnaParent.label
-                    #parentIds = items[8].split(';')[1].split('=')[1].split(',')
-    
                     parentIds.append(mRnaParent.label)
                     subItems = items[8].split(';')
-                    #print subItems
                     if len(subItems[1]) > 1:
                         try:
                             parentIds = subItems[1].split('=')[1].split(',')
-                            #parentIds = items[8].split(';')[1].split('=')[1].split(',')
                         except IndexError:
                             print >> sys.stderr, "FATAL ERROR 3: %s" %line
                             print >> sys.stderr, subItems
@@ -298,7 +258,6 @@ class WbTree(Tree):
                     strand, offset = items[6], items[7]
                     cds = Cds(cdsId, start, end, strand, offset)
                     for parentId in parentIds: # Add CDS to all mRNAs which are parents to the CDS
-                        #print parentId, dMrnas
                         try:
                             mRnaParent = dMrnas[parentId]
                         except KeyError:
@@ -364,11 +323,9 @@ class WbTree(Tree):
             item = node.object
             if item == None: continue
             if item.type == "gene":
-                #print >> sys.stderr, "gene"
                 if len(mRnas) > 0:
                     for mRna in sorted(mRnas, key = lambda item: item.id):
                         myStr += "%s\tmaker\tmRNA\t%d\t%d\t.\t%s\t.\tID=%s;Parent=%s;Name=%s\n" %(scafId, mRna.start, mRna.end, mRna.strand, mRna.id, geneId, mRna.id)
-                        #myStr += "%s\tmaker\tmRNA\t%d\t%d\t.\t%s\t.\tID=%s;Parent=%s;Name=%s;_AED=%s;_eAED=%s;_QI=%s\n" %(scafId, mRna.start, mRna.end, mRna.strand, mRna.id, geneId, mRna.id, mRna.aed, mRna.eAed, mRna.qi)
                         sortedExons = sorted(dExons[mRna.id], key = lambda item: item.start)
                         if mRna.strand == '-': sortedExons = sortedExons[::-1]
                         for exon in sortedExons:
@@ -384,26 +341,21 @@ class WbTree(Tree):
             if item.type == "mRNA":
                 mRnaId = item.id
                 mRnas.append(item)
-                #print "%s\tmaker\t%s\t%d\t%d\t.\t.\t.\tID=%s;Parent=%s;Name=%s;_AED=%s" %(scafId, item.type, item.start, item.end, item.id, geneId, item.id, item.aed)
             if item.type == "exon":
                 try:
                     dExons[mRnaId].append(item)
                 except KeyError:
                     dExons[mRnaId] = []
                     dExons[mRnaId].append(item)
-                #print "%s\tmaker\t%s\t%d\t%d\t.\t.\t.\tID=%s:exon:%d;Parent=%s" %(scafId, item.type, item.start, item.end, item.id, cnt, mRnaId)
-                #cnt += 1
             if item.type == "cds":
                 try:
                     dCdss[mRnaId].append(item)
                 except KeyError:
                     dCdss[mRnaId] = []
                     dCdss[mRnaId].append(item)
-                #print "%s\tmaker\tCDS\t%d\t%d\t.\t.\t.\tID=%s:cds;Parent=%s" %(scafId, item.start, item.end, item.id, mRnaId)
         if len(mRnas) > 0:
             for mRna in sorted(mRnas, key = lambda item: item.id):
                 myStr += "%s\tmaker\tmRNA\t%d\t%d\t.\t%s\t.\tID=%s;Parent=%s;Name=%s\n" %(scafId, mRna.start, mRna.end, mRna.strand, mRna.id, geneId, mRna.id)
-                #myStr += "%s\tmaker\tmRNA\t%d\t%d\t.\t%s\t.\tID=%s;Parent=%s;Name=%s;_AED=%s;_eAED=%s;_QI=%s\n" %(scafId, mRna.start, mRna.end, mRna.strand, mRna.id, geneId, mRna.id, mRna.aed, mRna.eAed, mRna.qi)
                 sortedExons = sorted(dExons[mRna.id], key = lambda item: item.start)
                 if mRna.strand == '-': sortedExons = sortedExons[::-1]
                 for exon in sortedExons:
@@ -429,14 +381,12 @@ class WbTree(Tree):
             if mRnaItem.strand == '+':
                 mRnaFirst += frontCnt
                 delta = int(frontCnt / 3) * 3 + 3
-                #if cdsFirst - mRnaFirst <= frontCnt + 1: cdsFirst += 3
                 if cdsFirst - mRnaFirst < 0: cdsFirst += delta
                 mRnaLast -= backCnt
                 if mRnaLast - cdsLast < 0: cdsLast -= delta
             else:
                 mRnaFirst += backCnt
                 delta = int(backCnt / 3) * 3 + 3
-                #if cdsFirst - mRnaFirst <= backCnt + 1: cdsFirst += 3
                 if cdsFirst - mRnaFirst < 0: cdsFirst += delta
                 mRnaLast -= frontCnt
                 if mRnaLast - cdsLast < 0: cdsLast -= delta
@@ -504,7 +454,7 @@ class WbTree(Tree):
         # Read in the GFF file to clarify the relationships between geneIds and mRnaIds
         dGeneIds, geneId = {}, None
         dExons = {}
-        dShortIntronsMrna = {} #, dShortIntronsGene = {}, {}
+        dShortIntronsMrna = {}
         for node in self.depthFirst():
             item = node.object
             if item == None: continue
@@ -546,30 +496,16 @@ class WbTree(Tree):
         rmFinal = set()
         for geneId in rmMrnaLabels: # Remove genes, which are non in list of preserved gene ids
             rmFinal.add(geneId)
-        #print >> sys.stderr, rmFinal
         for mRnaId in dShortIntronsMrna.iterkeys():
             geneId = dMrnaIds[mRnaId]
             if preserveOne == False:
                 rmFinal.add(geneId)
-            '''
-            else:
-                minLen = None # This is needed in case when there are >= 10 splicing variants
-                for myId in dGeneIds[geneId]:
-                   if minLen < len(myId) or minLen == None: minLen = len(myId)
-                myGeneIds = []
-                for myId in dGeneIds[geneId]:
-                    if len(myId) == minLen: myGeneIds.append(myId)
-                #    if "T1_9285" in myId: print >> sys.stderr, sorted(dGeneIds[geneId])
-                rmFinal |= set(sorted(myGeneIds)[1:])
-                #rmFinal |= set(sorted(dGeneIds[geneId])[1:])
-            '''
 
         print >> sys.stderr, "# mRNA count having short introns: %d" %len(list(dShortIntronsMrna.iterkeys()))
         genes = set()
         for mRnaId in dShortIntronsMrna.iterkeys():
             genes.add(dMrnaIds[mRnaId])
         print >> sys.stderr, "# Gene count having Short introns: %d" %len(genes)
-        #print >> sys.stderr, "Short introns in mRNAs to remove: %d" %len(rmFinal)
         genes = set()
         for myId in rmFinal:
              try:
@@ -592,7 +528,7 @@ class WbTree(Tree):
         '''
         dGeneIds, geneId = {}, None
         dExons = {}
-        dShortExonsMrna = {} #, dShortExonsGene = {}, {}
+        dShortExonsMrna = {}
         for node in self.depthFirst():
             item = node.object
             if item == None: continue
@@ -632,7 +568,6 @@ class WbTree(Tree):
         rmFinal = set()
         for geneId in rmMrnaLabels:
             rmFinal.add(geneId)
-        #print >> sys.stderr, rmFinal
         for mRnaId in dShortExonsMrna.iterkeys():
             geneId = dMrnaIds[mRnaId]
             if preserveAll == False:
@@ -643,7 +578,6 @@ class WbTree(Tree):
         for mRnaId in dShortExonsMrna.iterkeys():
             genes.add(dMrnaIds[mRnaId])
         print >> sys.stderr, "# Gene count having short exons: %d" %len(genes)
-        #print >> sys.stderr, "Short exons in mRNAs to remove: %d" %len(rmFinal)
         genes = set()
         for myId in rmFinal:
              try:
@@ -688,7 +622,6 @@ class WbTree(Tree):
     
         rmLabels = []
         for geneId in dGeneIds.iterkeys():
-            #if geneId == "gene46718": print geneId, len(dGeneIds[geneId]), dGeneIds[geneId]
             if len(dGeneIds[geneId]) == 0: rmLabels.append(geneId)
             if len(dGeneIds[geneId]) > 1:
                 myList = sorted(dGeneIds[geneId])
@@ -701,4 +634,3 @@ class WbTree(Tree):
                     for i in xrange(len(myList)):
                         if i != maxIdx: rmLabels.append(myList[i])
         self.rmNodes(rmLabels)
-

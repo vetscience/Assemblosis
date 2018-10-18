@@ -72,8 +72,5 @@ baseCommand: [bowtie2]
 
 stdout: $(inputs.reads1.basename.slice(0,-9)).sam
 hints:
-  SoftwareRequirement:
-    packages:
-    - package: bowtie2
-      version:
-      - "2.2.8"
+  - class: DockerRequirement
+    dockerPull: quay.io/biocontainers/bowtie2:2.2.5--py36h2d50403_3

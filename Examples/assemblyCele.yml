@@ -1,7 +1,6 @@
 pacBioDataDir:
   class: Directory
   location: /home/<username>/Dna
-currentDir: /home/<username>/Assemblosis/Run
 prefix: cele
 genomeSize: 100m
 minReadLen: 6000
@@ -38,9 +37,10 @@ orientation: 'fr'
 polishedAssembly: celePilon
 diploidOrganism: true
 fix: bases
-modifications: true
 
-database: /home/<username>/nt
+database:
+  class: Directory
+  path: /home/<username>/centrifugeNt
 taxons: [2,10239,4751,40674,81077] # Bacteria, viruses, fungi, mammals, artificial seqs
 partialMatch: 100
 

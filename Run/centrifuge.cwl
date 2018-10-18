@@ -6,10 +6,10 @@ requirements:
   - class: InlineJavascriptRequirement
 inputs:
   - id: database
-    type: string
-    inputBinding:
-      position: 1
-      prefix: -x
+    type: Directory
+#    inputBinding:
+#      position: 1
+#      prefix: -x
   - id: trimmedReads
     type: File
     inputBinding:
@@ -48,10 +48,10 @@ outputs:
     outputBinding:
       glob: "$(inputs.classificationFile)"
 baseCommand: ["centrifuge","-f"]
-arguments: []
+arguments:
+- valueFrom: $(inputs.database.path)/nt
+  prefix: -x
+  position: 1
 hints:
-  SoftwareRequirement:
-    packages:
-    - package: centrifuge
-      version:
-      - "1.0.3"
+  - class: DockerRequirement
+    dockerPull: quay.io/biocontainers/centrifuge:1.0.3--py27pl5.22.0_3

@@ -9,7 +9,6 @@ requirements:
 
 inputs:
   pacBioDataDir: Directory
-  currentDir: string
   prefix: string
   genomeSize: string
   minReadLen: int
@@ -31,8 +30,7 @@ inputs:
   polishedAssembly: string
   diploidOrganism: boolean
   fix: string
-  modifications: boolean
-  database: string
+  database: Directory
   taxons:
     type: int[]
   partialMatch: int
@@ -89,7 +87,6 @@ steps:
   cleanIlluminaReads:
     run: trimmomaticpe.cwl
     in:
-      currentDir: currentDir
       phred: phredsPe
       threads: threads
       reads1: readsPe1
@@ -116,6 +113,8 @@ steps:
       genomeSize: genomeSize
       pacbio-raw: hdf5check/pbFastqReads
       corMaxEvidenceErate: corMaxEvidenceErate
+      minThreads: threads
+      maxThreads: threads
     out: [correctedReads]
 
   trim:
@@ -126,6 +125,8 @@ steps:
       minReadLen: minReadLen
       pacbio-corrected: correct/correctedReads
       corMaxEvidenceErate: corMaxEvidenceErate
+      minThreads: threads
+      maxThreads: threads
     out: [trimmedReads]
 
   renameReads:
@@ -161,6 +162,8 @@ steps:
       minReadLen: minReadLen
       pacbio-corrected: decontaminate/deconReads
       corMaxEvidenceErate: corMaxEvidenceErate
+      minThreads: threads
+      maxThreads: threads
     out: [assembly]
 
   arrow:
@@ -229,13 +232,11 @@ steps:
   pilon:
     run: pilon.cwl
     in:
-      currentDir: currentDir
       bamPe: expressionToolBam/hybridFile
       reference: arrow/arrowPolishedAssembly
       output: polishedAssembly
       diploidOrganism: diploidOrganism
       fix: fix
-      modifications: modifications
     out: [pilonPolishedAssembly, pilonPolishedAssemblyChanges]
 
   indexAssembly:

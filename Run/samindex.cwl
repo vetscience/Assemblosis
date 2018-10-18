@@ -23,8 +23,5 @@ outputs:
 baseCommand: [samtools, index]
 
 hints:
-  SoftwareRequirement:
-    packages:
-    - package: samtools
-      version:
-      - "1.6"
+  - class: DockerRequirement
+    dockerPull: quay.io/biocontainers/samtools:1.6--0

@@ -62,6 +62,25 @@ inputs:
       position: 11
       separate: false
       prefix: ovsMethod=
+  - id: gnuplotTested
+    type: string
+    default: "true"
+    inputBinding:
+      position: 12
+      separate: false
+      prefix: gnuplotTested=
+  - id: minThreads
+    type: int
+    inputBinding:
+      position: 13
+      separate: false
+      prefix: minThreads=
+  - id: maxThreads
+    type: int
+    inputBinding:
+      position: 14
+      separate: false
+      prefix: maxThreads=
 outputs:
   - id: assembly
     type: File
@@ -71,8 +90,5 @@ baseCommand: ["canu", "-assemble"]
 arguments: []
 stdout: out
 hints:
-  SoftwareRequirement:
-    packages:
-    - package: canu
-      version:
-      - "1.6"
+  - class: DockerRequirement
+    dockerPull: quay.io/biocontainers/canu:1.6--pl5.22.0_1

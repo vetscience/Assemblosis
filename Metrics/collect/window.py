@@ -19,12 +19,8 @@ def options():
     parser.add_option('-c', '--coords', dest='coords', help='Filtered nucmer coordinates file from Quast', metavar='COORDS', default='')
     parser.add_option('-P', '--pacbio', dest='pacbio', help='PacBio mpileup file', metavar='PACBIO', default='')
     parser.add_option('-I', '--illu', dest='illu', help='Illumina mpileup file', metavar='ILLUMINA', default='')
-    #parser.add_option('-r', '--order', dest='order', action='store_true', help='Longest first (default=FALSE)', default=False)
     parser.add_option('-b', '--binary', dest='binary', action='store_true', help='Consider all 100 regions either 1 or 0', default=False)
     options, args = parser.parse_args()
-    #if options.fasta == '':
-    #    parser.print_help()
-    #    sys.exit(1)
     return options
 
 
@@ -90,15 +86,11 @@ def main():
             scafId = items[-1].split()[0] # Reference id
             ctgId = items[-1].split()[1] # Assembly id
             sAsm = int(items[1].split()[0])
-            # contig id, ref coords, asm coords, lengths, identity
             try:
-                dCoords[ctgId][sAsm] = (scafId, items[0], items[1]) #, items[2], items[3])
+                dCoords[ctgId][sAsm] = (scafId, items[0], items[1])
             except KeyError:
                 dCoords[ctgId] = {}
-                dCoords[ctgId][sAsm] = (scafId, items[0], items[1]) #, items[2], items[3])
-    #print dCoords
-    #sys.exit(0)
-    #print dTransLocCoords
+                dCoords[ctgId][sAsm] = (scafId, items[0], items[1])
     for key in dCoords:
         try:
             dTransLoc[key]
@@ -106,7 +98,6 @@ def main():
                 try:
                     refCoords = [int(item) for item in dCoords[key][s][1].split()]
                     scafId = dCoords[key][s][0].split("__")[0]
-                    #print "tr", key, scafId, refCoords
                     dTransLocCoords[scafId].append(refCoords)
                 except KeyError:
                     pass
@@ -118,7 +109,6 @@ def main():
                 try:
                     refCoords = [int(item) for item in dCoords[key][s][1].split()]
                     scafId = dCoords[key][s][0].split("__")[0]
-                    #print "re", key, scafId, refCoords
                     dReLocCoords[scafId].append(refCoords)
                 except KeyError:
                     pass
@@ -130,7 +120,6 @@ def main():
                 try:
                     refCoords = [int(item) for item in dCoords[key][s][1].split()]
                     scafId = dCoords[key][s][0].split("__")[0]
-                    #print "iv", key, scafId, refCoords
                     dInvCoords[scafId].append(refCoords)
                 except KeyError:
                     pass
@@ -161,8 +150,6 @@ def main():
             scafId, start, end, motif = items[0], int(items[3]), int(items[4]), items[8]
             motif = motif.split()[1].strip('"')[6:]
             dReps[dMapScafs[scafId]].append((start, end, motif))
-    #print dReps
-    #sys.exit(0)
 
     with open(opts.gff) as handle:
         for line in handle:
@@ -176,7 +163,6 @@ def main():
     with open(opts.gaps) as handle:
         for line in handle:
             items = line.strip().split()
-            #print items
             try:
                 int(items[0])
                 items = [int(item) for item in items]
@@ -184,8 +170,6 @@ def main():
                 scafId = items[0].split("__")[0]
                 continue
             dGaps[scafId].append((items[0], items[1]))
-    #print dGaps
-    #sys.exit(0)        
 
     dIndels, dSnps = {}, {}
     with open(opts.snps) as handle:
@@ -203,8 +187,6 @@ def main():
                     if items[2] == scafPos or items[5] == queryPos:
                         cnt += 1
                         dIndels[scafId][-1] = (items[1], items[2], items[5], cnt)
-                        #print dIndels[scafId][-1]
-                        #dIndels[scafId].append((items[1], items[2], items[5], cnt))
                     else:
                         cnt = 1
                         dIndels[scafId].append((items[1], items[2], items[5], cnt))
@@ -228,18 +210,14 @@ def main():
     # Print out indels
     dSeqsIndels = {}
     for key in dRefLens:
-       #dSeqsIndels[key] = [0 for i in xrange(dIndels[key][-1][-3] + 1)]
        dSeqsIndels[key] = [0 for i in xrange(dRefLens[key])]
-       #print len(dSeqsIndels[key])
     for key in dIndels:
        for items in dIndels[key]:
            queryId, scafPos, queryPos, cnt = items
-           #print key, len(dSeqsIndels[key]), scafPos
            if opts.binary == True:
                dSeqsIndels[key][scafPos] += 1
            else:
                dSeqsIndels[key][scafPos] += cnt
-           #print key, items, dSeqsIndels[key][scafPos], scafPos
     for key in dSeqsIndels:
        indels = []
        cnt = 0
@@ -250,19 +228,15 @@ def main():
            indels.append(indelCnt)
            cnt += size / 2
        dRes[key].append(indels)
-       #print key, indels
 
     # Print out nucleotide differences
     dSeqsSnps = {}
     for key in dRefLens:
        dSeqsSnps[key] = [0 for i in xrange(dRefLens[key])]
-       #print len(dSeqsSnps[key])
     for key in dSnps:
        for items in dSnps[key]:
            queryId, scafPos, queryPos = items
-           #print key, len(dSeqsSnps[key]), scafPos
            dSeqsSnps[key][scafPos] += 1
-           #print key, items, dSeqsSnps[key][scafPos], scafPos
     for key in dSeqsSnps:
        snps = []
        cnt = 0
@@ -273,13 +247,11 @@ def main():
            snps.append(snpCnt)
            cnt += size / 2
        dRes[key].append(snps)
-       #print key, snps
 
     # Print out aligned bits
     dSeqs = {}
     for key in dRefLens:
        dSeqs[key] = [0 for i in xrange(dRefLens[key])]
-       #print len(dSeqs[key])
     for key in dStarts:
        startPos, endPos = dStarts[key], dEnds[key]
        for i in xrange(startPos, endPos):
@@ -294,7 +266,6 @@ def main():
            aligned.append(alignedCnt)
            cnt += size / 2
        dRes[key].append(aligned)
-       #print key, aligned
 
     # Print out GC content
     for key in dRefs:
@@ -309,13 +280,11 @@ def main():
            gcs.append(gc)
            cnt += size / 2
        dRes[key].append(gcs)
-       #print key, gcs
 
     # Print out gaps
     dSeqs = {}
     for key in dRefLens:
        dSeqs[key] = [0 for i in xrange(dRefLens[key])]
-       #print len(dSeqs[key])
     for key in dGaps:
        for item in dGaps[key]:
            for i in xrange(item[0], item[1]):
@@ -330,13 +299,11 @@ def main():
            gaps.append(gapsCnt)
            cnt += size / 2
        dRes[key].append(gaps)
-       #print key, gaps
 
     # Print out repeat regions
     dSeqsReps = {}
     for key in dRefLens:
        dSeqsReps[key] = [0 for i in xrange(dRefLens[key])]
-       #print len(dSeqsReps[key])
     for key in dReps:
        for item in dReps[key]:
            for i in xrange(item[0], item[1]):
@@ -356,7 +323,6 @@ def main():
     dSeqs = {}
     for key in dRefLens:
        dSeqs[key] = [0 for i in xrange(dRefLens[key])]
-       #print len(dSeqs[key])
     for key in dGff:
        for item in dGff[key]:
            for i in xrange(item[0], item[1]):
@@ -376,7 +342,6 @@ def main():
     dSeqsOther = {}
     for key in dRefLens:
        dSeqsOther[key] = [1 for i in xrange(dRefLens[key])]
-       #print len(dSeqsReps[key])
     for key in dReps:
        for item in dReps[key]:
            for i in xrange(item[0], item[1]):
@@ -400,14 +365,11 @@ def main():
     dSeqs = {}
     for key in dRefLens:
        dSeqs[key] = [0 for i in xrange(dRefLens[key])]
-       #print key, len(dSeqs[key])
     for key in dTransLocCoords:
        for item in dTransLocCoords[key]:
-           #print key, item
            if item[1] < item[0]: item[0], item[1] = item[1], item[0]
            for i in xrange(item[0], item[1]):
                dSeqs[key][i] = 1
-           #print key, cnt, item[0], item[1], i, sum(dSeqs[key])
     for key in dSeqs:
        coords = []
        cnt = 0
@@ -417,19 +379,15 @@ def main():
            for item in dSeqs[key][cnt:(cnt + size)]:
                coordsCnt += item
            coords.append(coordsCnt)
-           #print "%d " %coordsCnt,
            cnt += size / 2
        dRes[key].append(coords)
-       #print "Added translocations"
 
     # Print out relocated regions
     dSeqs = {}
     for key in dRefLens:
        dSeqs[key] = [0 for i in xrange(dRefLens[key])]
-       #print key, len(dSeqs[key])
     for key in dReLocCoords:
        for item in dReLocCoords[key]:
-           #print key, item
            if item[1] < item[0]: item[0], item[1] = item[1], item[0]
            for i in xrange(item[0], item[1]):
                dSeqs[key][i] = 1
@@ -444,16 +402,13 @@ def main():
            coords.append(coordsCnt)
            cnt += size / 2
        dRes[key].append(coords)
-       #print "Added relocations"
 
     # Print out inverted regions
     dSeqs = {}
     for key in dRefLens:
        dSeqs[key] = [0 for i in xrange(dRefLens[key])]
-       #print len(dSeqs[key])
     for key in dInvCoords:
        for item in dInvCoords[key]:
-           #print key, item
            if item[1] < item[0]: item[0], item[1] = item[1], item[0]
            for i in xrange(item[0], item[1]):
                dSeqs[key][i] = 1
@@ -467,15 +422,12 @@ def main():
                coordsCnt += item
            coords.append(coordsCnt)
            cnt += size / 2
-       #print coords
        dRes[key].append(coords)
-       #print "Added inversions"
 
     # Print out PacBio mapping depth
     dSeqs = {}
     for key in dRefLens:
        dSeqs[key] = [0 for i in xrange(dRefLens[key])]
-       #print len(dSeqs[key])
     with open(opts.pacbio) as handle:
         for line in handle:
             items = line.strip().split()
@@ -490,16 +442,12 @@ def main():
                coordsCnt += item
            coords.append(coordsCnt)
            cnt += size / 2
-       #print coords
        dRes[key].append(coords)
-       #print "Added inversions"
-
 
     # Print out Illumina mapping depth
     dSeqs = {}
     for key in dRefLens:
        dSeqs[key] = [0 for i in xrange(dRefLens[key])]
-       #print len(dSeqs[key])
     with open(opts.illu) as handle:
         for line in handle:
             items = line.strip().split()
@@ -514,16 +462,12 @@ def main():
                coordsCnt += item
            coords.append(coordsCnt)
            cnt += size / 2
-       #print coords
        dRes[key].append(coords)
-       #print "Added inversions"
-
 
     # Print out PacBio low mapping regions
     dSeqs = {}
     for key in dRefLens:
        dSeqs[key] = [0 for i in xrange(dRefLens[key])]
-       #print len(dSeqs[key])
     with open(opts.pacbio) as handle:
         for line in handle:
             items = line.strip().split()
@@ -538,16 +482,12 @@ def main():
                if item <= 5: coordsCnt += 1
            coords.append(coordsCnt)
            cnt += size / 2
-       #print coords
        dRes[key].append(coords)
-       #print "Added inversions"
-
 
     # Print out Illumina low mapping regions
     dSeqs = {}
     for key in dRefLens:
        dSeqs[key] = [0 for i in xrange(dRefLens[key])]
-       #print len(dSeqs[key])
     with open(opts.illu) as handle:
         for line in handle:
             items = line.strip().split()
@@ -562,38 +502,11 @@ def main():
                if item <= 5: coordsCnt += 1
            coords.append(coordsCnt)
            cnt += size / 2
-       #print coords
        dRes[key].append(coords)
-       #print "Added inversions"
 
-
-    # Correlation
-    #for key in dSeqsIndels:
-    #   cors = []
-    #   cnt = 0
-    #   while cnt + size < len(dSeqsIndels[key]):
-    #       a = dSeqsIndels[key][cnt:(cnt + size)]
-    #       b = dSeqsSnps[key][cnt:(cnt + size)]
-    #       corVal = 0.0
-    #       if np.std(a) > 0 and np.std(b) <= 0:
-    #           corVal = "NA" #-1.0
-    #       elif np.std(a) <= 0 and np.std(b) > 0:
-    #           corVal = "NA" #-1.0
-    #       elif np.std(a) > 0 and np.std(b) > 0:
-    #           corVal = np.corrcoef(a, b)[0][1]
-    #       else:
-    #           corVal = "NA" #1.0
-    #       cors.append(corVal)
-    #       cnt += size
-    #   dRes[key].append(cors)
-        
     # Print the matrix
-    #print "%s" %"\t".join([key for key in sorted(dRes)])
     for key in sorted(dRes):
         with open("%s.txt" %key, "w") as handle:
-            #print "%s\t" key,
-            #labels = ["%s: indels" %key,"%s: nucleotide differences" %key,"%s: alignment" %key,"%s: GC content" %key]
-            #labels = ["Indels","Nucleotide differences","Alignment","GC content","Gaps", "Repeats", "Gene regions", "Correlation (indels / nt diffs)", "Translocations", "Relocations"] #, "Inversions"]
             labels = ["Indels","Nucleotide differences","Alignment","GC content","Gaps", "Repeats", "Coding regions", "Non-coding non-repeat regions", "Translocations", "Relocations", "Inversions","PacBio mapping depth","Illumina mapping depth","PacBio low mapping regions","Illumina low mapping regions"]
             cnt = 0
             for items in dRes[key]:

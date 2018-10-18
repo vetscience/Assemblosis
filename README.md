@@ -5,8 +5,8 @@ The workflow is designed to use both PacBio long-reads and Illumina short-reads.
 Programs
 * [udocker v1.1.1](https://github.com/indigo-dc/udocker)
 * [cwltool v1.0.20180403145700](https://github.com/common-workflow-language/cwltool)
-* [Python library galaxy-lib v18.5.7](https://pypi.org/project/galaxy-lib)
 * [nodejs v10.4.1 required by cwltool](https://nodejs.org/en)
+* [Python library galaxy-lib v18.5.7](https://pypi.org/project/galaxy-lib)
 
 Data
 * [Illumina adapters converted to FASTA format](http://sapac.support.illumina.com/downloads/illumina-adapter-sequences-document-1000000002694.html)
@@ -63,27 +63,40 @@ You have to create a YAML (.yml) file for each assembly. This file defines the r
 > cd
 > git clone -b 'v0.0.6-beta' --single-branch --depth 1 https://github.com/vetscience/Assemblosis
 > cd Assemblosis/Run
-> cp ../Examples/assemblyCele.yml
+> cp ../Examples/assemblyCele.yml .
 
 "Edit assemblyCele.yml to fit your computing environment and to define the location for the read files, databases and Illumina adapters"
 
 > mkdir RepeatSimple; mkdir RepeatTransp; mkdir RepeatCustom
-> cwltool --tmpdir-prefix /home/<username>/Tmp --beta-conda-dependencies --cachedir /home/<username>/Cache --user-space-docker-cmd udocker --leave-tmpdir assembly.cwl assemblyCele.yml
+> cwltool --tmpdir-prefix /home/<username>/Tmp --cachedir /home/<username>/Cache --user-space-docker-cmd udocker --leave-tmpdir assembly.cwl assemblyCele.yml
 ```
 
 An annotated example of the YAML file for Caenorhabditis elegans assembly.
 ```
-# Top level directory, which contains the PacBio raw data
-# NOTE! The script looks for all .h5 files recursively in given directory
+## Top level directory, which contains the PacBio raw data
+# NOTE! The software looks for all .h5 files recursively in given directory
 pacBioDataDir:
   class: Directory
   location: /home/<username>/Dna
-currentDir: /home/<username>/Assemblosis/Run # The directory where the assembly is run from
-prefix: cele # Prefix for the resultant assembly files
-genomeSize: 100m # Expected genome size
-[minReadLen: 6000 # Minimum length for the PacBio reads used for the assembly
-corMaxEvidenceErate: 0.20  # Parameter for Canu assembler to adjust to GC-content. Should be 0.15 for high or low GC content.
-# Paired-end (PE) reads of Illumina raw data. NOTE! Two pairs given below.
+
+## Prefix for the resultant assembly files
+prefix: cele
+
+## Maximum number of threads used in the pipeline
+threads: 24
+
+## Expected genome size. This parameter is forwarded to Canu assembler.
+genomeSize: 100m 
+
+## Minimum length for the PacBio reads used for the assembly. This parameter is forwarded to Canu assembler.
+# The maximum resolvable repeat regions becomes 2 x minReadLength
+minReadLen: 6000 
+
+## Parameter for Canu assembler to adjust to GC-content. Should be 0.15 for high or low GC content.
+corMaxEvidenceErate: 0.20  
+
+## Paired-end (PE) reads of Illumina raw data. These files are given to the program Trimmomatic.
+# NOTE! Two pairs given below.
 readsPe1:
   - class: File
     format: edam:format_1930  # fastq
@@ -98,8 +111,12 @@ readsPe2:
   - class: File
     format: edam:format_1930  # fastq
     path: /home/<username>/Dna/SRR2598967_2.fastq.gz
-phredsPe: ['33','33'] # Phred coding of Illumina data. NOTE! Each pair needs one phred value.
-# Sliding window and illuminaClip parameters for Trimmomatic
+
+## Phred coding of Illumina data. This parameter is forwarded to Trimmomatic.
+# NOTE! Each read-pair needs one phred value.
+phredsPe: ['33','33']
+
+## Sliding window and illuminaClip parameters for Trimmomatic
 slidingWindow:
     windowSize: 4
     requiredQuality: 25
@@ -112,31 +129,42 @@ illuminaClip:
     simpleClipThreshold: 10
     minAdapterLength: 20
     keepBothReads: true
-# Further parameters for Trimmomatic
+## Further parameters for Trimmomatic
+# Required phred-quality for leading 5 nucleotides
 leading: 25
+# Required phred-quality for trailing 5 nucleotides
 trailing: 25
+# Minimum accepted read-length to keep the read after trimming
 minlen: 40
 
-threads: 24 # Maximum number of threads used in the pipeline
+## Illumina PE fragment length. This parameter is forwarded to bowtie2 mapper.
+# NOTE! Each read-pair needs one phred value.
+maxFragmentLens: [500, 600]
 
-maxFragmentLens: [500, 600] # Illumina PE fragment length. NOTE! Each pair needs one phred value.
-
-# Parameters for the program Pilon
+## Parameters for the program Pilon
+# Orientation of pair-end reads e.g. 'fr', 'rf', 'ff'
 orientation: 'fr'
-polishedAssembly: celePilon # Prefix for the resultant assembly
+# Prefix for the resultant pilon polished assembly
+polishedAssembly: celePilon 
+# This is set 'true' for an organism with diploid genome: Pilon parameter --diploid
 diploidOrganism: true
+# Value 'bases' fixes snps and indels: pilon parameter --fix
 fix: bases
-modifications: true
 
-# Parameters for the program Centrifuge to remove listed contaminations
-database: /home/<username>/nt
-taxons: [2,10239,4751,40674,81077] # Bacteria, viruses, fungi, mammals, artificial seqs
+## Parameters for the program Centrifuge.
+# Path to the directory, that contains NCBI nt database in nt.?.cf files.
+database: /home/<username>/ntDatabase
+# NCBI taxon root identifers for the species considered contaminants: e.g. bacteria (=2), viruses (=10239), fungi (=4751), mammals (=40674), artificial seqs (=81077).
+taxons: [2,10239,4751,40674,81077]
+# Lenght of the identical match in nucleotides required to infer a read as contaminant.
 partialMatch: 100
 
-# Parameters for the RepeatModeler and RepeatMasker
+## Parameters for the RepeatModeler and RepeatMasker
 repBaseLibrary:
   class: File
-  path: /home/<username>/RepBaseLibrary/RMRBSeqs.embl # This is the RepBase file from https://www.girinst.org/repbase
+  # This is the RepBase file from https://www.girinst.org/repbase
+  path: /home/<username>/RepBaseLibrary/RMRBSeqs.embl
+# Directories for inferred custom repeats (inferred by RepeatModeler), tandem repeats (simple repeats) and interspersed repeats (transposons)
 repeatWorkDir:
   - class: Directory
     location: RepeatCustom
@@ -144,13 +172,15 @@ repeatWorkDir:
     location: RepeatSimple
   - class: Directory
     location: RepeatTransp
+# Represents -noint parameter for masking custom, tandem and interspersed repeats
 noInterspersed: [false, true, false]
+# Represents -nolow parameter for masking custom, tandem and interspersed repeats
 noLowComplexity: [true, false, true]
 ```
 ### Runtimes and hardware requirements
 The workflow was tested in Linux environment (CentOS Linux release 7.2.1511) in a server with 24 physical CPUs (48 hyperthreaded CPUs) and 512 GB RAM.
-Assemblies for *Caenorhabditis elegans*, *Drosophila melanogaster* and *Plasmodium falciparum* were created in 1-5 days each and compared to respective reference assemblies.
-Maximum memory usage, ~135 GB, was required by the program Centrifuge.
+Runtimes for the assemblies of *Caenorhabditis elegans*, *Drosophila melanogaster* and *Plasmodium falciparum* were 1537, 6501 and 424 CPU hours, respectively.
+Maximum memory usage of 134.1 GB was claimed by the program Centrifuge for each assembly.
 
 ### Software tools used in this pipeline
 * [Dextractor v1.0](https://github.com/thegenemyers/DEXTRACTOR)
@@ -165,15 +195,6 @@ Maximum memory usage, ~135 GB, was required by the program Centrifuge.
 * [RepeatModeler v1.0.11](http://www.repeatmasker.org)
 * [RepBase v17.02](https://www.girinst.org/repbase)
 * [HaploMerger2 build_20160512](https://github.com/mapleforest/HaploMerger2)
-
-### Troubleshooting
-Issue: Sometimes udocker fails to download the docker image. For instance:
-```
-Error: file size mismatch: /home/pakorhon/.udocker/layers/sha256:302e0c0de2a0989628fd78e574ccf4da76e2e14840bdf2199bb3bff951fbe739 2104908521 143291913
-Error: no files downloaded
-Error: image or container not available
-```
-Solution: Restart cwltool. Run should continue from the failed step when --leave-tmpdir option was used.
 
 ### Cite
 If you use the pipeline, please cite: TBD

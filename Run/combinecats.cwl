@@ -5,7 +5,6 @@ requirements:
 hints:
   - class: DockerRequirement
     dockerPull: pakorhon/combinecats:v0.0.3-beta
-    #dockerPull: pakorhon/combinecats:latest
 inputs:
   - id: assembly
     type: File

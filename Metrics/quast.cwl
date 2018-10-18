@@ -4,8 +4,6 @@ id: "quast"
 doc: "Compare the assembly against the reference genome"
 requirements:
   - class: InlineJavascriptRequirement
-#  - class: InitialWorkDirRequirement
-#    listing: $(runtime.outdir)/$(inputs.workDir.listing)
 inputs:
   - id: assembly
     type: File
@@ -101,31 +99,8 @@ outputs:
     type: File
     outputBinding:
       glob: "quast_results/latest/quast.log"
-#  - id: metrics
-#    type:
-#      type: array
-#      items: [File, Directory]
-#    outputBinding:
-#      glob: "*"
-#  - id: assembled
-#    type:
-#      type: array
-#      items: [File, Directory]
-#    outputBinding:
-#      glob: "$inputs.workDir"
-#  - id: assembly
-#    type:
-#      type: array
-#      items: File
-#    outputBinding:
-#      #glob: "$(inputs.workDir)/$(inputs.prefix).contigs.fasta"
-#      glob: "*/$inputs.prefix.contigs.fasta"
 baseCommand: ["quast"]
 arguments: []
-#stdout: out
 hints:
-  SoftwareRequirement:
-    packages:
-    - package: quast
-      version:
-      - "4.6.3"
+  - class: DockerRequirement
+    dockerPull: quay.io/biocontainers/quast:4.6.3--py27_boost1.64_1

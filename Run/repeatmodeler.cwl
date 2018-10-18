@@ -7,7 +7,6 @@ requirements:
 hints:
   - class: DockerRequirement
     dockerPull: pakorhon/repeatmodeler:v0.0.4-beta
-    #dockerPull: repeatmodeler:latest
 inputs:
   - id: repBaseLibrary
     type: File

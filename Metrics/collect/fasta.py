@@ -62,7 +62,6 @@ class Fasta(Base):
         self.headers = commons
         self.seqs = newseqs
         self._check()
-        #print "Number of headers is %d" %len(commons)
 
 
     def myprint(self):
@@ -152,15 +151,5 @@ class Fasta(Base):
         myd = {}
         for i in xrange(len(self.headers)): myd[self.headers[i]] = self.seqs[i]
         return myd
-    
-    #def headers(self):
-    #    '''
-    #    '''
-    #    return self.headers
-    #
-    #def seqs(self):
-    #    '''
-    #    '''
-    #    return self.seqs
 
 

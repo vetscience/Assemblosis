@@ -1,7 +1,6 @@
 pacBioDataDir:
   class: Directory
   location: /home/<username>/Dna
-currentDir: /home/<username>/Assemblosis/Run
 prefix: pfal
 genomeSize: 23m
 minReadLen: 6000
@@ -16,10 +15,10 @@ readsPe1:
 readsPe2:
   - class: File
     format: edam:format_1930  # fastq
-    path: /home/<username>/Dna/ERR862169_2.rc.fastq.gz # Reverse complemented
+    path: /home/<username>/Dna/ERR862169_2.fastq.gz
   - class: File
     format: edam:format_1930  # fastq
-    path: /home/<username>/Dna/ERR862170_2.rc.fastq.gz # Reverse complemented
+    path: /home/<username>/Dna/ERR862170_2.fastq.gz
 phredsPe: ['33','33']
 slidingWindow:
     windowSize: 4
@@ -44,9 +43,10 @@ orientation: 'fr'
 polishedAssembly: pfalPilon
 diploidOrganism: false
 fix: bases
-modifications: true
 
-database: /home/<username>/nt
+database:
+  class: Directory
+  path: /home/software/centrifugeNt
 taxons: [2,10239,4751,40674,81077] # Bacteria, viruses, fungi, mammals, artificial seqs
 partialMatch: 100
 

@@ -7,7 +7,6 @@ requirements:
 hints:
   - class: DockerRequirement
     dockerPull: pakorhon/collect:v0.0.3-beta
-    #dockerPull: collect:latest
 inputs:
   - id: reference
     type: File
@@ -67,5 +66,4 @@ outputs:
     outputBinding:
       glob: "metrics.txt"
 baseCommand: ["python", "/root/createTables.py"]
-#arguments: []
 stdout: metrics.txt

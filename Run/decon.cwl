@@ -7,7 +7,6 @@ requirements:
 hints:
   - class: DockerRequirement
     dockerPull: pakorhon/decon:v0.0.3-beta
-    #dockerPull: pakorhon/decon:latest
 inputs:
   - id: trimmedReads
     type: File

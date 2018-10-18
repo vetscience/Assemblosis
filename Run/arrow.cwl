@@ -7,7 +7,6 @@ requirements:
 hints:
   - class: DockerRequirement
     dockerPull: pakorhon/arrow:v0.0.4-beta
-    #dockerPull: pakorhon/arrow:latest
 inputs:
   - id: dataDir
     type: Directory

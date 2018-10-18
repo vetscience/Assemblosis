@@ -8,12 +8,7 @@ def options():
     parser = optparse.OptionParser('usage: python %prog -i filename -n size')
     parser.add_option('-i', '--fasta', dest='fasta', help='FASTA reference', metavar='FASTA', default='')
     parser.add_option('-n', '--snps', dest='snps', help='Nucleotide differences', metavar='SNPS', default='')
-    #parser.add_option('-r', '--order', dest='order', action='store_true', help='Longest first (default=FALSE)', default=False)
-    #parser.add_option('-a', '--assemble', dest='assemble', action='store_true', help='Do assembly', default=False)
     options, args = parser.parse_args()
-    #if options.fasta == '':
-    #    parser.print_help()
-    #    sys.exit(1)
     return options
 
 
@@ -49,7 +44,6 @@ def main():
     for key in dScafs:
         print ">%s\n%s" %(key, ''.join(dScafs[key]))
     print >> sys.stderr, "SNP count: %d" %cnt
-    #print "%d SNPs and %d indels in %d CDSs in %d mRNAs, %d outside CDSs of which %d are indels and rest %d SNPs" %(cnt - indelCnt, indelCnt, sum([dCdsCnt[key] for key in dCdsCnt]), sum([dMrnaCnt[key] for key in dMrnaCnt]), totalCnt - cnt, totalIndelCnt - indelCnt, totalCnt - cnt - totalIndelCnt + indelCnt)
 
 
 #################################################

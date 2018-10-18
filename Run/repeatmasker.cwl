@@ -84,8 +84,5 @@ outputs:
 baseCommand: ["RepeatMasker"]
 arguments: []
 hints:
-  SoftwareRequirement:
-    packages:
-    - package: repeatmasker
-      version:
-      - "4.0.6"
+  - class: DockerRequirement
+    dockerPull: quay.io/biocontainers/repeatmasker:4.0.6--pl5.22.0_10
