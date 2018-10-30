@@ -17,7 +17,7 @@ Data
 Use installation script ```install.sh``` to install dependencies.
 ```
 cd
-git clone -b 'v0.0.9-beta' --single-branch --depth 1 https://github.com/vetscience/Assemblosis
+git clone -b 'v0.0.8-beta' --single-branch --depth 1 https://github.com/vetscience/Assemblosis
 cd Assemblosis
 bash install.sh
 
