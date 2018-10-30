@@ -17,7 +17,7 @@ Data
 Use installation script ```install.sh``` to install dependencies.
 ```
 cd
-git clone -b 'v0.0.8-beta' --single-branch --depth 1 https://github.com/vetscience/Assemblosis
+git clone -b 'v0.0.9-beta' --single-branch --depth 1 https://github.com/vetscience/Assemblosis
 cd Assemblosis
 bash install.sh
 
@@ -151,7 +151,7 @@ noLowComplexity: [true, false, true]
 ### Runtimes and hardware requirements
 The workflow was tested in Linux environment (CentOS Linux release 7.2.1511) in a server with 24 physical CPUs (48 hyperthreaded CPUs) and 512 GB RAM.
 
-| Species | Runtime in CPU hours | RAM usage (GB) |
+| Assembly | Runtime in CPU hours | RAM usage (GB) |
 | --- | --- | --- |
 | *Caenorhabditis elegans* | 1537 | 134.1 |
 | *Drosophila melanogaster* | 6501 | 134.1 |
