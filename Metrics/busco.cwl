@@ -8,8 +8,6 @@ requirements:
     envDef:
       AUGUSTUS_CONFIG_PATH: /usr/local/config
 inputs:
-  - id: currentDir
-    type: string
   - id: assembly
     type: File
     inputBinding:
@@ -35,7 +33,13 @@ inputs:
     type: int
     inputBinding:
       prefix: -c
-      position: 1
+      position: 5
+  - id: blastSingleCore
+    type: boolean
+    default: true
+    inputBinding:
+      prefix: --blast_single_core
+      position: 6
 outputs:
   - id: buscoResult
     type: File

@@ -17,10 +17,8 @@ assemblies:
     path: /home/<username>/Assemblosis/Run/celePilon.haplomerged.fa
 labels: ["Reference","Canu contigs","Arrow-polished contigs","Pilon-polished contigs","HaploMerger2-merged contigs"]
 threads: 12
-threadsBusco: 1
 minIdentity: 99.5
 extensiveMisSize: 12000
-currentDir: /home/<username>/Assemblosis/Metrics
 lineage:
   class: Directory
   path: /home/<username>/Lineages/nematoda_odb9

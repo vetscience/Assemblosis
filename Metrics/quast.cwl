@@ -102,5 +102,8 @@ outputs:
 baseCommand: ["quast"]
 arguments: []
 hints:
-  - class: DockerRequirement
-    dockerPull: quay.io/biocontainers/quast:4.6.3--py27_boost1.64_1
+  SoftwareRequirement:
+    packages:
+    - package: quast
+      version:
+      - "4.6.3"

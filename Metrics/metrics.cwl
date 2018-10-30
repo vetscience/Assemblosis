@@ -11,7 +11,6 @@ inputs:
   assemblies: File[]
   labels: string[]
   threads: int
-  threadsBusco: int
   minIdentity: float
   extensiveMisSize: int
   currentDir: string
@@ -46,7 +45,7 @@ steps:
       lineage: lineage
       mode: buscoMode
       outputName: buscoName
-      threads: threadsBusco
+      threads: threads
     out: [buscoResult]
     scatter: [assembly]
     scatterMethod: dotproduct

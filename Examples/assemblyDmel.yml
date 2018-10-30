@@ -3,7 +3,7 @@ pacBioDataDir:
   location: /home/<username>/Dna/
 prefix: dmel
 genomeSize: 137m
-minReadLen: 6000
+minReadLen: 1000
 corMaxEvidenceErate: 0.20
 readsPe1:
   - class: File

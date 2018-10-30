@@ -14,46 +14,14 @@ Data
 * [RepBase v17.02 file RMRBSeqs.embl](https://www.girinst.org/repbase)
 
 ### Installation
-Install udocker from [BioConda: udocker v1.1.1](https://bioconda.github.io/recipes/udocker/README.html). For instance:
+Use installation script ```install.sh``` to install dependencies.
 ```
 cd
-wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
-echo -e "\nyes\n\nyes\n" | bash Miniconda3-latest-Linux-x86_64.sh
-export PATH=~/miniconda3/bin:$PATH
-conda update -n base conda
-conda config --add channels defaults
-conda config --add channels conda-forge
-conda config --add channels bioconda
-conda install -p ~/miniconda3 udocker==1.1.1
-```
-Add following line to 2nd line of udocker script (~/miniconda3/bin/udocker):
-```
-2c2
-< export CONDA_PREFIX=~/miniconda3
----
->
-```
-Note that udocker may require fairly recent Linux distribution: [https://indigo-dc.gitbooks.io/udocker/content/doc/user_manual.html](https://indigo-dc.gitbooks.io/udocker/content/doc/user_manual.html).
+git clone -b 'v0.0.8-beta' --single-branch --depth 1 https://github.com/vetscience/Assemblosis
+cd Assemblosis
+bash install.sh
 
-Follow installation guidelines given for the programs cwltool, galaxy-lib, nodejs and git in their web-sites or use pip and conda:
 ```
-pip install galaxy-lib==18.5.7
-conda install -c conda-forge nodejs==10.4.1
-pip install cwltool==v1.0.20180403145700
-conda install -c conda-forge git==2.18.0
-```
-
-For cwltool, apply following fix in the file ~/miniconda3/lib/python2.7/site-packages/cwltool/job.py
-```
-471,473c471,472
-<         if env != None: # This is the fix
-<             for key in env:
-<                 env_copy[key] = env[key]
----
->         for key in env:
->             env_copy[key] = env[key]
-```
-
 Download and extract RepBase database, Centrifuge version of NCBI nt database and create Illumina adapter FASTA file to your preferred locations.
 The location of these data will be defined in the configuration (.yml) file.
 
@@ -61,14 +29,13 @@ The location of these data will be defined in the configuration (.yml) file.
 You have to create a YAML (.yml) file for each assembly. This file defines the required parameters and the location for both PacBio and Illumina raw-reads.
 ```
 > cd
-> git clone -b 'v0.0.6-beta' --single-branch --depth 1 https://github.com/vetscience/Assemblosis
 > cd Assemblosis/Run
 > cp ../Examples/assemblyCele.yml .
 
 "Edit assemblyCele.yml to fit your computing environment and to define the location for the read files, databases and Illumina adapters"
 
 > mkdir RepeatSimple; mkdir RepeatTransp; mkdir RepeatCustom
-> cwltool --tmpdir-prefix /home/<username>/Tmp --cachedir /home/<username>/Cache --user-space-docker-cmd udocker --leave-tmpdir assembly.cwl assemblyCele.yml
+> cwltool --tmpdir-prefix /home/<username>/Tmp --cachedir /home/<username>/Cache --beta-conda-dependencies --user-space-docker-cmd udocker --leave-tmpdir assembly.cwl assemblyCele.yml
 ```
 
 An annotated example of the YAML file for Caenorhabditis elegans assembly.
@@ -85,8 +52,9 @@ prefix: cele
 ## Maximum number of threads used in the pipeline
 threads: 24
 
+### Parameters for the program Canu are described in https://canu.readthedocs.io/en/latest/parameter-reference.html
 ## Expected genome size. This parameter is forwarded to Canu assembler.
-genomeSize: 100m 
+genomeSize: 100m
 
 ## Minimum length for the PacBio reads used for the assembly. This parameter is forwarded to Canu assembler.
 # The maximum resolvable repeat regions becomes 2 x minReadLength
@@ -95,8 +63,9 @@ minReadLen: 6000
 ## Parameter for Canu assembler to adjust to GC-content. Should be 0.15 for high or low GC content.
 corMaxEvidenceErate: 0.20  
 
+### Parameters for the program Trimmomatic are described in http://www.usadellab.org/cms/?page=trimmomatic
 ## Paired-end (PE) reads of Illumina raw data. These files are given to the program Trimmomatic.
-# NOTE! Two pairs given below.
+# NOTE! Data for two paired libraries is given below.
 readsPe1:
   - class: File
     format: edam:format_1930  # fastq
@@ -137,34 +106,36 @@ trailing: 25
 # Minimum accepted read-length to keep the read after trimming
 minlen: 40
 
-## Illumina PE fragment length. This parameter is forwarded to bowtie2 mapper.
+### Parameters for the program bowtie2 are described in http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml
+## Illumina PE fragment length. Program bowtie2 parameter -X.
 # NOTE! Each read-pair needs one phred value.
 maxFragmentLens: [500, 600]
-
-## Parameters for the program Pilon
-# Orientation of pair-end reads e.g. 'fr', 'rf', 'ff'
+# Orientation of pair-end reads e.g. 'fr', 'rf', 'ff': Program bowtie2 parameters --fr, --rf or --ff
 orientation: 'fr'
-# Prefix for the resultant pilon polished assembly
+
+### Parameters for the program Pilon are described in https://github.com/broadinstitute/pilon/wiki/Requirements-&-Usage
+# Prefix for the resultant pilon polished assembly. Pilon parameter --output
 polishedAssembly: celePilon 
 # This is set 'true' for an organism with diploid genome: Pilon parameter --diploid
 diploidOrganism: true
-# Value 'bases' fixes snps and indels: pilon parameter --fix
+# Value 'bases' fixes snps and indels: Pilon parameter --fix
 fix: bases
 
-## Parameters for the program Centrifuge.
-# Path to the directory, that contains NCBI nt database in nt.?.cf files.
+### Parameters for the program centrifuge are described in http://www.ccb.jhu.edu/software/centrifuge/manual.shtml
+# Path to the directory, that contains NCBI nt database in nt.?.cf files. Centrifuge parameter -x
 database: /home/<username>/ntDatabase
-# NCBI taxon root identifers for the species considered contaminants: e.g. bacteria (=2), viruses (=10239), fungi (=4751), mammals (=40674), artificial seqs (=81077).
-taxons: [2,10239,4751,40674,81077]
-# Lenght of the identical match in nucleotides required to infer a read as contaminant.
+# Lenght of the identical match in nucleotides required to infer a read as contaminant. Centrifuge parameter --min-hitlen
 partialMatch: 100
+# NCBI taxon root identifers for the species considered contaminants: e.g. bacteria (=2), viruses (=10239), fungi (=4751), mammals (=40674), artificial seqs (=81077). Pipeline specific parameter.
+taxons: [2,10239,4751,40674,81077]
 
-## Parameters for the RepeatModeler and RepeatMasker
+## Parameters for the RepeatModeler and RepeatMasker are described in http://www.repeatmasker.org
 repBaseLibrary:
   class: File
-  # This is the RepBase file from https://www.girinst.org/repbase
+  # This is the RepBase file from https://www.girinst.org/repbase. RepeatMasker parameter -lib
   path: /home/<username>/RepBaseLibrary/RMRBSeqs.embl
-# Directories for inferred custom repeats (inferred by RepeatModeler), tandem repeats (simple repeats) and interspersed repeats (transposons)
+# Directories for inferred custom repeats (inferred by RepeatModeler), tandem repeats (simple repeats) and interspersed repeats (transposons)'
+# RepeatMasker parameter -dir
 repeatWorkDir:
   - class: Directory
     location: RepeatCustom
@@ -179,7 +150,13 @@ noLowComplexity: [true, false, true]
 ```
 ### Runtimes and hardware requirements
 The workflow was tested in Linux environment (CentOS Linux release 7.2.1511) in a server with 24 physical CPUs (48 hyperthreaded CPUs) and 512 GB RAM.
-Runtimes for the assemblies of *Caenorhabditis elegans*, *Drosophila melanogaster* and *Plasmodium falciparum* were 1537, 6501 and 424 CPU hours, respectively.
+
+| Species | Runtime in CPU hours | RAM usage (GB) |
+| --- | --- | --- |
+| *Caenorhabditis elegans* | 1537 | 134.1 |
+| *Drosophila melanogaster* | 6501 | 134.1 |
+| *Plasmodium falciparum* | 424 | 134.1 |
+
 Maximum memory usage of 134.1 GB was claimed by the program Centrifuge for each assembly.
 
 ### Software tools used in this pipeline

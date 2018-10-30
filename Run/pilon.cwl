@@ -6,7 +6,7 @@ requirements:
   - class: InlineJavascriptRequirement
   - class: EnvVarRequirement
     envDef:
-      CLASSPATH: /usr/local/share/pilon-1.22-1/pilon-1.22.jar
+      CLASSPATH: /usr/local/share/pilon-1.22-0/pilon-1.22.jar
  
 inputs:
   - id: reference
