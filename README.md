@@ -4,9 +4,10 @@ The workflow is designed to use both PacBio long-reads and Illumina short-reads.
 ### Dependencies
 Programs
 * [udocker v1.1.1](https://github.com/indigo-dc/udocker)
+* [udocker snapshot](https://raw.githubusercontent.com/indigo-dc/udocker/7f6975c19c63c3d65ec6256c7cf5b2369d5c115d/udocker.py)
 * [cwltool v1.0.20180403145700](https://github.com/common-workflow-language/cwltool)
-* [Python library galaxy-lib v18.5.7](https://pypi.org/project/galaxy-lib)
 * [nodejs v10.4.1 required by cwltool](https://nodejs.org/en)
+* [Python library galaxy-lib v18.5.7](https://pypi.org/project/galaxy-lib)
 
 Data
 * [Illumina adapters converted to FASTA format](http://sapac.support.illumina.com/downloads/illumina-adapter-sequences-document-1000000002694.html)
@@ -14,47 +15,22 @@ Data
 * [RepBase v17.02 file RMRBSeqs.embl](https://www.girinst.org/repbase)
 
 ### Installation
-Install udocker from [BioConda: udocker v1.1.1](https://bioconda.github.io/recipes/udocker/README.html). For instance:
+Use installation script ```install.sh``` to install program dependencies.
 ```
+# First confirm that you have the program 'git' installed in your system
 cd
-wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
-echo -e "\nyes\n\nyes\n" | bash Miniconda3-latest-Linux-x86_64.sh
-export PATH=~/miniconda3/bin:$PATH
-conda update -n base conda
-conda config --add channels defaults
-conda config --add channels conda-forge
-conda config --add channels bioconda
-conda install -p ~/miniconda3 udocker==1.1.1
-```
-Note that udocker may require fairly recent Linux distribution: [https://indigo-dc.gitbooks.io/udocker/content/doc/user_manual.html](https://indigo-dc.gitbooks.io/udocker/content/doc/user_manual.html).
+git clone -b 'v0.0.1-publication' --single-branch --depth 1 https://github.com/vetscience/Assemblosis
+cd Assemblosis
+bash install.sh
 
-Follow installation guidelines given for the programs cwltool, galaxy-lib, nodejs and git in their web-sites or use pip and conda:
 ```
-pip install galaxy-lib==18.5.7
-conda install -c conda-forge nodejs==10.4.1
-pip install cwltool==v1.0.20180403145700
-conda install -c conda-forge git==2.18.0
-```
-
-For cwltool, apply following fix in the file ~/miniconda3/lib/python2.7/site-packages/cwltool/job.py
-```
-471,473c471,472
-<         if env != None: # This is the fix
-<             for key in env:
-<                 env_copy[key] = env[key]
----
->         for key in env:
->             env_copy[key] = env[key]
-```
-
-Download and extract RepBase database, Centrifuge version of NCBI nt database and create Illumina adapter FASTA file to your preferred locations.
-The location of these data will be defined in the configuration (.yml) file.
+For data dependencies: download and extract RepBase database, download Centrifuge version of NCBI nt database and create Illumina adapter FASTA file to your preferred locations. If your reads are clean from adapters, the adapter FASTA file can be empty.
+The location of these data will be given in the configuration (.yml) file.
 
 ### Usage
 You have to create a YAML (.yml) file for each assembly. This file defines the required parameters and the location for both PacBio and Illumina raw-reads.
 ```
 > cd
-> git clone -b 'v0.0.5-beta' --single-branch --depth 1 https://github.com/vetscience/Assemblosis
 > cd Assemblosis/Run
 > cp ../Examples/assemblyCele.yml
 
@@ -66,17 +42,35 @@ You have to create a YAML (.yml) file for each assembly. This file defines the r
 
 An annotated example of the YAML file for Caenorhabditis elegans assembly.
 ```
-# Top level directory, which contains the PacBio raw data
-# NOTE! The script looks for all .h5 files recursively in given directory
+## Top level directory, which contains the PacBio raw data
+# NOTE! The software looks for all .h5 files recursively in given directory
 pacBioDataDir:
   class: Directory
   location: /home/<username>/Dna
-currentDir: /home/<username>/Assemblosis/Run # The directory where the assembly is run from
-prefix: cele # Prefix for the resultant assembly files
-genomeSize: 100m # Expected genome size
-[minReadLen: 6000 # Minimum length for the PacBio reads used for the assembly
-corMaxEvidenceErate: 0.20  # Parameter for Canu assembler to adjust to GC-content. Should be 0.15 for high or low GC content.
-# Paired-end (PE) reads of Illumina raw data. NOTE! Two pairs given below.
+
+## The directory where the assembly is run from
+currentDir: /home/<username>/Assemblosis/Run
+
+## Prefix for the resultant assembly files
+prefix: cele
+
+## Maximum number of threads used in the pipeline
+threads: 24
+
+### Parameters for the program Canu are described in https://canu.readthedocs.io/en/latest/parameter-reference.html
+## Expected genome size. This parameter is forwarded to Canu assembler.
+genomeSize: 100m
+
+## Minimum length for the PacBio reads used for the assembly. This parameter is forwarded to Canu assembler.
+# The maximum resolvable repeat regions becomes 2 x minReadLength
+minReadLen: 6000
+
+## Parameter for Canu assembler to adjust to GC-content. Should be 0.15 for high or low GC content.
+corMaxEvidenceErate: 0.20
+
+### Parameters for the program Trimmomatic are described in http://www.usadellab.org/cms/?page=trimmomatic
+## Paired-end (PE) reads of Illumina raw data. These files are given to the program Trimmomatic.
+# NOTE! Data for two paired libraries is given below.
 readsPe1:
   - class: File
     format: edam:format_1930  # fastq
@@ -91,8 +85,12 @@ readsPe2:
   - class: File
     format: edam:format_1930  # fastq
     path: /home/<username>/Dna/SRR2598967_2.fastq.gz
-phredsPe: ['33','33'] # Phred coding of Illumina data. NOTE! Each pair needs one phred value.
-# Sliding window and illuminaClip parameters for Trimmomatic
+
+## Phred coding of Illumina data. This parameter is forwarded to Trimmomatic.
+# NOTE! Each read-pair needs one phred value.
+phredsPe: ['33','33']
+
+## Sliding window and illuminaClip parameters for Trimmomatic
 slidingWindow:
     windowSize: 4
     requiredQuality: 25
@@ -105,31 +103,45 @@ illuminaClip:
     simpleClipThreshold: 10
     minAdapterLength: 20
     keepBothReads: true
-# Further parameters for Trimmomatic
+## Further parameters for Trimmomatic
+# Required phred-quality for leading 5 nucleotides
 leading: 25
+# Required phred-quality for trailing 5 nucleotides
 trailing: 25
+# Minimum accepted read-length to keep the read after trimming
 minlen: 40
 
-threads: 24 # Maximum number of threads used in the pipeline
-
-maxFragmentLens: [500, 600] # Illumina PE fragment length. NOTE! Each pair needs one phred value.
-
-# Parameters for the program Pilon
+### Parameters for the program bowtie2 are described in http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml
+## Illumina PE fragment length. Program bowtie2 parameter -X.
+# NOTE! Each read-pair needs one phred value.
+maxFragmentLens: [500, 600]
+# Orientation of pair-end reads e.g. 'fr', 'rf', 'ff': Program bowtie2 parameters --fr, --rf or --ff
 orientation: 'fr'
-polishedAssembly: celePilon # Prefix for the resultant assembly
+
+### Parameters for the program Pilon are described in https://github.com/broadinstitute/pilon/wiki/Requirements-&-Usage
+# Prefix for the resultant pilon polished assembly. Pilon parameter --output
+polishedAssembly: celePilon
+# This is set 'true' for an organism with diploid genome: Pilon parameter --diploid
 diploidOrganism: true
 fix: bases
+# Value 'bases' fixes snps and indels: Pilon parameter --fix
 modifications: true
 
-# Parameters for the program Centrifuge to remove listed contaminations
+### Parameters for the program centrifuge are described in http://www.ccb.jhu.edu/software/centrifuge/manual.shtml
+# Path to the name of the index file, that contains NCBI nt database in nt.?.cf files. Centrifuge parameter -x
 database: /home/<username>/nt
-taxons: [2,10239,4751,40674,81077] # Bacteria, viruses, fungi, mammals, artificial seqs
+# Lenght of the identical match in nucleotides required to infer a read as contaminant. Centrifuge parameter --min-hitlen
 partialMatch: 100
+# NCBI taxon root identifers for the species considered contaminants: e.g. bacteria (=2), viruses (=10239), fungi (=4751), mammals (=40674), artificial seqs (=81077). Pipeline specific parameter.
+taxons: [2,10239,4751,40674,81077]
 
-# Parameters for the RepeatModeler and RepeatMasker
+## Parameters for the RepeatModeler and RepeatMasker are described in http://www.repeatmasker.org
 repBaseLibrary:
   class: File
-  path: /home/<username>/RepBaseLibrary/RMRBSeqs.embl # This is the RepBase file from https://www.girinst.org/repbase
+  # This is the RepBase file from https://www.girinst.org/repbase. RepeatMasker parameter -lib
+  path: /home/<username>/RepBaseLibrary/RMRBSeqs.embl
+# Directories for inferred custom repeats (inferred by RepeatModeler), tandem repeats (simple repeats) and interspersed repeats (transposons)'
+# RepeatMasker parameter -dir
 repeatWorkDir:
   - class: Directory
     location: RepeatCustom
@@ -137,13 +149,21 @@ repeatWorkDir:
     location: RepeatSimple
   - class: Directory
     location: RepeatTransp
+# Represents -noint parameter for masking custom, tandem and interspersed repeats
 noInterspersed: [false, true, false]
+# Represents -nolow parameter for masking custom, tandem and interspersed repeats
 noLowComplexity: [true, false, true]
 ```
 ### Runtimes and hardware requirements
 The workflow was tested in Linux environment (CentOS Linux release 7.2.1511) in a server with 24 physical CPUs (48 hyperthreaded CPUs) and 512 GB RAM.
-Assemblies for *Caenorhabditis elegans*, *Drosophila melanogaster* and *Plasmodium falciparum* were created in 1-5 days each and compared to respective reference assemblies.
-Maximum memory usage, ~135 GB, was required by the program Centrifuge.
+
+| Assembly | Runtime in CPU hours | RAM usage (GB) |
+| --- | --- | --- |
+| *Caenorhabditis elegans* | 1537 | 134.1 |
+| *Drosophila melanogaster* | 6501 | 134.1 |
+| *Plasmodium falciparum* | 424 | 134.1 |
+
+Maximum memory usage of 134.1 GB was claimed by the program Centrifuge for each assembly.
 
 ### Software tools used in this pipeline
 * [Dextractor v1.0](https://github.com/thegenemyers/DEXTRACTOR)
