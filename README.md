@@ -31,6 +31,7 @@ Give the location of these data in the configuration (.yml) file (see **Usage**)
 You have to create a YAML (.yml) file for each assembly. This file defines the required parameters and the location for both PacBio and Illumina raw-reads.
 ```
 > cd
+> export PATH=~/miniconda3/bin:$PATH
 > cd Assemblosis/Run
 > cp ../Examples/assemblyCele.yml
 
