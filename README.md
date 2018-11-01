@@ -10,7 +10,7 @@ Programs
 * [Python library galaxy-lib v18.5.7](https://pypi.org/project/galaxy-lib)
 
 Data
-* [Illumina adapters converted to FASTA forma]t(http://sapac.support.illumina.com/downloads/illumina-adapter-sequences-document-1000000002694.html)
+* [Illumina adapters converted to FASTA format](http://sapac.support.illumina.com/downloads/illumina-adapter-sequences-document-1000000002694.html)
 * [NCBI nucleotide non-redundant sequences for decontamination with Centrifuge](http://www.ccb.jhu.edu/software/centrifuge)
 * [RepBase v17.02 file RMRBSeqs.embl](https://www.girinst.org/repbase)
 
@@ -19,7 +19,7 @@ Use installation script ```install.sh``` to install program dependencies.
 ```
 # First confirm that you have the program 'git' installed in your system
 cd
-git clone -b 'v0.0.2-publication' --single-branch --depth 1 https://github.com/vetscience/Assemblosis
+git clone -b 'v0.0.3-publication' --single-branch --depth 1 https://github.com/vetscience/Assemblosis
 cd Assemblosis
 bash install.sh
 
@@ -33,7 +33,7 @@ You have to create a YAML (.yml) file for each assembly. This file defines the r
 > cd
 > export PATH=~/miniconda3/bin:$PATH
 > cd Assemblosis/Run
-> cp ../Examples/assemblyCele.yml
+> cp ../Examples/assemblyCele.yml .
 
 "Edit assemblyCele.yml to fit your computing environment and to define the location for the read files, databases and Illumina adapters"
 
@@ -124,8 +124,9 @@ orientation: 'fr'
 polishedAssembly: celePilon
 # This is set 'true' for an organism with diploid genome: Pilon parameter --diploid
 diploidOrganism: true
-fix: bases
 # Value 'bases' fixes snps and indels: Pilon parameter --fix
+fix: bases
+# Generates a list or changes into a file if set 'true'. Pilon parameter --changes
 modifications: true
 
 ### Parameters for the program centrifuge are described in http://www.ccb.jhu.edu/software/centrifuge/manual.shtml
