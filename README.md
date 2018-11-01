@@ -19,7 +19,7 @@ Use installation script ```install.sh``` to install program dependencies.
 ```
 # First confirm that you have the program 'git' installed in your system
 cd
-git clone -b 'v0.0.1-publication' --single-branch --depth 1 https://github.com/vetscience/Assemblosis
+git clone -b 'v0.0.2-publication' --single-branch --depth 1 https://github.com/vetscience/Assemblosis
 cd Assemblosis
 bash install.sh
 
