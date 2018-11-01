@@ -4,6 +4,7 @@ The workflow is designed to use both PacBio long-reads and Illumina short-reads.
 ### Dependencies
 Programs
 * [udocker v1.1.1](https://github.com/indigo-dc/udocker)
+* [udocker snapshot](https://raw.githubusercontent.com/indigo-dc/udocker/7f6975c19c63c3d65ec6256c7cf5b2369d5c115d/udocker.py)
 * [cwltool v1.0.20180403145700](https://github.com/common-workflow-language/cwltool)
 * [nodejs v10.4.1 required by cwltool](https://nodejs.org/en)
 * [Python library galaxy-lib v18.5.7](https://pypi.org/project/galaxy-lib)
@@ -14,28 +15,30 @@ Data
 * [RepBase v17.02 file RMRBSeqs.embl](https://www.girinst.org/repbase)
 
 ### Installation
-Use installation script ```install.sh``` to install dependencies.
+Use installation script ```install.sh``` to install program dependencies.
 ```
-cd
-git clone -b 'v0.0.8-beta' --single-branch --depth 1 https://github.com/vetscience/Assemblosis
-cd Assemblosis
-bash install.sh
+# First confirm that you have the program 'git' installed in your system
+> cd
+> git clone -b 'v0.0.9-beta' --single-branch --depth 1 https://github.com/vetscience/Assemblosis
+> cd Assemblosis
+> bash install.sh
 
 ```
-Download and extract RepBase database, Centrifuge version of NCBI nt database and create Illumina adapter FASTA file to your preferred locations.
-The location of these data will be defined in the configuration (.yml) file.
+For data dependencies: download and extract [RepBase database](https://www.girinst.org/repbase), download Centrifuge version of [NCBI nt database](http://www.ccb.jhu.edu/software/centrifuge) and create [Illumina adapter FASTA file](http://sapac.support.illumina.com/downloads/illumina-adapter-sequences-document-1000000002694.html) to your preferred locations. If your reads are clean from adapters, the adapter FASTA file can be empty.
+Give the location of these data in the configuration (.yml) file (see **Usage**).
 
 ### Usage
 You have to create a YAML (.yml) file for each assembly. This file defines the required parameters and the location for both PacBio and Illumina raw-reads.
 ```
 > cd
+> export PATH=~/miniconda3/bin:$PATH
 > cd Assemblosis/Run
 > cp ../Examples/assemblyCele.yml .
 
 "Edit assemblyCele.yml to fit your computing environment and to define the location for the read files, databases and Illumina adapters"
 
 > mkdir RepeatSimple; mkdir RepeatTransp; mkdir RepeatCustom
-> cwltool --tmpdir-prefix /home/<username>/Tmp --cachedir /home/<username>/Cache --beta-conda-dependencies --user-space-docker-cmd udocker --leave-tmpdir assembly.cwl assemblyCele.yml
+> cwltool --tmpdir-prefix /home/<username>/Tmp --beta-conda-dependencies --cachedir /home/<username>/Cache --user-space-docker-cmd udocker --leave-tmpdir assembly.cwl assemblyCele.yml
 ```
 
 An annotated example of the YAML file for Caenorhabditis elegans assembly.
@@ -58,10 +61,10 @@ genomeSize: 100m
 
 ## Minimum length for the PacBio reads used for the assembly. This parameter is forwarded to Canu assembler.
 # The maximum resolvable repeat regions becomes 2 x minReadLength
-minReadLen: 6000 
+minReadLen: 6000
 
 ## Parameter for Canu assembler to adjust to GC-content. Should be 0.15 for high or low GC content.
-corMaxEvidenceErate: 0.20  
+corMaxEvidenceErate: 0.20
 
 ### Parameters for the program Trimmomatic are described in http://www.usadellab.org/cms/?page=trimmomatic
 ## Paired-end (PE) reads of Illumina raw data. These files are given to the program Trimmomatic.
@@ -115,7 +118,7 @@ orientation: 'fr'
 
 ### Parameters for the program Pilon are described in https://github.com/broadinstitute/pilon/wiki/Requirements-&-Usage
 # Prefix for the resultant pilon polished assembly. Pilon parameter --output
-polishedAssembly: celePilon 
+polishedAssembly: celePilon
 # This is set 'true' for an organism with diploid genome: Pilon parameter --diploid
 diploidOrganism: true
 # Value 'bases' fixes snps and indels: Pilon parameter --fix
@@ -123,7 +126,9 @@ fix: bases
 
 ### Parameters for the program centrifuge are described in http://www.ccb.jhu.edu/software/centrifuge/manual.shtml
 # Path to the directory, that contains NCBI nt database in nt.?.cf files. Centrifuge parameter -x
-database: /home/<username>/ntDatabase
+database:
+  class: Directory
+  path:  /home/<username>/ntDatabase
 # Lenght of the identical match in nucleotides required to infer a read as contaminant. Centrifuge parameter --min-hitlen
 partialMatch: 100
 # NCBI taxon root identifers for the species considered contaminants: e.g. bacteria (=2), viruses (=10239), fungi (=4751), mammals (=40674), artificial seqs (=81077). Pipeline specific parameter.
