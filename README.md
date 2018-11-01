@@ -10,7 +10,7 @@ Programs
 * [Python library galaxy-lib v18.5.7](https://pypi.org/project/galaxy-lib)
 
 Data
-* [Illumina adapters converted to FASTA format](http://sapac.support.illumina.com/downloads/illumina-adapter-sequences-document-1000000002694.html)
+* [Illumina adapters converted to FASTA forma]t(http://sapac.support.illumina.com/downloads/illumina-adapter-sequences-document-1000000002694.html)
 * [NCBI nucleotide non-redundant sequences for decontamination with Centrifuge](http://www.ccb.jhu.edu/software/centrifuge)
 * [RepBase v17.02 file RMRBSeqs.embl](https://www.girinst.org/repbase)
 
@@ -24,8 +24,8 @@ cd Assemblosis
 bash install.sh
 
 ```
-For data dependencies: download and extract RepBase database, download Centrifuge version of NCBI nt database and create Illumina adapter FASTA file to your preferred locations. If your reads are clean from adapters, the adapter FASTA file can be empty.
-The location of these data will be given in the configuration (.yml) file.
+For data dependencies: download and extract [RepBase database](https://www.girinst.org/repbase), download Centrifuge version of [NCBI nt database](http://www.ccb.jhu.edu/software/centrifuge) and create [Illumina adapter FASTA file](http://sapac.support.illumina.com/downloads/illumina-adapter-sequences-document-1000000002694.html) to your preferred locations. If your reads are clean from adapters, the adapter FASTA file can be empty.
+Give the location of these data in the configuration (.yml) file (see **Usage**).
 
 ### Usage
 You have to create a YAML (.yml) file for each assembly. This file defines the required parameters and the location for both PacBio and Illumina raw-reads.

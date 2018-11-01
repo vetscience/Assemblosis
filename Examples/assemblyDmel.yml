@@ -4,8 +4,8 @@ pacBioDataDir:
 currentDir: /home/<username>/Assemblosis/Run
 prefix: dmel
 genomeSize: 137m
-minReadLen: 6000
-corMaxEvidenceErate: 0.15
+minReadLen: 2000
+corMaxEvidenceErate: 0.20
 readsPe1:
   - class: File
     format: edam:format_1930  # fastq
