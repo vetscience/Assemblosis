@@ -159,13 +159,12 @@ noLowComplexity: [true, false, true]
 ### Runtimes and hardware requirements
 The workflow was tested in Linux environment (CentOS Linux release 7.2.1511) in a server with 24 physical CPUs (48 hyperthreaded CPUs) and 512 GB RAM.
 
-| Assembly | Runtime in CPU hours | RAM usage (GB) |
-| --- | --- | --- |
-| *Caenorhabditis elegans* | 1537 | 134.1 |
-| *Drosophila melanogaster* | 6501 | 134.1 |
-| *Plasmodium falciparum* | 424 | 134.1 |
-
-Maximum memory usage of 134.1 GB was claimed by the program Centrifuge for each assembly.
+| Assembly | Runtime in CPU hours | RAM usage (GB) | Genome size (Mb) |
+| --- | --- | --- | --- |
+| *Caenorhabditis elegans* | 1537 | 134.1 | 100 |
+| *Drosophila melanogaster* | 6501 | 134.1 | 138 |
+| *Plasmodium falciparum* | 424 | 134.1 | 23 |
+| *Haemonchus contortus* | 4704 | 142.1 | 320 |
 
 ### Software tools used in this pipeline
 * [Dextractor v1.0](https://github.com/thegenemyers/DEXTRACTOR)
