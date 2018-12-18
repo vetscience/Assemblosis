@@ -166,6 +166,8 @@ The workflow was tested in Linux environment (CentOS Linux release 7.2.1511) in 
 | *Plasmodium falciparum* | 424 | 134.1 | 23 |
 | *Haemonchus contortus* | 4704 | 142.1 | 320 |
 
+Maximum memory usage of 134.1 GB and 142.1 GB was claimed by the program Centrifuge for each assembly. The difference in the usage is due to the updated NCBI nt database used for *Haemonchus contortus* assembly.
+
 ### Software tools used in this pipeline
 * [Dextractor v1.0](https://github.com/thegenemyers/DEXTRACTOR)
 * [Trimmomatic v0.36](http://www.usadellab.org/cms/?page=trimmomatic)
