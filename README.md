@@ -179,5 +179,5 @@ Maximum memory usage of 134.1 GB was claimed by the program Centrifuge for each 
 * [HaploMerger2 build_20160512](https://github.com/mapleforest/HaploMerger2)
 
 ### Cite
-If you use the pipeline, please cite: TBD
+If you use the pipeline, please cite: https://doi.org/10.1093/gigascience/giz014
 
