@@ -6,7 +6,8 @@ requirements:
   - class: InlineJavascriptRequirement
 hints:
   - class: DockerRequirement
-    dockerPull: pakorhon/arrow:v0.0.4-beta
+    #dockerPull: pakorhon/arrow:v0.0.4-beta
+    dockerPull: arrow:latest
 inputs:
   - id: dataDir
     type: Directory
@@ -29,6 +30,12 @@ inputs:
     inputBinding:
       position: 4
       prefix: -p
+  - id: bam
+    type: boolean
+    default: false
+    inputBinding:
+      prefix: -b
+      position: 5
 outputs:
   - id: assembled
     type:

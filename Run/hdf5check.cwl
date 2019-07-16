@@ -4,7 +4,7 @@ requirements:
   - class: InlineJavascriptRequirement
 hints:
   - class: DockerRequirement
-    dockerPull: pakorhon/hdf5check:v0.0.4-beta
+    dockerPull: hdf5check:latest
 inputs:
   - id: directory
     type: Directory
@@ -23,6 +23,12 @@ inputs:
     inputBinding:
       prefix: -r
       position: 3
+  - id: fastq
+    type: boolean
+    default: false
+    inputBinding:
+      prefix: -b
+      position: 4
 outputs:
   - id: pbFastqReads
     type: File

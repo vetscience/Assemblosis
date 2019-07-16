@@ -24,7 +24,7 @@ inputs:
       prefix: genomeSize=
   - id: stopOnReadQuality
     type: string
-    default: "true"
+    default: "false"
     inputBinding:
       position: 4
       separate: false

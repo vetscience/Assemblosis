@@ -20,6 +20,7 @@ def args():
     parser.add_argument('-d', '--dir', dest='data', help='Directory, in which PacBio data resides', metavar='DATADIR', default='Data')
     parser.add_argument('-r', '--res', dest='res', help='Result directory', metavar='RESDIR', default='Results')
     parser.add_argument('-T', '--threads', dest='pCnt', help='Number of parallel threads (default is half of the capacity but >= 1)', metavar='THREADS', default='0')
+    parser.add_argument('-b', '--bam', dest='bam', help='Search for BAM files instead of h5 files', action='store_true', default=False)
     return parser.parse_args()
 
 
@@ -77,13 +78,74 @@ class Dextractor(base.Base):
         with open("%s/runs.sh" %resDir, 'w') as handle:
             for read in readsH5:
                 resRead = read.split("/")[-1]
-                handle.write("dextract %s > %s/%s.fasta\n" %(read, resDir, resRead))
+                #handle.write("dextract %s > %s/%s.fasta\n" %(read, resDir, resRead))
                 handle.write("dextract -q %s > %s/%s.fastq\n" %(read, resDir, resRead))
-                self.logger("dextract %s > %s/%s.fasta" %(read, resDir, resRead))
+                #self.logger("dextract %s > %s/%s.fasta" %(read, resDir, resRead))
                 self.logger("dextract -q %s > %s/%s.fastq" %(read, resDir, resRead))
         self.shell("parallel -j %d < %s/runs.sh" %(self.pCnt, resDir))
         self.shell("cat %s/*.fastq > %s/pbReads.fastq" %(resDir, resDir))
-        self.shell("cat %s/*.fasta > %s/pbReads.fasta" %(resDir, resDir))
+        #self.shell("cat %s/*.fasta > %s/pbReads.fasta" %(resDir, resDir))
+        for read in readsH5:
+            resRead = read.split("/")[-1]
+            #self.shell("rm %s/%s.fasta" %(resDir, resRead))
+            self.shell("rm %s/%s.fastq" %(resDir, resRead))
+
+
+#################################################
+class Bam(base.Base):
+    '''
+    '''
+    #################################################
+    def __init__(self, dataDir, resDir, pCnt):
+        '''
+        '''
+        base.Base.__init__(self)
+        self.wd = dataDir
+        self.shell("rm -rf %s" %resDir, log = False)
+        self.createDir(resDir)
+        self.pCnt = int(pCnt)
+        self.setLogHandle(open("%s/log.txt" %resDir, "w"))
+
+
+    #################################################
+    def checkFileExistence(self, files):
+        '''
+        '''
+        for item in files:
+            if os.path.exists(item) == False:
+                print "# FATAL ERROR: file %s, given in configuration file, does not exist. Exiting..." %item
+                sys.exit(-1)
+
+
+    #################################################
+    def pbReads(self):
+        '''
+        '''
+        readsBam = set()
+        for (dirpath, dirnames, filenames) in walk(self.wd, followlinks = True):
+            #print dirpath, dirnames, filenames
+            for filename in filenames:
+                if ".bam" in filename[-4:]:
+                    readsBam.add("%s/%s" %(dirpath, filename))
+        return sorted(readsBam)
+
+
+    #################################################
+    def createBamReads(self, resDir, readsBam):
+        '''
+        '''
+        if len(readsBam) == 0:
+            print >> sys.stderr, "# FATAL ERROR: cannot find PacBio read fastq files. Exiting ..."
+            sys.exit(-1)
+        with open("%s/runs.sh" %resDir, 'w') as handle:
+            for read in readsBam:
+                resRead = read.split("/")[-1]
+                handle.write("/root/miniconda3/bin/bedtools bamtofastq -i %s -fq %s/%s.fastq\n" %(read, resDir, resRead))
+        self.shell("parallel -j %d < %s/runs.sh" %(self.pCnt, resDir))
+        self.shell("cat %s/*.fastq > %s/pbReads.fastq" %(resDir, resDir))
+        for read in readsBam:
+            resRead = read.split("/")[-1]
+            self.shell("rm %s/%s.fastq" %(resDir, resRead))
 
 
 #################################################
@@ -96,13 +158,21 @@ def main():
     if pCnt == 0:
         pCnt = int(float(multiprocessing.cpu_count()) / 2.0 + 0.5)
 
-    dextractor = Dextractor(opts.data, opts.res, pCnt)
-    dextractor.logTime("Start")
-    # Convert hdf5 reads to FASTA and FASTQ formats into the given result directory
-    readsH5, readsFa, readsFq = dextractor.pbReads()
-    dextractor.createFastaAndFastqReads(opts.res, readsH5, readsFa, readsFq)
-    dextractor.logTime("End")
-    dextractor.closeLogHandle()
+    if opts.bam == True:
+        bam = Bam(opts.data, opts.res, pCnt)
+        bam.logTime("Start")
+        readsBam = bam.pbReads()
+        bam.createBamReads(opts.res, readsBam)
+        bam.logTime("End")
+        bam.closeLogHandle()
+    else:
+        dextractor = Dextractor(opts.data, opts.res, pCnt)
+        dextractor.logTime("Start")
+        # Convert hdf5 reads to FASTA and FASTQ formats into the given result directory
+        readsH5, readsFa, readsFq = dextractor.pbReads()
+        dextractor.createFastaAndFastqReads(opts.res, readsH5, readsFa, readsFq)
+        dextractor.logTime("End")
+        dextractor.closeLogHandle()
 
 
 #################################################

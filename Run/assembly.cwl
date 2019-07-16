@@ -9,6 +9,7 @@ requirements:
 
 inputs:
   pacBioDataDir: Directory
+  pacBioInBam: boolean
   prefix: string
   genomeSize: string
   minReadLen: int
@@ -104,6 +105,7 @@ steps:
     run: hdf5check.cwl
     in:
       directory: pacBioDataDir
+      fastq: pacBioInBam
     out: [pbFastqReads]
 
   correct:
@@ -172,6 +174,7 @@ steps:
       dataDir: pacBioDataDir
       assembly: assemble/assembly
       prefix: prefix
+      bam: pacBioInBam
     out: [arrowPolishedAssembly]
 
   indexReference:

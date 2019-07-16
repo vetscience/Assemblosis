@@ -1,5 +1,5 @@
 FROM ubuntu:16.04
-RUN apt-get update && apt-get install -y python perl wget git
+RUN apt-get update && apt-get install -y python build-essential perl wget git
 WORKDIR /root
 
 LABEL about.license="BSD 3-Clause License"
