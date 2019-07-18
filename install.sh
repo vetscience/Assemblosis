@@ -23,14 +23,14 @@ chmod uog+x ~/miniconda3/bin/proot*
 
 echo "###########################"
 echo "# Installing containers ..."
-udocker pull pakorhon/arrow:v0.0.4-beta
+udocker pull pakorhon/arrow:v0.0.5-beta
 udocker pull quay.io/biocontainers/bowtie2:2.2.5--py36h2d50403_3
 udocker pull quay.io/biocontainers/canu:1.6--pl5.22.0_1
 udocker pull quay.io/biocontainers/centrifuge:1.0.3--py27pl5.22.0_3
 udocker pull pakorhon/combinecats:v0.0.3-beta
 udocker pull pakorhon/decon:v0.0.3-beta
 udocker pull pakorhon/haplomerger:v0.0.5-beta
-udocker pull pakorhon/hdf5check:v0.0.4-beta
+udocker pull pakorhon/hdf5check:v0.0.5-beta
 udocker pull quay.io/biocontainers/repeatmodeler:1.0.11--pl526_1
 udocker pull quay.io/biocontainers/pilon:1.22--1
 udocker pull pakorhon/renamereads:v0.0.3-beta
