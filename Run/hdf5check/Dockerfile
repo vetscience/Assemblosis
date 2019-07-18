@@ -1,6 +1,6 @@
 FROM ubuntu:16.04
 # Install dextractor
-RUN apt-get update && apt-get install -y git python build-essential wget parallel libhdf5-dev
+RUN apt-get update && apt-get install -y git python2.7 build-essential wget parallel libhdf5-dev
 WORKDIR /root
 
 LABEL about.license="Copyright (c) 2014, Dr. Eugene W. Myers (EWM). All rights reserved."
@@ -29,7 +29,6 @@ LABEL about.license="BSD 3-Clause License"
 RUN git clone --recursive git://github.com/vetscience/Assemblosis
 #RUN git clone -b 'v0.1.0-beta' --single-branch --depth 1 https://github.com/vetscience/Assemblosis
 WORKDIR Assemblosis
-COPY hdf5Check.py Run/hdf5check
 RUN chmod uog+x /root && chmod uog+x /root/Assemblosis && chmod uog+x /root/Assemblosis/Run && chmod uog+x /root/Assemblosis/Run/hdf5check && chmod uog+x /root/Assemblosis/Run/hdf5check/hdf5Check.py
 ENV PYTHONPATH /root/Assemblosis
 #ENTRYPOINT ["python", "/root/Assemblosis/Run/hdf5check/hdf5Check.py"]

@@ -44,9 +44,7 @@ echo "# Installing cwltool ..."
 pip install galaxy-lib==18.5.7
 conda install -y -c conda-forge nodejs==10.4.1
 conda install -y -c conda-forge git==2.18.0
-pip install cwltool==v1.0.20180403145700
-sed 's/        for key in env:/        if env != None:\n          for key in env:/1' ~/miniconda3/lib/python*/site-packages/cwltool/job.py > job.py
-mv job.py ~/miniconda3/lib/python*/site-packages/cwltool
+pip install cwltool==1.0.20181012180214
 
 echo "###########################"
 echo "# Finished installation ..."

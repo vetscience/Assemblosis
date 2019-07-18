@@ -46,7 +46,7 @@ class Dextractor(base.Base):
         '''
         for item in files:
             if os.path.exists(item) == False:
-                print "# FATAL ERROR: file %s, given in configuration file, does not exist. Exiting..." %item
+                print ("# FATAL ERROR: file %s, given in configuration file, does not exist. Exiting..." %item)
                 sys.exit(-1)
 
 
@@ -72,7 +72,7 @@ class Dextractor(base.Base):
         '''
         '''
         if len(readsH5) == 0:
-            print >> sys.stderr, "# FATAL ERROR: cannot find PacBio reads. Exiting ..."
+            print ("# FATAL ERROR: cannot find PacBio reads. Exiting ...")
             sys.exit(-1)
         #if (len(readsFa) != len(readsH5) or len(readsFq) != len(readsH5)) and len(readsH5) > 0:
         with open("%s/runs.sh" %resDir, 'w') as handle:
@@ -113,7 +113,7 @@ class Bam(base.Base):
         '''
         for item in files:
             if os.path.exists(item) == False:
-                print "# FATAL ERROR: file %s, given in configuration file, does not exist. Exiting..." %item
+                print ("# FATAL ERROR: file %s, given in configuration file, does not exist. Exiting..." %item)
                 sys.exit(-1)
 
 
@@ -135,7 +135,7 @@ class Bam(base.Base):
         '''
         '''
         if len(readsBam) == 0:
-            print >> sys.stderr, "# FATAL ERROR: cannot find PacBio read fastq files. Exiting ..."
+            print ("# FATAL ERROR: cannot find PacBio read fastq files. Exiting ...")
             sys.exit(-1)
         with open("%s/runs.sh" %resDir, 'w') as handle:
             for read in readsBam:

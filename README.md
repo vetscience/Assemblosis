@@ -49,6 +49,9 @@ pacBioDataDir:
   class: Directory
   location: /home/<username>/Dna
 
+## PacBio files are in bam format as returned from Sequel platform
+pacBioInBam: true
+
 ## Prefix for the resultant assembly files
 prefix: cele
 
@@ -179,5 +182,5 @@ Maximum memory usage of 134.1 GB was claimed by the program Centrifuge for each 
 * [HaploMerger2 build_20160512](https://github.com/mapleforest/HaploMerger2)
 
 ### Cite
-If you use the pipeline, please cite: TBD
+If you use the pipeline, please cite: Korhonen, Pasi K., Ross S. Hall, Neil D. Young, and Robin B. Gasser. "Common Workflow Language (CWL)-based software pipeline for de novo genome assembly from long-and short-read data." GigaScience 8, no. 4 (2019): giz014.
 
