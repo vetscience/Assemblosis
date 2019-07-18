@@ -13,15 +13,10 @@ conda config --add channels bioconda
 
 echo "########################"
 echo "# Installing udocker ..."
-conda install -y -p ~/miniconda3 udocker==1.1.1
-rm -f udocker.py
-wget https://raw.githubusercontent.com/indigo-dc/udocker/7f6975c19c63c3d65ec6256c7cf5b2369d5c115d/udocker.py
-sed 's/proot_killonexit = True/proot_killonexit = False/1' udocker.py > ~/miniconda3/bin/udocker.py
-rm -f udocker.py
-chmod uog+x ~/miniconda3/bin/udocker.py
-sed 's/#!\/bin\/bash/#!\/bin\/bash\nexport CONDA_PREFIX=~\/miniconda3/1' ~/miniconda3/bin/udocker > udocker
-chmod uog+x udocker
-mv udocker ~/miniconda3/bin
+curl https://download.ncg.ingrid.pt/webdav/udocker/udocker-1.1.2.tar.gz > udocker-1.1.2.tar.gz
+tar xzvf udocker-1.1.2.tar.gz udocker
+./udocker install
+mv ./udocker ~/miniconda3/bin/
 wget https://github.com/proot-me/proot-static-build/raw/master/static/proot-x86_64 -P ~/miniconda3/bin
 wget https://github.com/proot-me/proot-static-build/raw/master/static/proot-x86 -P ~/miniconda3/bin
 chmod uog+x ~/miniconda3/bin/proot*
