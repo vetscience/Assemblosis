@@ -25,7 +25,7 @@ RUN conda install -c anaconda perl==5.22.0.1
 LABEL about.license="BSD 3-Clause License"
 WORKDIR /root
 #RUN git clone --recursive git://github.com/vetscience/Assemblosis
-RUN git clone -b 'v0.1.0-beta' --single-branch --depth 1 https://github.com/vetscience/Assemblosis
+RUN git clone -b 'v0.1.1-beta' --single-branch --depth 1 https://github.com/vetscience/Assemblosis
 RUN cp /root/Assemblosis/Run/repeatmodeler/inputJson .
 RUN perl -MCPAN -e 'install JSON' < inputJson
 RUN cpan install LWP::UserAgent

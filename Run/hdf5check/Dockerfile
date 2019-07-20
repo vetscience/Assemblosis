@@ -28,7 +28,7 @@ RUN conda install bedtools==2.27.1
 LABEL about.license="BSD 3-Clause License"
 WORKDIR /root
 #RUN git clone --recursive git://github.com/vetscience/Assemblosis
-RUN git clone -b 'v0.1.0-beta' --single-branch --depth 1 https://github.com/vetscience/Assemblosis
+RUN git clone -b 'v0.1.1-beta' --single-branch --depth 1 https://github.com/vetscience/Assemblosis
 WORKDIR Assemblosis
 RUN chmod uog+x /root && chmod uog+x /root/Assemblosis && chmod uog+x /root/Assemblosis/Run && chmod uog+x /root/Assemblosis/Run/hdf5check && chmod uog+x /root/Assemblosis/Run/hdf5check/hdf5Check.py
 ENV PYTHONPATH /root/Assemblosis
