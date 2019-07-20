@@ -42,7 +42,7 @@ RUN tar zxf RepeatMaskerMetaData-20170127.tar.gz && rm -f RepeatMaskerMetaData-2
 
 # Changes for docker: does not work with udocker
 #RUN cp -r /root/miniconda3/pkgs/repeatmasker-4.0.7-pl5.22.0_11/share/RepeatMasker/Libraries /root
-#RUN cd /root/miniconda3/pkgs/repeatmasker-4.0.7-pl5.22.0_11/share/RepeatMasker && rm -r Libraries && ln -s /var/spool/cwl/Libraries
+#RUN cd /root/miniconda3/pkgs/repeatmasker-4.0.7-pl5.22.0_11/share/RepeatMasker && rm -r Libraries && ln -s$HOME/Libraries
 
 ## Install RepeatModeler
 LABEL about.license_file=https://opensource.org/licenses/osl-2.1.php
