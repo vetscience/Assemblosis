@@ -19,11 +19,12 @@ LABEL about.license_file=https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.ht
 RUN conda install recon==1.08
 LABEL about.license="GNU General Public License"
 RUN conda install repeatscout==1.0.5
+RUN conda install -c anaconda perl==5.22.0.1
 
 # Install required perl modules
 LABEL about.license="BSD 3-Clause License"
-#RUN git clone --recursive git://github.com/vetscience/Assemblosis
-RUN git clone -b 'v0.0.4-beta' --single-branch --depth 1 https://github.com/vetscience/Assemblosis
+RUN git clone --recursive git://github.com/vetscience/Assemblosis
+#RUN git clone -b 'v0.0.4-beta' --single-branch --depth 1 https://github.com/vetscience/Assemblosis
 RUN cp /root/Assemblosis/Run/repeatmodeler/inputJson .
 RUN perl -MCPAN -e 'install JSON' < inputJson
 RUN cpan install LWP::UserAgent
@@ -31,7 +32,8 @@ RUN cpan install LWP::UserAgent
 ## Configure RepeatMasker
 LABEL about.license="CC0"
 LABEL about.license_file="https://creativecommons.org/publicdomain/zero/1.0"
-RUN wget http://www.dfam.org/web_download/Release/Dfam_2.0/Dfam.hmm.gz
+RUN wget http://www.dfam.org/releases/Dfam_3.1/families/Dfam.hmm.gz
+#RUN wget http://www.dfam.org/web_download/Release/Dfam_2.0/Dfam.hmm.gz
 #COPY Dfam.hmm.gz .
 RUN zcat /root/Dfam.hmm.gz > /root/miniconda3/share/RepeatMasker/Libraries/Dfam.hmm && rm -f Dfam.hmm.gz
 RUN wget http://www.repeatmasker.org/libraries/RepeatMaskerMetaData-20170127.tar.gz

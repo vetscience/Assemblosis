@@ -1,6 +1,6 @@
 #!/bin/bash
 
-mkdir -p /var/spool/cwl/Libraries
+mkdir -p $HOME/Libraries
 
 # Changes for docker: does not work with udocker
 #cp -r /root/Libraries/* /var/spool/cwl/Libraries
