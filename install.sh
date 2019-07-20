@@ -29,7 +29,7 @@ udocker pull quay.io/biocontainers/canu:1.6--pl5.22.0_1
 udocker pull quay.io/biocontainers/centrifuge:1.0.3--py27pl5.22.0_3
 udocker pull pakorhon/combinecats:v0.0.3-beta
 udocker pull pakorhon/decon:v0.0.3-beta
-udocker pull pakorhon/haplomerger:v0.0.5-beta
+udocker pull pakorhon/haplomerger:v0.0.6-beta
 udocker pull pakorhon/hdf5check:v0.0.5-beta
 udocker pull quay.io/biocontainers/repeatmodeler:1.0.11--pl526_1
 udocker pull quay.io/biocontainers/pilon:1.22--1
