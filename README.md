@@ -3,9 +3,9 @@ The workflow is designed to use both PacBio long-reads and Illumina short-reads.
 
 ### Dependencies
 Programs
-* [udocker v1.1.1](https://github.com/indigo-dc/udocker)
+* [udocker v1.1.2](https://github.com/indigo-dc/udocker)
 * [udocker snapshot](https://raw.githubusercontent.com/indigo-dc/udocker/7f6975c19c63c3d65ec6256c7cf5b2369d5c115d/udocker.py)
-* [cwltool v1.0.20180403145700](https://github.com/common-workflow-language/cwltool)
+* [cwltool v1.0.20181012180214](https://github.com/common-workflow-language/cwltool)
 * [nodejs v10.4.1 required by cwltool](https://nodejs.org/en)
 * [Python library galaxy-lib v18.5.7](https://pypi.org/project/galaxy-lib)
 
