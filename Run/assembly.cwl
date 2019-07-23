@@ -268,7 +268,6 @@ steps:
   maskRepeats:
     run: repeatmasker.cwl
     in:
-      repBaseLibrary: repBaseLibrary
       workDir: repeatWorkDir
       threads: threads
       noInterspersed: noInterspersed
