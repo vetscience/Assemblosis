@@ -1,12 +1,12 @@
 
-/root/miniconda3/bin/perl
+/home/miniconda3/bin/perl
 /usr/local/RepeatModeler
-/root/miniconda3/pkgs/repeatmasker-4.0.7-pl5.22.0_11/share/RepeatMasker
-/root/miniconda3/bin
-/root/miniconda3/bin
-/root/miniconda3/bin
-/root/miniconda3/bin
+/home/miniconda3/pkgs/repeatmasker-4.0.7-pl5.22.0_11/share/RepeatMasker
+/home/miniconda3/bin
+/home/miniconda3/bin
+/home/miniconda3/bin
+/home/miniconda3/bin
 1
-/root/miniconda3/bin
+/home/miniconda3/bin
 Y
 3

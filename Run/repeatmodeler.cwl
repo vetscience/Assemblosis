@@ -6,7 +6,7 @@ requirements:
   - class: InlineJavascriptRequirement
 hints:
   - class: DockerRequirement
-    dockerPull: pakorhon/repeatmodeler:v0.0.5-beta
+    dockerPull: pakorhon/repeatmodeler:v0.0.6-beta
 inputs:
   - id: repBaseLibrary
     type: File
@@ -49,5 +49,5 @@ outputs:
     outputBinding:
       glob: "RM*/consensi.fa.classified"
 
-baseCommand: ["/root/repeatModeler.sh"]
+baseCommand: ["/home/repeatModeler.sh"]
 arguments: []

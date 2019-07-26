@@ -1,11 +1,11 @@
 
-/root/miniconda3/bin/perl
-/root/miniconda3/pkgs/repeatmasker-4.0.7-pl5.22.0_11/share/RepeatMasker
-/root/miniconda3/bin/trf
+/home/miniconda3/bin/perl
+/home/miniconda3/pkgs/repeatmasker-4.0.7-pl5.22.0_11/share/RepeatMasker
+/home/miniconda3/bin/trf
 2
-/root/miniconda3/bin
+/home/miniconda3/bin
 Y
 4
-/root/miniconda3/bin
+/home/miniconda3/bin
 N
 5
