@@ -4,7 +4,7 @@ requirements:
   - class: InlineJavascriptRequirement
 hints:
   - class: DockerRequirement
-    dockerPull: pakorhon/combinecats:v0.0.3-beta
+    dockerPull: pakorhon/combinecats:v0.0.4-beta
 inputs:
   - id: assembly
     type: File
@@ -27,4 +27,4 @@ outputs:
     type: File
     outputBinding:
       glob: "*/$(inputs.assembly.basename).masked"
-baseCommand: ["bash","/root/combine.sh"]
+baseCommand: ["bash","/home/combine.sh"]
