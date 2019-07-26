@@ -23,4 +23,4 @@ set -- "${POSITIONAL[@]}" # restore positional parameters
 echo TRIMMEDREADS   = "${TRIMMEDREADS}"
 
 # First rename the trimmed reads to enable unique identification
-zcat $TRIMMEDREADS | python /root/renameFasta.py -i - -m mapped.ids | gzip > $(echo $TRIMMEDREADS | awk -F"/" '{print "rn_"$NF}')
+zcat $TRIMMEDREADS | python /home/renameFasta.py -i - -m mapped.ids | gzip > $(echo $TRIMMEDREADS | awk -F"/" '{print "rn_"$NF}')
