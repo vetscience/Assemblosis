@@ -6,7 +6,7 @@ requirements:
   - class: InlineJavascriptRequirement
 hints:
   - class: DockerRequirement
-    dockerPull: pakorhon/haplomerger:v0.0.6-beta
+    dockerPull: pakorhon/haplomerger:v0.0.7-beta
 inputs:
   - id: assembly
     type: File
@@ -37,5 +37,5 @@ outputs:
     type: File
     outputBinding:
       glob: "workDir/*.haplomerged.fa*"
-baseCommand: ["/root/haploMerger.sh"]
+baseCommand: ["/home/haploMerger.sh"]
 arguments: []
