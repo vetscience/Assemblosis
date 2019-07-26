@@ -15,6 +15,7 @@ ENV PATH=/home/smrtlink/smrtcmds/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/u
 RUN apt-get update && apt-get install -y git python
 
 LABEL about.license="BSD 3-Clause License"
+WORKDIR /home
 RUN git clone --recursive git://github.com/vetscience/Assemblosis
 #RUN git clone -b 'v0.1.2-beta' --single-branch --depth 1 https://github.com/vetscience/Assemblosis
 WORKDIR /home/Assemblosis

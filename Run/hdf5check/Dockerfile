@@ -26,7 +26,7 @@ LABEL about.license_file=https://opensource.org/licenses/osl-2.1.php
 RUN conda install bedtools==2.27.1
 
 LABEL about.license="BSD 3-Clause License"
-WORKDIR /home
+#WORKDIR /home
 RUN git clone --recursive git://github.com/vetscience/Assemblosis
 #RUN git clone -b 'v0.1.1-beta' --single-branch --depth 1 https://github.com/vetscience/Assemblosis
 WORKDIR Assemblosis

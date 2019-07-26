@@ -4,7 +4,7 @@ requirements:
   - class: InlineJavascriptRequirement
 hints:
   - class: DockerRequirement
-    dockerPull: pakorhon/hdf5check:v0.0.5-beta
+    dockerPull: pakorhon/hdf5check:v0.0.6-beta
 inputs:
   - id: directory
     type: Directory
@@ -34,4 +34,4 @@ outputs:
     type: File
     outputBinding:
       glob: "*/pbReads.fastq"
-baseCommand: ["python","/root/Assemblosis/Run/hdf5check/hdf5Check.py"]
+baseCommand: ["python","/home/Assemblosis/Run/hdf5check/hdf5Check.py"]
