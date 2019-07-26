@@ -5,8 +5,7 @@ WORKDIR /home
 
 LABEL about.license="Copyright (c) 2014, Dr. Eugene W. Myers (EWM). All rights reserved."
 LABEL about.license_file=https://github.com/thegenemyers/DEXTRACTOR/blob/master/LICENSE
-RUN git clone --recursive git://github.com/vetscience/Assemblosis
-#RUN git clone -b 'V1.0' --single-branch --depth 1 https://github.com/thegenemyers/DEXTRACTOR
+RUN git clone -b 'V1.0' --single-branch --depth 1 https://github.com/thegenemyers/DEXTRACTOR
 WORKDIR DEXTRACTOR
 RUN mv Makefile Makefile.orig && sed 1,1d Makefile.orig | sed 's/\/usr\/local\/hdf5/\/usr\/lib\/x86_64-linux-gnu\/hdf5\/serial/1' > Makefile
 RUN make && mv dextract /usr/bin
@@ -28,8 +27,8 @@ RUN conda install bedtools==2.27.1
 
 LABEL about.license="BSD 3-Clause License"
 WORKDIR /home
-#RUN git clone --recursive git://github.com/vetscience/Assemblosis
-RUN git clone -b 'v0.1.1-beta' --single-branch --depth 1 https://github.com/vetscience/Assemblosis
+RUN git clone --recursive git://github.com/vetscience/Assemblosis
+#RUN git clone -b 'v0.1.1-beta' --single-branch --depth 1 https://github.com/vetscience/Assemblosis
 WORKDIR Assemblosis
 RUN chmod uog+x /home && chmod uog+x /home/Assemblosis && chmod uog+x /home/Assemblosis/Run && chmod uog+x /home/Assemblosis/Run/hdf5check && chmod uog+x /home/Assemblosis/Run/hdf5check/hdf5Check.py
 ENV PYTHONPATH /home/Assemblosis
