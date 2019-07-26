@@ -21,8 +21,8 @@ if (@ARGV != 2) {
 my $blastfile = shift;
 my $head_id = shift;
 
-my $nodefile = "/root/nodes.dmp";
-my $namefile = "/root/names.dmp";
+my $nodefile = "/home/nodes.dmp";
+my $namefile = "/home/names.dmp";
 
 
 open(NODEFILE,$nodefile) || &ErrorMessage("Cannot open file ".$nodefile);

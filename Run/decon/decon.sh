@@ -50,7 +50,7 @@ awk -v var="$PARTIALMATCH" 'NR>1{if ($6>=PARTIALMATCH) print $0"\t"$3}' $CLASSIF
 touch taxon.ids
 for taxon in  ${TAXONS//,/ };
 do
-perl /root/taxtreelabel.pl classification.converted $taxon && awk '{print $1}' in_tree.txt | sort | uniq >> taxon.ids
+perl /home/taxtreelabel.pl classification.converted $taxon && awk '{print $1}' in_tree.txt | sort | uniq >> taxon.ids
 done
 sort taxon.ids | uniq > contaminated.read.ids.unique
 
@@ -59,5 +59,5 @@ grep ">" trimmed.fasta | sed 's/>//1' > trimmedReads.ids
 fgrep -w -f contaminated.read.ids.unique trimmedReads.ids > contaminated.read.ids.orig
 fgrep -v -w -f contaminated.read.ids.orig trimmedReads.ids > trimmedReads.ids.decon
 
-python /root/mapFasta.py -i trimmed.fasta -s contaminated.read.ids.unique -m $MAPPEDIDS -r | gzip > contaminatedReads.fa.gz
-python /root/mapFasta.py -i trimmed.fasta -s trimmedReads.ids.decon -m $MAPPEDIDS -r | gzip > trimmedReads.decon.fa.gz
+python /home/mapFasta.py -i trimmed.fasta -s contaminated.read.ids.unique -m $MAPPEDIDS -r | gzip > contaminatedReads.fa.gz
+python /home/mapFasta.py -i trimmed.fasta -s trimmedReads.ids.decon -m $MAPPEDIDS -r | gzip > trimmedReads.decon.fa.gz

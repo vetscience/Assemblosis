@@ -6,7 +6,7 @@ requirements:
   - class: InlineJavascriptRequirement
 hints:
   - class: DockerRequirement
-    dockerPull: pakorhon/decon:v0.0.3-beta
+    dockerPull: pakorhon/decon:v0.0.4-beta
 inputs:
   - id: trimmedReads
     type: File
@@ -60,5 +60,5 @@ outputs:
     type: File
     outputBinding:
       glob: "classification.converted"
-baseCommand: ["bash","/root/decon.sh"]
+baseCommand: ["bash","/home/decon.sh"]
 arguments: []
