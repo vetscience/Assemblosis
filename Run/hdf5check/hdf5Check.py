@@ -140,7 +140,7 @@ class Bam(base.Base):
         with open("%s/runs.sh" %resDir, 'w') as handle:
             for read in readsBam:
                 resRead = read.split("/")[-1]
-                handle.write("/root/miniconda3/bin/bedtools bamtofastq -i %s -fq %s/%s.fastq\n" %(read, resDir, resRead))
+                handle.write("/home/miniconda3/bin/bedtools bamtofastq -i %s -fq %s/%s.fastq\n" %(read, resDir, resRead))
         self.shell("parallel -j %d < %s/runs.sh" %(self.pCnt, resDir))
         self.shell("cat %s/*.fastq > %s/pbReads.fastq" %(resDir, resDir))
         for read in readsBam:
