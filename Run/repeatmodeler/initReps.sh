@@ -1,9 +1,9 @@
 #!/bin/bash
 
-mkdir -p $HOME/Libraries
+mkdir -p $PWD/Libraries
 
 # Changes for docker: does not work with udocker
-#cp -r /home/Libraries/* $HOME/Libraries
+#cp -r /home/Libraries/* $PWD/Libraries
 
 # This copy circumvents the issue encountered with CWL InitialWorkDir and udocker
 cd /home/miniconda3/pkgs/repeatmasker-4.0.7-pl5.22.0_11/share/RepeatMasker
