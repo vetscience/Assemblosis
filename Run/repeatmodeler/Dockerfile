@@ -21,15 +21,6 @@ LABEL about.license="GNU General Public License"
 RUN conda install repeatscout==1.0.5
 RUN conda install -c anaconda perl==5.22.0.1
 
-# Install required perl modules
-LABEL about.license="BSD 3-Clause License"
-WORKDIR /home
-RUN git clone --recursive git://github.com/vetscience/Assemblosis
-#RUN git clone -b 'v0.1.1-beta' --single-branch --depth 1 https://github.com/vetscience/Assemblosis
-RUN cp /home/Assemblosis/Run/repeatmodeler/inputJson .
-RUN perl -MCPAN -e 'install JSON' < inputJson
-RUN cpan install LWP::UserAgent
-
 ## Configure RepeatMasker
 LABEL about.license="CC0"
 LABEL about.license_file="https://creativecommons.org/publicdomain/zero/1.0"
@@ -42,7 +33,12 @@ RUN tar zxf RepeatMaskerMetaData-20170127.tar.gz && rm -f RepeatMaskerMetaData-2
 
 # Changes for docker: does not work with udocker
 #RUN cp -r /home/miniconda3/pkgs/repeatmasker-4.0.7-pl5.22.0_11/share/RepeatMasker/Libraries /home
-#RUN cd /home/miniconda3/pkgs/repeatmasker-4.0.7-pl5.22.0_11/share/RepeatMasker && rm -r Libraries && ln -s$HOME/Libraries
+#RUN cd /home/miniconda3/pkgs/repeatmasker-4.0.7-pl5.22.0_11/share/RepeatMasker && rm -r Libraries && ln -s$PWD/Libraries
+
+# Install required perl modules
+RUN echo -e "yes\ny" > inputJson
+RUN perl -MCPAN -e 'install JSON' < inputJson
+RUN cpan install LWP::UserAgent
 
 ## Install RepeatModeler
 LABEL about.license_file=https://opensource.org/licenses/osl-2.1.php
@@ -50,7 +46,14 @@ LABEL about.license_file=https://opensource.org/licenses/osl-2.1.php
 WORKDIR /usr/local
 RUN wget http://www.repeatmasker.org/RepeatModeler/RepeatModeler-open-1.0.11.tar.gz
 RUN tar zxf RepeatModeler-open-1.0.11.tar.gz && mv RepeatModeler-open-1.0.11 RepeatModeler
-WORKDIR RepeatModeler
+
+# Install files from the assembler
+LABEL about.license="BSD 3-Clause License"
+WORKDIR /home
+RUN git clone --recursive git://github.com/vetscience/Assemblosis
+#RUN git clone -b 'v0.1.1-beta' --single-branch --depth 1 https://github.com/vetscience/Assemblosis
+
+WORKDIR /usr/local/RepeatModeler
 RUN cp -r /home/Assemblosis/Run/repeatmodeler/RepeatModelerConf/* .
 #COPY RepeatModelerConf/RepModelConfig.pm .
 
