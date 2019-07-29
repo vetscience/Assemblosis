@@ -57,7 +57,8 @@ BEGIN
 ## The path to the RepeatMasker directory and libraries.
 ##
   $REPEATMASKER_DIR = "/home/miniconda3/pkgs/repeatmasker-4.0.7-pl5.22.0_11/share/RepeatMasker";
-  $REPEATMASKER_LIB = "$REPEATMASKER_DIR/Libraries/RepeatMasker.lib";
+#  $REPEATMASKER_LIB = "$REPEATMASKER_DIR/Libraries/RepeatMasker.lib";
+  $REPEATMASKER_LIB = "$PWD/Libraries/RepeatMasker.lib";
 
 ##
 ## RMBLAST Location
