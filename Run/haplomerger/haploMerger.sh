@@ -1,4 +1,4 @@
 #!/bin/bash
 
-export PATH=$HOME/workDir/bin:$PATH
+export PATH=$PWD/workDir/bin:$PATH
 python /home/haploMerger.py $@
