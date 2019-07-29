@@ -4,16 +4,8 @@ id: "RepeatMasker"
 doc: "Masks given genomic scaffolds using given mask option and/or repeat file"
 requirements:
   - class: InlineJavascriptRequirement
-  - class: InitialWorkDirRequirement
-    listing:
-      - $(inputs.workDir)
 
 inputs:
-  - id: workDir
-    type: Directory
-    inputBinding:
-      prefix: -dir
-      position: 1
   - id: threads
     type: int
     inputBinding:
@@ -79,10 +71,10 @@ outputs:
   - id: categoryFile
     type: File
     outputBinding:
-      glob: "*/$(inputs.reference.basename).cat*"
+      glob: "$(inputs.reference.basename).cat*"
 
 baseCommand: ["RepeatMasker"]
-arguments: []
+arguments: ["-dir", $(runtime.outdir)]
 hints:
   - class: DockerRequirement
     dockerPull: quay.io/biocontainers/repeatmasker:4.0.6--pl5.22.0_10

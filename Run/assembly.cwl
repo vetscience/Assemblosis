@@ -36,7 +36,6 @@ inputs:
     type: int[]
   partialMatch: int
   repBaseLibrary: File
-  repeatWorkDir: Directory[]
   noInterspersed: boolean[]
   noLowComplexity: boolean[]
 
@@ -268,7 +267,6 @@ steps:
   maskRepeats:
     run: repeatmasker.cwl
     in:
-      workDir: repeatWorkDir
       threads: threads
       noInterspersed: noInterspersed
       noLowComplexity: noLowComplexity
