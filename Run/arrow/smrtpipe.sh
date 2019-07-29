@@ -2,6 +2,7 @@
 
 PATH=/home/smrtlink/smrtcmds/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 PYTHONPATH=/home/Assemblosis
+cp -r /home/Assemblosis/datasets $PWD
 
 POSITIONAL=()
 while [[ $# -gt 0 ]]
@@ -58,7 +59,7 @@ rm preset.tmp
 
 # Create RW reference data for smrtlink
 echo "fasta-to-reference $ASSEMBLY /home/smrtlink/install/smrtlink-release_7.0.1.66975/bundles/smrttools/install/smrttools-release_7.0.1.66768/private/pacbio/pythonpkgs/pbcore/lib/python2.7/site-packages/pbcore/data/datasets $PREFIX"
-fasta-to-reference $ASSEMBLY /home/smrtlink/install/smrtlink-release_7.0.1.66975/bundles/smrttools/install/smrttools-release_7.0.1.66768/private/pacbio/pythonpkgs/pbcore/lib/python2.7/site-packages/pbcore/data/datasets $PREFIX
+fasta-to-reference $ASSEMBLY $PWD/datasets $PREFIX
 
 # Convert hdf5 files to subread format understood by pbsmrtpipe
 if [ $BAM = "false" ]; then
@@ -69,14 +70,14 @@ dataset create --force --type HdfSubreadSet baxFiles.hdfsubreadset.xml baxFiles.
 echo "pbsmrtpipe pipeline-id pbsmrtpipe.pipelines.sa3_hdfsubread_to_subread --preset-xml preset.xml -e eid_hdfsubread:baxFiles.hdfsubreadset.xml"
 pbsmrtpipe pipeline-id pbsmrtpipe.pipelines.sa3_hdfsubread_to_subread --preset-xml preset.xml -e eid_hdfsubread:baxFiles.hdfsubreadset.xml
 echo "pbsmrtpipe pipeline-id pbsmrtpipe.pipelines.sa3_ds_resequencing --preset-xml preset.xml -e eid_subread:tasks/pbcoretools.tasks.gather_subreadset-1/file.subreadset.xml -e eid_ref_dataset:/home/smrtlink/install/smrtlink-release_7.0.1.66975/bundles/smrttools/install/smrttools-release_7.0.1.66768/private/pacbio/pythonpkgs/pbcore/lib/python2.7/site-packages/pbcore/data/datasets/$PREFIX/referenceset.xml"
-pbsmrtpipe pipeline-id pbsmrtpipe.pipelines.sa3_ds_resequencing --preset-xml preset.xml -e eid_subread:tasks/pbcoretools.tasks.gather_subreadset-1/file.subreadset.xml -e eid_ref_dataset:/home/smrtlink/install/smrtlink-release_7.0.1.66975/bundles/smrttools/install/smrttools-release_7.0.1.66768/private/pacbio/pythonpkgs/pbcore/lib/python2.7/site-packages/pbcore/data/datasets/$PREFIX/referenceset.xml
+pbsmrtpipe pipeline-id pbsmrtpipe.pipelines.sa3_ds_resequencing --preset-xml preset.xml -e eid_subread:tasks/pbcoretools.tasks.gather_subreadset-1/file.subreadset.xml -e eid_ref_dataset:$PWD/datasets/$PREFIX/referenceset.xml
 else
 echo "dataset create --force --type SubreadSet subreadset.xml baxFiles.fofn"
 ls $DATADIR/*.bam | while read line; do samtools index $line; done
 ls $DATADIR/*.bam | while read line; do pbindex $line; done
 dataset create --force --type SubreadSet allTheSubreads.subreadset.xml $DATADIR/*.bam
 echo "pbsmrtpipe pipeline-id pbsmrtpipe.pipelines.sa3_ds_resequencing --preset-xml preset.xml -e eid_subread:allTheSubreads.subreadset.xml -e eid_ref_dataset:/home/smrtlink/install/smrtlink-release_7.0.1.66975/bundles/smrttools/install/smrttools-release_7.0.1.66768/private/pacbio/pythonpkgs/pbcore/lib/python2.7/site-packages/pbcore/data/datasets/$PREFIX/referenceset.xml"
-pbsmrtpipe pipeline-id pbsmrtpipe.pipelines.sa3_ds_resequencing --preset-xml preset.xml -e eid_subread:allTheSubreads.subreadset.xml -e eid_ref_dataset:/home/smrtlink/install/smrtlink-release_7.0.1.66975/bundles/smrttools/install/smrttools-release_7.0.1.66768/private/pacbio/pythonpkgs/pbcore/lib/python2.7/site-packages/pbcore/data/datasets/$PREFIX/referenceset.xml
+pbsmrtpipe pipeline-id pbsmrtpipe.pipelines.sa3_ds_resequencing --preset-xml preset.xml -e eid_subread:allTheSubreads.subreadset.xml -e eid_ref_dataset:$PWD/datasets/$PREFIX/referenceset.xml
 fi
 
 # Convert created consensus FASTQ file to a FASTA file

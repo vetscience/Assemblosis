@@ -19,8 +19,11 @@ WORKDIR /home
 RUN git clone --recursive git://github.com/vetscience/Assemblosis
 #RUN git clone -b 'v0.1.2-beta' --single-branch --depth 1 https://github.com/vetscience/Assemblosis
 WORKDIR /home/Assemblosis
-RUN chmod uog+x /home && chmod uog+rwx /home/Assemblosis
+RUN chmod uog+rx /home && chmod uog+rwx /home/Assemblosis
 RUN cp Run/arrow/smrtpipe.sh . && cp Run/arrow/preset.xml . && cp Run/arrow/createFofn.py . && cp Run/arrow/referenceset.xml .
 RUN chmod uog+x /home/Assemblosis/createFofn.py && chmod uog+x smrtpipe.sh && chmod uog+x preset.xml
+RUN mkdir -p datasets && cp -r /home/smrtlink/install/smrtlink-release_7.0.1.66975/bundles/smrttools/install/smrttools-release_7.0.1.66768/private/pacbio/pythonpkgs/pbcore/lib/python2.7/site-packages/pbcore/data/datasets/* datasets
+RUN chmod -R uog+rx datasets && rm -r /home/smrtlink/install/smrtlink-release_7.0.1.66975/bundles/smrttools/install/smrttools-release_7.0.1.66768/private/pacbio/pythonpkgs/pbcore/lib/python2.7/site-packages/pbcore/data/datasets
+#RUN ln -s $HOME/datasets /home/smrtlink/install/smrtlink-release_7.0.1.66975/bundles/smrttools/install/smrttools-release_7.0.1.66768/private/pacbio/pythonpkgs/pbcore/lib/python2.7/site-packages/pbcore/data/datasets
 ENV PYTHONPATH=/home/Assemblosis
 #COPY smrtpipe.sh .
