@@ -8,6 +8,11 @@ hints:
   - class: DockerRequirement
     dockerPull: pakorhon/decon:v0.0.4-beta
 inputs:
+  - id: prefix
+    type: string
+    inputBinding:
+      position: 1
+      prefix: -p
   - id: trimmedReads
     type: File
     inputBinding:
@@ -43,11 +48,11 @@ outputs:
   - id: conReads
     type: File
     outputBinding:
-      glob: "contaminatedReads.fa.gz"
+      glob: "*/$(inputs.prefix).contaminatedReads.fasta.gz"
   - id: deconReads
     type: File
     outputBinding:
-      glob: "trimmedReads.decon.fa.gz"
+      glob: "*/$(inputs.prefix).trimmedReads.fasta.gz"
   - id: deconReadIds
     type: File
     outputBinding:

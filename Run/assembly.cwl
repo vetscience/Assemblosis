@@ -148,6 +148,7 @@ steps:
   decontaminate:
     run: decon.cwl
     in:
+      prefix: prefix
       trimmedReads: renameReads/renamedReads
       taxons: taxons
       classificationFile: classifyReads/classification

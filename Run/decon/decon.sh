@@ -6,6 +6,11 @@ do
 key="$1"
 
 case $key in
+    -p|--prefix)
+    PREFIX="$2"
+    shift # past argument
+    shift # past value
+    ;;
     -U|--trimmed-reads)
     TRIMMEDREADS="$2"
     shift # past argument
@@ -39,6 +44,7 @@ esac
 done
 set -- "${POSITIONAL[@]}" # restore positional parameters
 
+echo PREFIX         = "${PREFIX}"
 echo TRIMMEDREADS   = "${TRIMMEDREADS}"
 echo CLASSIFICATION = "${CLASSIFICATION}"
 echo TAXONS         = "${TAXONS}"
@@ -59,5 +65,5 @@ grep ">" trimmed.fasta | sed 's/>//1' > trimmedReads.ids
 fgrep -w -f contaminated.read.ids.unique trimmedReads.ids > contaminated.read.ids.orig
 fgrep -v -w -f contaminated.read.ids.orig trimmedReads.ids > trimmedReads.ids.decon
 
-python /home/mapFasta.py -i trimmed.fasta -s contaminated.read.ids.unique -m $MAPPEDIDS -r | gzip > contaminatedReads.fa.gz
-python /home/mapFasta.py -i trimmed.fasta -s trimmedReads.ids.decon -m $MAPPEDIDS -r | gzip > trimmedReads.decon.fa.gz
+python /home/mapFasta.py -i trimmed.fasta -s contaminated.read.ids.unique -m $MAPPEDIDS -r | gzip > $PREFIX.contaminatedReads.fasta.gz
+python /home/mapFasta.py -i trimmed.fasta -s trimmedReads.ids.decon -m $MAPPEDIDS -r | gzip > $PREFIX.trimmedReads.fasta.gz
