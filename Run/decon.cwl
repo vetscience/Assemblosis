@@ -6,7 +6,7 @@ requirements:
   - class: InlineJavascriptRequirement
 hints:
   - class: DockerRequirement
-    dockerPull: pakorhon/decon:v0.0.4-beta
+    dockerPull: pakorhon/decon:v0.0.5-beta
 inputs:
   - id: prefix
     type: string
