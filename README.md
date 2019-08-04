@@ -3,8 +3,11 @@ The workflow is designed to use both PacBio long-reads and Illumina short-reads.
 
 ### Dependencies
 Programs
-* [udocker v1.1.2](https://github.com/indigo-dc/udocker)
-* [udocker snapshot](https://raw.githubusercontent.com/indigo-dc/udocker/7f6975c19c63c3d65ec6256c7cf5b2369d5c115d/udocker.py)
+* Docker containers are run with singularity and squashfs-tools: have to be installed server-wide by administrator
+** [Singularity v3.2.1](https://singularity.lbl.gov)
+** [squashfs-tools v4.3.0](https://github.com/plougher/squashfs-tools)
+* Docker containers are run with udocker: can be installed locally
+** [udocker v1.1.2](https://github.com/indigo-dc/udocker)
 * [cwltool v1.0.20181012180214](https://github.com/common-workflow-language/cwltool)
 * [nodejs v10.4.1 required by cwltool](https://nodejs.org/en)
 * [Python library galaxy-lib v18.5.7](https://pypi.org/project/galaxy-lib)
@@ -19,7 +22,7 @@ Use installation script ```install.sh``` to install program dependencies.
 ```
 # First confirm that you have the program 'git' installed in your system
 > cd
-> git clone -b 'v0.1.2-beta' --single-branch --depth 1 https://github.com/vetscience/Assemblosis
+> git clone -b 'v0.1.3-beta' --single-branch --depth 1 https://github.com/vetscience/Assemblosis
 > cd Assemblosis
 > bash install.sh
 
@@ -37,8 +40,11 @@ You have to create a YAML (.yml) file for each assembly. This file defines the r
 
 "Edit assemblyCele.yml to fit your computing environment and to define the location for the read files, databases and Illumina adapters"
 
-> mkdir RepeatSimple; mkdir RepeatTransp; mkdir RepeatCustom
+"Running docker images using udocker:"
 > cwltool --tmpdir-prefix /home/<username>/Tmp --beta-conda-dependencies --cachedir /home/<username>/Cache --user-space-docker-cmd udocker --leave-tmpdir assembly.cwl assemblyCele.yml
+
+"Running docker images using singularity:"
+> cwltool --tmpdir-prefix /home/<username>/Tmp --beta-conda-dependencies --cachedir /home/<username>/Cache --singularity --leave-tmpdir assembly.cwl assemblyCele.yml
 ```
 
 An annotated example of the YAML file for Caenorhabditis elegans assembly.
@@ -142,15 +148,7 @@ repBaseLibrary:
   class: File
   # This is the RepBase file from https://www.girinst.org/repbase. RepeatMasker parameter -lib
   path: /home/<username>/RepBaseLibrary/RMRBSeqs.embl
-# Directories for inferred custom repeats (inferred by RepeatModeler), tandem repeats (simple repeats) and interspersed repeats (transposons)'
-# RepeatMasker parameter -dir
-repeatWorkDir:
-  - class: Directory
-    location: RepeatCustom
-  - class: Directory
-    location: RepeatSimple
-  - class: Directory
-    location: RepeatTransp
+# Settings for inferred custom repeats (inferred by RepeatModeler), tandem repeats (simple repeats) and interspersed repeats (transposons)'
 # Represents -noint parameter for masking custom, tandem and interspersed repeats
 noInterspersed: [false, true, false]
 # Represents -nolow parameter for masking custom, tandem and interspersed repeats
