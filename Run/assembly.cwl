@@ -1,7 +1,7 @@
 cwlVersion: cwl:v1.0
 class: Workflow
 requirements:
-  - $import: assembly-typedef.yml
+  - "$import": assembly-typedef.yml
   - class: InlineJavascriptRequirement
   - class: StepInputExpressionRequirement
   - class: ScatterFeatureRequirement
@@ -19,14 +19,14 @@ inputs:
   readsPe2:
     type: File[]
   phredsPe:
-    type: assembly-typedef.yml#phred[]
+    type: string[]
   slidingWindow: assembly-typedef.yml#slidingWindow
   illuminaClip: assembly-typedef.yml#illuminaClipping?
   leading: int
   trailing: int
   minlen: int
   threads: int
-  orientation: assembly-typedef.yml#orientation
+  orientation: string
   maxFragmentLens: int[]
   polishedAssembly: string
   diploidOrganism: boolean

@@ -3,7 +3,7 @@ class: CommandLineTool
 id: "trimmomaticpe"
 doc: "Clean paired-end Illumina reads"
 requirements:
-  - $import: assembly-typedef.yml
+  - "$import": assembly-typedef.yml
   - class: InlineJavascriptRequirement
   - class: EnvVarRequirement
     envDef:
@@ -11,7 +11,7 @@ requirements:
 
 inputs:
   - id: phred
-    type: assembly-typedef.yml#phred
+    type: string
     default: '33'
     inputBinding:
       prefix: -phred
@@ -41,8 +41,9 @@ inputs:
   - id: illuminaClip
     type: assembly-typedef.yml#illuminaClipping?
     inputBinding:
-      valueFrom: |
-        ILLUMINACLIP:$(self.adapters.path):$(self.seedMismatches):$(self.palindromeClipThreshold):$(self.simpleClipThreshold):$(self.minAdapterLength):$(self.keepBothReads)
+      valueFrom: ILLUMINACLIP:$(self.adapters.path):$(self.seedMismatches):$(self.palindromeClipThreshold):$(self.simpleClipThreshold):$(self.minAdapterLength):$(self.keepBothReads)
+#      valueFrom: |
+#        ILLUMINACLIP:$(self.adapters.path):$(self.seedMismatches):$(self.palindromeClipThreshold):$(self.simpleClipThreshold):$(self.minAdapterLength):$(self.keepBothReads)
       position: 10
   - id: leading
     type: int?

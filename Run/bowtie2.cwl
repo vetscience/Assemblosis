@@ -3,24 +3,23 @@ class: CommandLineTool
 id: "bowtie2"
 doc: "Maps illumina reads to a genome"
 requirements:
-  - $import: assembly-typedef.yml
   - class: InlineJavascriptRequirement
 inputs:
   - id: seedMismatches
-    type: assembly-typedef.yml#seedMismatches
+    type: string
     default: '1'
     inputBinding:
       prefix: -N
       position: 1
   - id: phred
-    type: assembly-typedef.yml#phred
+    type: string
     default: '33'
     inputBinding:
       prefix: --phred
       separate: false
       position: 2
   - id: orientation
-    type: assembly-typedef.yml#orientation
+    type: string
     default: 'fr'
     inputBinding:
       prefix: --

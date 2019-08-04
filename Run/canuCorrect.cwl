@@ -48,20 +48,20 @@ inputs:
       position: 10
       separate: false
       prefix: useGrid=
-  - id: ovsMethod
-    type: string
-    default: "sequential"
-    inputBinding:
-      position: 11
-      separate: false
-      prefix: ovsMethod=
-  - id: gnuplotTested
-    type: string
-    default: "true"
-    inputBinding:
-      position: 12
-      separate: false
-      prefix: gnuplotTested=
+#  - id: ovsMethod
+#    type: string
+#    default: "sequential"
+#    inputBinding:
+#      position: 11
+#      separate: false
+#      prefix: ovsMethod=
+#  - id: gnuplotTested
+#    type: string
+#    default: "true"
+#    inputBinding:
+#      position: 12
+#      separate: false
+#      prefix: gnuplotTested=
   - id: minThreads
     type: int
     inputBinding:
@@ -84,4 +84,4 @@ arguments: []
 stdout: out
 hints:
   - class: DockerRequirement
-    dockerPull: quay.io/biocontainers/canu:1.6--pl5.22.0_1
+    dockerPull: quay.io/biocontainers/canu:1.8--pl526h470a237_0
