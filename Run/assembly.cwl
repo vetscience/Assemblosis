@@ -45,7 +45,7 @@ outputs:
     outputSource: correct/correctedReads
   trimmedReads:
     type: File
-    outputSource: trim/trimmedReads
+    outputSource: assemble/trimmedReads
   canuAssembly:
     type: File
     outputSource: assemble/assembly
@@ -118,22 +118,22 @@ steps:
       maxThreads: threads
     out: [correctedReads]
 
-  trim:
-    run: canuTrim.cwl
-    in:
-      prefix: prefix
-      genomeSize: genomeSize
-      minReadLen: minReadLen
-      pacbio-corrected: correct/correctedReads
-      corMaxEvidenceErate: corMaxEvidenceErate
-      minThreads: threads
-      maxThreads: threads
-    out: [trimmedReads]
+#  trim:
+#    run: canuTrim.cwl
+#    in:
+#      prefix: prefix
+#      genomeSize: genomeSize
+#      minReadLen: minReadLen
+#      pacbio-corrected: correct/correctedReads
+#      corMaxEvidenceErate: corMaxEvidenceErate
+#      minThreads: threads
+#      maxThreads: threads
+#    out: [trimmedReads]
 
   renameReads:
     run: renameReads.cwl
     in:
-      trimmedReads: trim/trimmedReads
+      trimmedReads: correct/correctedReads
     out: [renamedReads, mappedIds]
 
   classifyReads:
@@ -166,7 +166,7 @@ steps:
       corMaxEvidenceErate: corMaxEvidenceErate
       minThreads: threads
       maxThreads: threads
-    out: [assembly]
+    out: [trimmedReads, assembly]
 
   arrow:
     run: arrow.cwl

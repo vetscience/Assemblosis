@@ -82,11 +82,15 @@ inputs:
       separate: false
       prefix: maxThreads=
 outputs:
+  - id: trimmedReads
+    type: File
+    outputBinding:
+      glob: "*/$(inputs.prefix).trimmedReads.fasta.gz"
   - id: assembly
     type: File
     outputBinding:
       glob: "*/$(inputs.prefix).contigs.fasta"
-baseCommand: ["canu", "-assemble"]
+baseCommand: ["canu", "-trim-assemble"]
 arguments: []
 stdout: out
 hints:
