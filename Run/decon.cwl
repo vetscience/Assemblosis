@@ -12,7 +12,7 @@ inputs:
     type: string
     inputBinding:
       position: 1
-      prefix: -p
+      prefix: -r
   - id: trimmedReads
     type: File
     inputBinding:
