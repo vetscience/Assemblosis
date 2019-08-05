@@ -48,11 +48,11 @@ outputs:
   - id: conReads
     type: File
     outputBinding:
-      glob: "*/$(inputs.prefix).contaminatedReads.fasta.gz"
+      glob: "$(inputs.prefix).contaminatedReads.fasta.gz"
   - id: deconReads
     type: File
     outputBinding:
-      glob: "*/$(inputs.prefix).trimmedReads.fasta.gz"
+      glob: "$(inputs.prefix).trimmedReads.fasta.gz"
   - id: deconReadIds
     type: File
     outputBinding:
