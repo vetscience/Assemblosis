@@ -118,18 +118,6 @@ steps:
       maxThreads: threads
     out: [correctedReads]
 
-#  trim:
-#    run: canuTrim.cwl
-#    in:
-#      prefix: prefix
-#      genomeSize: genomeSize
-#      minReadLen: minReadLen
-#      pacbio-corrected: correct/correctedReads
-#      corMaxEvidenceErate: corMaxEvidenceErate
-#      minThreads: threads
-#      maxThreads: threads
-#    out: [trimmedReads]
-
   renameReads:
     run: renameReads.cwl
     in:
