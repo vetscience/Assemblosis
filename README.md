@@ -49,8 +49,8 @@ You have to create a YAML (.yml) file for each assembly. This file defines the r
 
 An annotated example of the YAML file for Caenorhabditis elegans assembly.
 ```
-## Top level directory, which contains the PacBio raw data
-# NOTE! The software looks for all .h5 files recursively in given directory
+## Directory, which contains the PacBio raw data
+# NOTE! The software looks for all .h5 file (or bam files if bacBioInBam below is defined true) in given directory
 pacBioDataDir:
   class: Directory
   location: /home/<username>/Dna
