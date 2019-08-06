@@ -13,7 +13,6 @@ inputs:
   threads: int
   minIdentity: float
   extensiveMisSize: int
-  currentDir: string
   lineage: Directory
   buscoMode: string
   buscoName: string
@@ -40,7 +39,6 @@ steps:
   buscoMetrics:
     run: busco.cwl
     in:
-      currentDir: currentDir
       assembly: assemblies
       lineage: lineage
       mode: buscoMode

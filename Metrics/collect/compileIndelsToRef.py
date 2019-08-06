@@ -9,7 +9,12 @@ def options():
     parser.add_option('-i', '--fasta', dest='fasta', help='FASTA reference', metavar='FASTA', default='')
     parser.add_option('-g', '--gff', dest='gff', help='GFF reference', metavar='GFF', default='')
     parser.add_option('-n', '--snps', dest='snps', help='Nucleotide differences', metavar='SNPS', default='')
+    #parser.add_option('-r', '--order', dest='order', action='store_true', help='Longest first (default=FALSE)', default=False)
+    #parser.add_option('-a', '--assemble', dest='assemble', action='store_true', help='Do assembly', default=False)
     options, args = parser.parse_args()
+    #if options.fasta == '':
+    #    parser.print_help()
+    #    sys.exit(1)
     return options
 
 
@@ -47,7 +52,7 @@ def main():
         for line in handle:
             items = line.strip().split('\t')
             scafId, pos = items[0], int(items[2])
-            scafId = '_'.join(scafId.split("_")[:2])
+            scafId = '_'.join(scafId.split("_")[:-2])
             insertion, deletion = False, False
             if items[3] == ".": insertion = True
             if items[4] == ".": deletion = True
@@ -56,19 +61,22 @@ def main():
                     if prevInsIdx == items[2]:
                         insCnt += 1
                     else:
-                        if insCnt % 3 == 0:
+                        try:
+                          if insCnt % 3 == 0:
                            for item in dGff[prevScafInsId]:
                                start, end, phase, mRnaId = item
                                if int(prevInsIdx) >= start and int(prevInsIdx) <=end:
                                    insFrameCnt += 1
                                    allInsCnt += 1
                                    break
-                        elif prevScafInsId != None:
+                          elif prevScafInsId != None:
                            for item in dGff[prevScafInsId]:
                                start, end, phase, mRnaId = item
                                if int(prevInsIdx) >= start and int(prevInsIdx) <=end:
                                    allInsCnt += 1
                                    break
+                        except KeyError:
+                          pass
                         prevInsIdx, insCnt = None, 1
                 prevInsIdx, prevScafInsId = items[2], scafId
             if deletion == True:
@@ -76,19 +84,22 @@ def main():
                     if prevDelIdx == items[5]:
                         delCnt += 1
                     else:
-                        if delCnt % 3 == 0:
+                        try:
+                          if delCnt % 3 == 0:
                            for item in dGff[prevScafDelId]:
                                start, end, phase, mRnaId = item
                                if int(prevDelIdx) >= start and int(prevDelIdx) <=end:
                                    delFrameCnt += 1
                                    allDelCnt += 1
                                    break
-                        elif prevScafDelId != None:
+                          elif prevScafDelId != None:
                            for item in dGff[prevScafDelId]:
                                start, end, phase, mRnaId = item
                                if int(prevDelIdx) >= start and int(prevDelIdx) <=end:
                                    allDelCnt += 1
                                    break
+                        except KeyError:
+                          pass
                         prevDelIdx, delCnt = None, 1
                 prevDelIdx, prevScafDelId = items[5], scafId
     print insFrameCnt, delFrameCnt, insFrameCnt + delFrameCnt

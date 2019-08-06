@@ -7,7 +7,12 @@ def options():
     parser = optparse.OptionParser('usage: python %prog -i filename -n size')
     parser.add_option('-i', '--gff', dest='gff', help='GFF file for reference', metavar='GFF', default='')
     parser.add_option('-n', '--snps', dest='snps', help='Nucleotide differences', metavar='SNPS', default='')
+    #parser.add_option('-r', '--order', dest='order', action='store_true', help='Longest first (default=FALSE)', default=False)
+    #parser.add_option('-a', '--assemble', dest='assemble', action='store_true', help='Do assembly', default=False)
     options, args = parser.parse_args()
+    #if options.fasta == '':
+    #    parser.print_help()
+    #    sys.exit(1)
     return options
 
 
@@ -68,6 +73,8 @@ def main():
         lines.append(prevInsLine)
     if prevDelIdx != None:
         lines.append(prevDelLine)
+    #for line in lines:
+    #    print line
 
     cnt, indelCnt, totalCnt, totalIndelCnt = 0, 0, 0, 0
     dCdsCnt, dMrnaCnt = {}, {}
@@ -78,12 +85,13 @@ def main():
             totalCnt += 1
             items = line.strip().split('\t')
             scafId, pos = items[0], int(items[2])
-            scafId = '_'.join(scafId.split("_")[:2])
+            scafId = '_'.join(scafId.split("_")[:-2])
             indel = False
             if items[3] == "." or items[4] == ".":
                 indel = True
                 totalIndelCnt += 1
-            for cds in dScafs[scafId]:
+            try:
+              for cds in dScafs[scafId]:
                 start, end, phase, mRnaId = cds
                 if pos >= start and pos <= end:
                     cnt += 1
@@ -93,8 +101,11 @@ def main():
                     dCdsCnt["%s_%d_%d" %(scafId, start, end)] = 1
                     dMrnaCnt["%s_%s" %(scafId, mRnaId)] = 1
                     break
+            except KeyError:
+                pass
     print "%d\t%d\t%d\t%d\t%d\t%d\t%d" %(cnt - indelCnt, indelCnt, sum([dCdsCnt[key] for key in dCdsCnt]), sum([dMrnaCnt[key] for key in dMrnaCnt]), totalCnt - cnt, totalIndelCnt - indelCnt, totalCnt - cnt - totalIndelCnt + indelCnt)
     print >> sys.stderr, '\t'.join(sorted(indelMrnas))
+    #print "%d SNPs and %d indels in %d CDSs in %d mRNAs, %d outside CDSs of which %d are indels and rest %d SNPs" %(cnt - indelCnt, indelCnt, sum([dCdsCnt[key] for key in dCdsCnt]), sum([dMrnaCnt[key] for key in dMrnaCnt]), totalCnt - cnt, totalIndelCnt - indelCnt, totalCnt - cnt - totalIndelCnt + indelCnt)
 
 
 #################################################
