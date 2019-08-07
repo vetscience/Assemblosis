@@ -36,12 +36,6 @@ inputs:
       prefix: -b
       position: 5
 outputs:
-  - id: assembled
-    type:
-      type: array
-      items: [File, Directory]
-    outputBinding:
-      glob: "*"
   - id: arrowPolishedAssembly
     type: File
     format: edam:format_1929  # fasta
