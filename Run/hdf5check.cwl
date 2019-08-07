@@ -4,7 +4,7 @@ requirements:
   - class: InlineJavascriptRequirement
 hints:
   - class: DockerRequirement
-    dockerPull: pakorhon/hdf5check:v0.0.6-beta
+    dockerPull: "pakorhon/hdf5check:v0.0.6-beta"
 inputs:
   - id: directory
     type: Directory

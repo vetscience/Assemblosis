@@ -119,4 +119,4 @@ outputs:
 baseCommand: [java,org.usadellab.trimmomatic.TrimmomaticPE]
 hints:
   - class: DockerRequirement
-    dockerPull: quay.io/biocontainers/trimmomatic:0.36--5
+    dockerPull: "quay.io/biocontainers/trimmomatic:0.36--5"
