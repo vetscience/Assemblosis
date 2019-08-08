@@ -13,4 +13,3 @@ expression: >
     var ret = inputs.masterFile;
     ret["secondaryFiles"] = inputs.indexFiles;
     return { "hybridFile": ret } ; }
-
