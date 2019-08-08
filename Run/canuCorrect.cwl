@@ -74,6 +74,13 @@ inputs:
       position: 14
       separate: false
       prefix: maxThreads=
+  - id: corConcurrency
+    type: int
+    default: 6
+    inputBinding:
+      position: 15
+      separate: false
+      prefix: corConcurrency=
 outputs:
   - id: correctedReads
     type: File

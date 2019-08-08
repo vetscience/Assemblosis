@@ -26,6 +26,8 @@ inputs:
   trailing: int
   minlen: int
   threads: int
+  minThreads: int
+  canuConcurrency: int
   orientation: string
   maxFragmentLens: int[]
   polishedAssembly: string
@@ -114,8 +116,9 @@ steps:
       genomeSize: genomeSize
       pacbio-raw: hdf5check/pbFastqReads
       corMaxEvidenceErate: corMaxEvidenceErate
-      minThreads: threads
+      minThreads: minThreads
       maxThreads: threads
+      corConcurrency: canuConcurrency
     out: [correctedReads]
 
   renameReads:
@@ -152,8 +155,14 @@ steps:
       minReadLen: minReadLen
       pacbio-corrected: decontaminate/deconReads
       corMaxEvidenceErate: corMaxEvidenceErate
-      minThreads: threads
+      minThreads: minThreads
       maxThreads: threads
+      obtmhapConcurrency: canuConcurrency
+      utgmhapConcurrency: canuConcurrency
+      obtmmapConcurrency: canuConcurrency
+      utgmmapConcurrency: canuConcurrency
+      obtovlConcurrency: canuConcurrency
+      utgovlConcurrency: canuConcurrency
     out: [trimmedReads, assembly]
 
   arrow:
@@ -169,15 +178,19 @@ steps:
     run: bowtie2-build.cwl
     in:
       reference: arrow/arrowPolishedAssembly
-    out: [indexFiles]
+    out: [referenceAssembly, bt2_1, bt2_2, bt2_3, bt2_4, bt2rev1, bt2rev2]
 
   expressionToolBowtie:
-    run: expressiontool.cwl
+    run: expressiontoolbowtie.cwl
     in:
       masterFile:
-          source: arrow/arrowPolishedAssembly
-      indexFiles:
-          source: indexReference/indexFiles
+        source: indexReference/referenceAssembly
+      bt2_1: indexReference/bt2_1
+      bt2_2: indexReference/bt2_2
+      bt2_3: indexReference/bt2_3
+      bt2_4: indexReference/bt2_4
+      bt2rev1: indexReference/bt2rev1
+      bt2rev2: indexReference/bt2rev2
     out: [hybridFile]
 
   mapIlluminaReads:
@@ -206,18 +219,17 @@ steps:
     run: samindex.cwl
     in:
       inputBamFile: sortMappedReads/sortedBamFile
-    out: [bamIndexFile]
+    out: [sortedBamFile, bamIndexFile]
     scatter: inputBamFile
 
   expressionToolBam:
-    run: expressiontool.cwl
+    run: expressiontoolbam.cwl
     in:
       masterFile:
-          source: sortMappedReads/sortedBamFile
-      indexFiles:
-          source: [indexBamFile/bamIndexFile]
+          source: indexBamFile/sortedBamFile
+      bai: indexBamFile/bamIndexFile
     out: [hybridFile]
-    scatter: [masterFile, indexFiles]
+    scatter: [masterFile, bai]
     scatterMethod: dotproduct
 
   pilon:
@@ -234,15 +246,20 @@ steps:
     run: indexassembly.cwl
     in:
       scaffolds: pilon/pilonPolishedAssembly
-    out: [indexFiles]
+    out: [pilonPolishedAssembly, translation, nsq, nin, nhr, nog, nni, nnd]
 
   expressionToolRepeatModeler:
-    run: expressiontool.cwl
+    run: expressiontoolrepeats.cwl
     in:
       masterFile:
-          source: pilon/pilonPolishedAssembly
-      indexFiles:
-          source: indexAssembly/indexFiles
+          source: indexAssembly/pilonPolishedAssembly
+      translation: indexAssembly/translation
+      nsq: indexAssembly/nsq
+      nin: indexAssembly/nin
+      nhr: indexAssembly/nhr
+      nog: indexAssembly/nog
+      nni: indexAssembly/nni
+      nnd: indexAssembly/nnd
     out: [hybridFile]
 
   inferRepeats:

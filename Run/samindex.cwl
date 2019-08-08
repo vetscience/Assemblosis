@@ -4,6 +4,9 @@ id: "samtoolsIndex"
 doc: "Indexes sorted the BAM file"
 requirements:
   - class: InlineJavascriptRequirement
+  - class: InitialWorkDirRequirement
+    listing:
+      - $(inputs.inputBamFile)
 inputs:
   - id: inputBamFile
     type: File
@@ -15,8 +18,12 @@ arguments:
     position: 2
 
 outputs:
+  - id: sortedBamFile
+    type: File
+    outputBinding:
+      glob: "$(inputs.inputBamFile.basename)"
   - id: bamIndexFile
-    type: File[]
+    type: File
     outputBinding:
       glob: "$(inputs.inputBamFile.basename).bai"
 

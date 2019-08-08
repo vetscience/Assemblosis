@@ -44,10 +44,10 @@ outputs:
     type: File
     outputBinding:
       glob: "RM*/consensi.fa"
-  - id: repeatFastaFileClassified
-    type: File?
-    outputBinding:
-      glob: "RM*/consensi.fa.classified"
+#  - id: repeatFastaFileClassified
+#    type: File?
+#    outputBinding:
+#      glob: "RM*/consensi.fa.classified"
 
 baseCommand: ["/home/repeatModeler.sh"]
 arguments: []

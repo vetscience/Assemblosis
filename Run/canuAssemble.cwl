@@ -81,6 +81,48 @@ inputs:
       position: 14
       separate: false
       prefix: maxThreads=
+  - id: obtmhapConcurrency
+    type: int
+    default: 6
+    inputBinding:
+      position: 16
+      separate: false
+      prefix: obtmhapConcurrency=
+  - id: utgmhapConcurrency
+    type: int
+    default: 6
+    inputBinding:
+      position: 17
+      separate: false
+      prefix: utgmhapConcurrency=
+  - id: obtmmapConcurrency
+    type: int
+    default: 6
+    inputBinding:
+      position: 16
+      separate: false
+      prefix: obtmmapConcurrency=
+  - id: utgmmapConcurrency
+    type: int
+    default: 6
+    inputBinding:
+      position: 17
+      separate: false
+      prefix: utgmmapConcurrency=
+  - id: obtovlConcurrency
+    type: int
+    default: 6
+    inputBinding:
+      position: 16
+      separate: false
+      prefix: obtovlConcurrency=
+  - id: utgovlConcurrency
+    type: int
+    default: 6
+    inputBinding:
+      position: 17
+      separate: false
+      prefix: utgovlConcurrency=
 outputs:
   - id: trimmedReads
     type: File
