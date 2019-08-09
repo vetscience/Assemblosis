@@ -3,15 +3,8 @@ The workflow is designed to use both PacBio long-reads and Illumina short-reads.
 
 ### Dependencies
 # Programs
-Docker containers can be run either using [Singularity](https://singularity.lbl.gov) or [udocker](https://singularity.lbl.gov).
-Singularity software packages have to be installed server-wide by administrator
-* [Singularity v3.2.1](https://singularity.lbl.gov)
-* [squashfs-tools v4.3.0](https://github.com/plougher/squashfs-tools)
+The pipeline can be run either using [Cromwell](https://cromwell.readthedocs.io/en/stable) or [cwltool reference](https://github.com/common-workflow-language/cwltool) implementation and docker containers can be run either using [Singularity](https://singularity.lbl.gov) or [udocker](https://singularity.lbl.gov).
 
-Udocker software package can be installed locally
-* [udocker v1.1.2](https://github.com/indigo-dc/udocker)
-
-The pipeline can be run either using [Cromwell](https://cromwell.readthedocs.io/en/stable) or [cwltool reference](https://github.com/common-workflow-language/cwltool) implementation.
 Cromwell implementation
 * [cromwell v44](https://github.com/broadinstitute/cromwell/releases/tag/44)
 * [java-jdk v8.0.112](https://www.java.com/en)
@@ -20,6 +13,13 @@ Reference implementation
 * [cwltool v1.0.20181012180214](https://github.com/common-workflow-language/cwltool)
 * [nodejs v10.4.1 required by cwltool](https://nodejs.org/en)
 * [Python library galaxy-lib v18.5.7](https://pypi.org/project/galaxy-lib)
+
+Singularity software packages have to be installed server-wide by administrator
+* [Singularity v3.2.1](https://singularity.lbl.gov)
+* [squashfs-tools v4.3.0](https://github.com/plougher/squashfs-tools)
+
+Udocker software package can be installed locally
+* [udocker v1.1.2](https://github.com/indigo-dc/udocker)
 
 # Data
 * [Illumina adapters converted to FASTA format](http://sapac.support.illumina.com/downloads/illumina-adapter-sequences-document-1000000002694.html)
@@ -84,6 +84,12 @@ prefix: cele
 
 ## Maximum number of threads used in the pipeline
 threads: 24
+
+## Minimum number of threads per job used in canu assembler
+minThreads: 4
+
+## Number of concurrent jobs in canu assembler (recommended to use threads / minThreads)
+canuConcurrency: 6
 
 ### Parameters for the program Canu are described in https://canu.readthedocs.io/en/latest/parameter-reference.html
 ## Expected genome size. This parameter is forwarded to Canu assembler.
@@ -169,11 +175,10 @@ repBaseLibrary:
   class: File
   # This is the RepBase file from https://www.girinst.org/repbase. RepeatMasker parameter -lib
   path: /home/<username>/RepBaseLibrary/RMRBSeqs.embl
-# Settings for inferred custom repeats (inferred by RepeatModeler), tandem repeats (simple repeats) and interspersed repeats (transposons)'
-# Represents -noint parameter for masking custom, tandem and interspersed repeats
-noInterspersed: [false, true, false]
-# Represents -nolow parameter for masking custom, tandem and interspersed repeats
-noLowComplexity: [true, false, true]
+# Constant true and false values for repeat masker
+trueValue: true
+falseValue: false
+
 ```
 ### Runtimes and hardware requirements
 The workflow was tested in Linux environment (CentOS Linux release 7.2.1511) in a server with 24 physical CPUs (48 hyperthreaded CPUs) and 512 GB RAM.
@@ -190,8 +195,8 @@ Maximum memory usage of 134.1 GB was claimed by the program Centrifuge for each 
 * [Dextractor v1.0](https://github.com/thegenemyers/DEXTRACTOR)
 * [Trimmomatic v0.36](http://www.usadellab.org/cms/?page=trimmomatic)
 * [Centrifuge v1.0.3](http://www.ccb.jhu.edu/software/centrifuge)
-* [Canu v1.6](http://canu.readthedocs.io/en/latest/index.html)
-* [Arrow in SmrtLink v5.0.1](https://www.pacb.com/support/software-downloads)
+* [Canu v1.8](http://canu.readthedocs.io/en/latest/index.html)
+* [Arrow in SmrtLink v7.0.1](https://www.pacb.com/support/software-downloads)
 * [Bowtie 2 v2.2.8](http://bowtie-bio.sourceforge.net/bowtie2/index.shtml)
 * [SAMtools v1.6](http://samtools.sourceforge.net)
 * [Pilon v1.22](https://github.com/broadinstitute/pilon)
@@ -201,5 +206,6 @@ Maximum memory usage of 134.1 GB was claimed by the program Centrifuge for each 
 * [HaploMerger2 build_20160512](https://github.com/mapleforest/HaploMerger2)
 
 ### Cite
-If you use the pipeline, please cite: Korhonen, Pasi K., Ross S. Hall, Neil D. Young, and Robin B. Gasser. "Common Workflow Language (CWL)-based software pipeline for de novo genome assembly from long-and short-read data." GigaScience 8, no. 4 (2019): giz014.
+If you use the pipeline, please cite:
+Korhonen, Pasi K., Ross S. Hall, Neil D. Young, and Robin B. Gasser. "Common Workflow Language (CWL)-based software pipeline for de novo genome assembly from long-and short-read data." GigaScience 8, no. 4 (2019): giz014.
 
