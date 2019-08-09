@@ -277,7 +277,7 @@ steps:
       noInterspersed: falseValue
       noLowComplexity: trueValue
       repeatLibrary: inferRepeats/repeatFastaFile
-      reference: arrowPolishedAssembly
+      reference: pilon/pilonPolishedAssembly
     out: [categoryFile]
 
   maskTranspRepeats:
@@ -287,7 +287,7 @@ steps:
       noInterspersed: falseValue
       noLowComplexity: trueValue
       repeatLibrary: inferRepeats/repeatLibrary
-      reference: arrowPolishedAssembly
+      reference: pilon/pilonPolishedAssembly
     out: [categoryFile]
 
   maskSimpleRepeats:
@@ -297,13 +297,13 @@ steps:
       noInterspersed: trueValue
       noLowComplexity: falseValue
       repeatLibrary: inferRepeats/repeatLibrary
-      reference: arrowPolishedAssembly
+      reference: pilon/pilonPolishedAssembly
     out: [categoryFile]
 
   combineCatFiles:
     run: combinecats.cwl
     in:
-      assembly: arrowPolishedAssembly
+      assembly: pilon/pilonPolishedAssembly
       categories: [maskCustomRepeats/categoryFile, maskTranspRepeats/categoryFile, maskSimpleRepeats/categoryFile]
     out: [maskedAssembly]
 
