@@ -38,8 +38,8 @@ inputs:
     type: int[]
   partialMatch: int
   repBaseLibrary: File
-  noInterspersed: boolean[]
-  noLowComplexity: boolean[]
+  trueValue: boolean
+  falseValue: boolean
 
 outputs:
   correctedReads:
@@ -270,24 +270,41 @@ steps:
       database: expressionToolRepeatModeler/hybridFile
     out: [repeatFastaFile, repeatLibrary]
 
-  maskRepeats:
+  maskCustomRepeats:
     run: repeatmasker.cwl
     in:
       threads: threads
-      noInterspersed: noInterspersed
-      noLowComplexity: noLowComplexity
-      repeatLibrary: [inferRepeats/repeatFastaFile, inferRepeats/repeatLibrary, inferRepeats/repeatLibrary]
-      reference: pilon/pilonPolishedAssembly
+      noInterspersed: falseValue
+      noLowComplexity: trueValue
+      repeatLibrary: inferRepeats/repeatFastaFile
+      reference: arrowPolishedAssembly
     out: [categoryFile]
-    #scatter: [noInterspersed, noLowComplexity, repeatLibrary]
-    scatter: [noInterspersed, noLowComplexity]
-    scatterMethod: dotproduct
+
+  maskTranspRepeats:
+    run: repeatmasker.cwl
+    in:
+      threads: threads
+      noInterspersed: falseValue
+      noLowComplexity: trueValue
+      repeatLibrary: inferRepeats/repeatLibrary
+      reference: arrowPolishedAssembly
+    out: [categoryFile]
+
+  maskSimpleRepeats:
+    run: repeatmasker.cwl
+    in:
+      threads: threads
+      noInterspersed: trueValue
+      noLowComplexity: falseValue
+      repeatLibrary: inferRepeats/repeatLibrary
+      reference: arrowPolishedAssembly
+    out: [categoryFile]
 
   combineCatFiles:
     run: combinecats.cwl
     in:
-      assembly: pilon/pilonPolishedAssembly
-      categories: maskRepeats/categoryFile
+      assembly: arrowPolishedAssembly
+      categories: [maskCustomRepeats/categoryFile, maskTranspRepeats/categoryFile, maskSimpleRepeats/categoryFile]
     out: [maskedAssembly]
 
   haploMerge:
