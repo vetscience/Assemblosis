@@ -2,29 +2,41 @@
 The workflow is designed to use both PacBio long-reads and Illumina short-reads. The workflow first extracts, corrects, trims and decontaminates the long reads. Decontaminated trimmed reads are then used to assemble the genome and raw reads are used to polish it. Next, Illumina reads are cleaned and used to further polish the resultant assembly. Finally, the polished assembly is masked using inferred repeats and haplotypes are eliminated. The workflow uses BioConda and DockerHub to install required software and is therefore fully automated. In addition to final assembly, the workflow produces intermediate assemblies before and after polishing steps. The workflow follows the syntax for CWL v1.0.
 
 ### Dependencies
-Programs
-* Docker containers are run with singularity and squashfs-tools: have to be installed server-wide by administrator
-** [Singularity v3.2.1](https://singularity.lbl.gov)
-** [squashfs-tools v4.3.0](https://github.com/plougher/squashfs-tools)
-* Docker containers are run with udocker: can be installed locally
-** [udocker v1.1.2](https://github.com/indigo-dc/udocker)
+# Programs
+Docker containers can be run either using [Singularity](https://singularity.lbl.gov) or [udocker](https://singularity.lbl.gov).
+Singularity software packages have to be installed server-wide by administrator
+* [Singularity v3.2.1](https://singularity.lbl.gov)
+* [squashfs-tools v4.3.0](https://github.com/plougher/squashfs-tools)
+Udocker software package can be installed locally
+* [udocker v1.1.2](https://github.com/indigo-dc/udocker)
+The pipeline can be run either using [Cromwell](https://cromwell.readthedocs.io/en/stable) or [cwltool reference](https://github.com/common-workflow-language/cwltool) implementation.
+Cromwell implementation
+* [cromwell v44](https://github.com/broadinstitute/cromwell/releases/tag/44)
+* [java-jdk v8.0.112](https://www.java.com/en)
+Reference implementation
 * [cwltool v1.0.20181012180214](https://github.com/common-workflow-language/cwltool)
 * [nodejs v10.4.1 required by cwltool](https://nodejs.org/en)
 * [Python library galaxy-lib v18.5.7](https://pypi.org/project/galaxy-lib)
 
-Data
+# Data
 * [Illumina adapters converted to FASTA format](http://sapac.support.illumina.com/downloads/illumina-adapter-sequences-document-1000000002694.html)
 * [NCBI nucleotide non-redundant sequences for decontamination with Centrifuge](http://www.ccb.jhu.edu/software/centrifuge)
 * [RepBase v17.02 file RMRBSeqs.embl](https://www.girinst.org/repbase)
 
 ### Installation
-Use installation script ```install.sh``` to install program dependencies.
+Install miniconda using installation script ```installCromwell.sh```.
+To install CWL, use either installation script ```installCromwell.sh``` or ```installCwltool.sh```.
+To install udocker, use installation script ```installUdocker.sh```.
+To install singularity, ask your system administrator.
+
 ```
 # First confirm that you have the program 'git' installed in your system
 > cd
 > git clone -b 'v0.1.3-beta' --single-branch --depth 1 https://github.com/vetscience/Assemblosis
 > cd Assemblosis
-> bash install.sh
+> bash installConda.sh
+> bash installCromwell.sh # or bash installCwltool.sh
+> bash installUdocker.sh # if singularity cannot be installed or does not run
 
 ```
 For data dependencies: download and extract [RepBase database](https://www.girinst.org/repbase), download Centrifuge version of [NCBI nt database](http://www.ccb.jhu.edu/software/centrifuge) and create [Illumina adapter FASTA file](http://sapac.support.illumina.com/downloads/illumina-adapter-sequences-document-1000000002694.html) to your preferred locations. If your reads are clean from adapters, the adapter FASTA file can be empty.
@@ -40,11 +52,17 @@ You have to create a YAML (.yml) file for each assembly. This file defines the r
 
 "Edit assemblyCele.yml to fit your computing environment and to define the location for the read files, databases and Illumina adapters"
 
-"Running docker images using udocker:"
-> cwltool --tmpdir-prefix /home/<username>/Tmp --beta-conda-dependencies --cachedir /home/<username>/Cache --user-space-docker-cmd udocker --leave-tmpdir assembly.cwl assemblyCele.yml
+"Running docker images using Cromwell and singularity:"
+> java -Dconfig.file=cromwell.udocker.conf -jar cromwell-44.jar run -t CWL -v v1.0 assembly.cwl -i assemblyCele.yml
 
-"Running docker images using singularity:"
+"Running docker images using Cromwell and udocker:"
+> java -Dconfig.file=cromwell.singularity.conf -jar cromwell-44.jar run -t CWL -v v1.0 assembly.cwl -i assemblyCele.yml
+
+"Running docker images using Cwltool and singularity:"
 > cwltool --tmpdir-prefix /home/<username>/Tmp --beta-conda-dependencies --cachedir /home/<username>/Cache --singularity --leave-tmpdir assembly.cwl assemblyCele.yml
+
+"Running docker images using Cwltool and udocker:"
+> cwltool --tmpdir-prefix /home/<username>/Tmp --beta-conda-dependencies --cachedir /home/<username>/Cache --user-space-docker-cmd udocker --leave-tmpdir assembly.cwl assemblyCele.yml
 ```
 
 An annotated example of the YAML file for Caenorhabditis elegans assembly.
