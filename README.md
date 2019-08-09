@@ -7,12 +7,15 @@ Docker containers can be run either using [Singularity](https://singularity.lbl.
 Singularity software packages have to be installed server-wide by administrator
 * [Singularity v3.2.1](https://singularity.lbl.gov)
 * [squashfs-tools v4.3.0](https://github.com/plougher/squashfs-tools)
+
 Udocker software package can be installed locally
 * [udocker v1.1.2](https://github.com/indigo-dc/udocker)
+
 The pipeline can be run either using [Cromwell](https://cromwell.readthedocs.io/en/stable) or [cwltool reference](https://github.com/common-workflow-language/cwltool) implementation.
 Cromwell implementation
 * [cromwell v44](https://github.com/broadinstitute/cromwell/releases/tag/44)
 * [java-jdk v8.0.112](https://www.java.com/en)
+
 Reference implementation
 * [cwltool v1.0.20181012180214](https://github.com/common-workflow-language/cwltool)
 * [nodejs v10.4.1 required by cwltool](https://nodejs.org/en)
@@ -24,7 +27,7 @@ Reference implementation
 * [RepBase v17.02 file RMRBSeqs.embl](https://www.girinst.org/repbase)
 
 ### Installation
-Install miniconda using installation script ```installCromwell.sh```.
+Install miniconda using installation script ```installConda.sh```.
 To install CWL, use either installation script ```installCromwell.sh``` or ```installCwltool.sh```.
 To install udocker, use installation script ```installUdocker.sh```.
 To install singularity, ask your system administrator.
