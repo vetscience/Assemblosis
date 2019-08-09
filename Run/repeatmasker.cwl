@@ -4,6 +4,9 @@ id: "RepeatMasker"
 doc: "Masks given genomic scaffolds using given mask option and/or repeat file"
 requirements:
   - class: InlineJavascriptRequirement
+  - class: InitialWorkDirRequirement
+    listing:
+      - $(inputs.repeatLibrary)
 
 inputs:
   - id: threads
@@ -58,7 +61,7 @@ inputs:
       position: 9
       prefix: -nolow
   - id: repeatLibrary
-    type: File?
+    type: File
     inputBinding:
       position: 10
       prefix: -lib

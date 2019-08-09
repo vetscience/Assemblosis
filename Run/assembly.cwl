@@ -279,7 +279,8 @@ steps:
       repeatLibrary: [inferRepeats/repeatFastaFile, inferRepeats/repeatLibrary, inferRepeats/repeatLibrary]
       reference: pilon/pilonPolishedAssembly
     out: [categoryFile]
-    scatter: [noInterspersed, noLowComplexity, repeatLibrary]
+    #scatter: [noInterspersed, noLowComplexity, repeatLibrary]
+    scatter: [noInterspersed, noLowComplexity]
     scatterMethod: dotproduct
 
   combineCatFiles:
