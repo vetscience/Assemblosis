@@ -64,7 +64,7 @@ fasta-to-reference $ASSEMBLY $PWD/datasets $PREFIX
 # Convert hdf5 files to subread format understood by pbsmrtpipe
 if [ $BAM = "false" ]; then
 echo "python /home/Assemblosis/createFofn.py -d $DATADIR -f baxFiles.fofn"
-python /home/Assemblosis/createFofn.py -d $DATADIR -q $FASTQ -f baxFiles.fofn
+python /home/Assemblosis/createFofn.py -d $DATADIR -f baxFiles.fofn
 echo "dataset create --force --type HdfSubreadSet baxFiles.hdfsubreadset.xml baxFiles.fofn"
 dataset create --force --type HdfSubreadSet baxFiles.hdfsubreadset.xml baxFiles.fofn
 echo "pbsmrtpipe pipeline-id pbsmrtpipe.pipelines.sa3_hdfsubread_to_subread --preset-xml preset.xml -e eid_hdfsubread:baxFiles.hdfsubreadset.xml"
