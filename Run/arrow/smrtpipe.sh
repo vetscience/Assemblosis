@@ -17,6 +17,11 @@ case $key in
     shift # past argument
     shift # past value
     ;;
+    -t|--tmp)
+    TEMPDIR="$2"
+    shift # past argument
+    shift # past value
+    ;;
     -a|--assemblydir)
     ASSEMBLYDIR="$2"
     shift # past argument
@@ -50,11 +55,14 @@ echo ASSEMBLYDIR = "${ASSEMBLYDIR}"
 echo ASSEMBLY    = "${ASSEMBLY}"
 echo PREFIX      = "${PREFIX}"
 echo BAM         = "${BAM}"
+TEMPDIR=/home/pakorhon/TmpSingularity
+echo TEMPDIR     = "${TEMPDIR}"
 
 # First set up the environment parameters to 4 parallel chunks running all available cpus
 cp /home/Assemblosis/preset.xml preset.tmp
 NPROC=$((`nproc`/4))
-sed "s/NPROC/$NPROC/1" preset.tmp > preset.xml
+mkdir -p $TEMPDIR
+sed "s/NPROC/$NPROC/1;s/MYTMPDIR/$TEMPDIR/1" preset.tmp > preset.xml
 rm preset.tmp
 
 # Create RW reference data for smrtlink

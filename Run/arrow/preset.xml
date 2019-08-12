@@ -8,7 +8,7 @@
             <value>NPROC</value>
         </option>
         <option id="pbsmrtpipe.options.tmp_dir">
-            <value>$HOME/tmpPipe</value>
+            <value>MYTMPDIR</value>
         </option>
         <option id="pbsmrtpipe.options.chunk_mode">
             <value>True</value>
