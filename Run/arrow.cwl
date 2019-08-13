@@ -13,12 +13,11 @@ inputs:
     inputBinding:
       position: 1
       prefix: -d
-  - id: assemblyDir
+  - id: tmpDir
     type: string
-    default: CanuAssembly
     inputBinding:
       position: 2
-      prefix: -a
+      prefix: -t
   - id: assembly
     type: File
     inputBinding:
