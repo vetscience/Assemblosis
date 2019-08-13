@@ -14,6 +14,8 @@ RUN rm -f smrtlink_7.0.1.66975.zip smrtlink_7.0.1.66975.run*
 ENV PATH=/home/smrtlink/smrtcmds/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 RUN apt-get update && apt-get install -y git python
 
+WORKDIR /home
+WORKDIR /home
 LABEL about.license="BSD 3-Clause License"
 WORKDIR /home
 RUN git clone --recursive git://github.com/vetscience/Assemblosis

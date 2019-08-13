@@ -22,11 +22,6 @@ case $key in
     shift # past argument
     shift # past value
     ;;
-    -a|--assemblydir)
-    ASSEMBLYDIR="$2"
-    shift # past argument
-    shift # past value
-    ;;
     -s|--assembly)
     ASSEMBLY="$2"
     shift # past argument
@@ -51,11 +46,9 @@ done
 set -- "${POSITIONAL[@]}" # restore positional parameters
 
 echo DATADIR     = "${DATADIR}"
-echo ASSEMBLYDIR = "${ASSEMBLYDIR}"
 echo ASSEMBLY    = "${ASSEMBLY}"
 echo PREFIX      = "${PREFIX}"
 echo BAM         = "${BAM}"
-TEMPDIR=/home/pakorhon/TmpSingularity
 echo TEMPDIR     = "${TEMPDIR}"
 
 # First set up the environment parameters to 4 parallel chunks running all available cpus

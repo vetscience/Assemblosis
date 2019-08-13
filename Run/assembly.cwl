@@ -9,6 +9,7 @@ requirements:
 
 inputs:
   pacBioDataDir: Directory
+  pacBioTmpDir: string
   pacBioInBam: boolean
   prefix: string
   genomeSize: string
@@ -169,6 +170,7 @@ steps:
     run: arrow.cwl
     in:
       dataDir: pacBioDataDir
+      tmpDir: pacBioTmpDir
       assembly: assemble/assembly
       prefix: prefix
       bam: pacBioInBam
