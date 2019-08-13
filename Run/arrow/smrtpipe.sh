@@ -62,7 +62,7 @@ echo TEMPDIR     = "${TEMPDIR}"
 cp /home/Assemblosis/preset.xml preset.tmp
 NPROC=$((`nproc`/4))
 mkdir -p $TEMPDIR
-sed "s/NPROC/$NPROC/1;s/MYTMPDIR/$TEMPDIR/1" preset.tmp > preset.xml
+sed "s/NPROC/$NPROC/1;s+MYTMPDIR+$TEMPDIR+1" preset.tmp > preset.xml
 rm preset.tmp
 
 # Create RW reference data for smrtlink
