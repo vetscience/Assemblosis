@@ -1,7 +1,12 @@
 pacBioDataDir:
   class: Directory
   location: /home/<username>/Dna
+pacBioTmpDir: /home/<username>/PacBioTmp
+pacBioInBam: false
 prefix: pfal
+threads: 32
+minThreads: 8 
+canuConcurrency: 4
 genomeSize: 23m
 minReadLen: 6000
 corMaxEvidenceErate: 0.15
@@ -35,7 +40,6 @@ illuminaClip:
 leading: 25
 trailing: 25
 minlen: 40
-threads: 32
 
 maxFragmentLens: [800,800]
 
@@ -62,3 +66,5 @@ repeatWorkDir:
     location: RepeatTransp
 noInterspersed: [false, true, false]
 noLowComplexity: [true, false, true]
+trueValue: true
+falseValue: false

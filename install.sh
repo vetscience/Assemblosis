@@ -10,16 +10,19 @@ conda update -y -n base conda
 conda config --add channels defaults
 conda config --add channels conda-forge
 conda config --add channels bioconda
+conda create -n assemblosis
+conda activate assemblosis
+conda install -c anaconda pip
 
 echo "########################"
 echo "# Installing udocker ..."
 curl https://download.ncg.ingrid.pt/webdav/udocker/udocker-1.1.2.tar.gz > udocker-1.1.2.tar.gz
 tar xzvf udocker-1.1.2.tar.gz udocker
 ./udocker install
-mv ./udocker ~/miniconda3/bin/
-wget https://github.com/proot-me/proot-static-build/raw/master/static/proot-x86_64 -P ~/miniconda3/bin
-wget https://github.com/proot-me/proot-static-build/raw/master/static/proot-x86 -P ~/miniconda3/bin
-chmod uog+x ~/miniconda3/bin/proot*
+mv ./udocker ~/miniconda3/envs/assemblosis/bin/
+wget https://github.com/proot-me/proot-static-build/raw/master/static/proot-x86_64 -P ~/miniconda3/envs/assemblosis/bin
+wget https://github.com/proot-me/proot-static-build/raw/master/static/proot-x86 -P ~/miniconda3/envs/assemblosis/bin
+chmod uog+x ~/miniconda3/envs/assemblosis/bin/proot*
 
 echo "###########################"
 echo "# Installing containers ..."

@@ -1,7 +1,12 @@
 pacBioDataDir:
   class: Directory
   location: /home/<username>/Dna
+pacBioTmpDir: /home/<username>/PacBioTmp
+pacBioInBam: false
 prefix: cele
+threads: 32
+minThreads: 8 
+canuConcurrency: 4
 genomeSize: 100m
 minReadLen: 6000
 corMaxEvidenceErate: 0.20
@@ -29,7 +34,6 @@ illuminaClip:
 leading: 25
 trailing: 25
 minlen: 40
-threads: 32
 
 maxFragmentLens: [500]
 
@@ -42,7 +46,7 @@ database:
   class: Directory
   path: /home/<username>/centrifugeNt
 taxons: [2,10239,4751,40674,81077] # Bacteria, viruses, fungi, mammals, artificial seqs
-partialMatch: 100
+partialMatch: 200
 
 repBaseLibrary:
   class: File
@@ -56,3 +60,5 @@ repeatWorkDir:
     location: RepeatTransp
 noInterspersed: [false, true, false]
 noLowComplexity: [true, false, true]
+trueValue: true
+falseValue: false

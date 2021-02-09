@@ -38,6 +38,8 @@ To install singularity, ask your system administrator.
 > git clone -b 'v0.1.3-beta' --single-branch --depth 1 https://github.com/vetscience/Assemblosis
 > cd Assemblosis
 > bash installConda.sh
+> conda create -n assemblosis -c anaconda pip
+> conda activate assemblosis
 > bash installCromwell.sh # or bash installCwltool.sh
 > bash installUdocker.sh # if singularity cannot be installed or does not run
 
@@ -49,11 +51,13 @@ Give the location of these data in the configuration (.yml) file (see **Usage**)
 You have to create a YAML (.yml) file for each assembly. This file defines the required parameters and the location for both PacBio and Illumina raw-reads.
 ```
 > cd
-> export PATH=~/miniconda3/bin:$PATH
 > cd Assemblosis/Run
 > cp ../Examples/assemblyCele.yml .
 
 "Edit assemblyCele.yml to fit your computing environment and to define the location for the read files, databases and Illumina adapters"
+
+"Make sure that you have activate assemblosis conda environment"
+> conda activate assemblosis
 
 "Running docker images using Cromwell and singularity:"
 > java -Dconfig.file=cromwell.udocker.conf -jar cromwell-44.jar run -t CWL -v v1.0 assembly.cwl -i assemblyCele.yml
@@ -76,13 +80,16 @@ pacBioDataDir:
   class: Directory
   location: /home/<username>/Dna
 
+## Temporary files from processing PacBio reads are stored in this directory
+pacBioTmpDir: /home/<username>/PacBioTmp
+
 ## PacBio files are in bam format as returned from Sequel platform
 pacBioInBam: true
 
 ## Prefix for the resultant assembly files
 prefix: cele
 
-## Maximum number of threads used in the pipeline
+## Maximum number of threads used in the pipeline (minThreads x canuConcurrency)
 threads: 24
 
 ## Minimum number of threads per job used in canu assembler
