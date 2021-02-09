@@ -56,7 +56,7 @@ You have to create a YAML (.yml) file for each assembly. This file defines the r
 
 "Edit assemblyCele.yml to fit your computing environment and to define the location for the read files, databases and Illumina adapters"
 
-"Make sure that you have activate assemblosis conda environment"
+"Make sure that you have activate assemblosis conda environment:"
 > conda activate assemblosis
 
 "Running docker images using Cromwell and singularity:"
