@@ -22,13 +22,13 @@ inputs:
       position: 3
       separate: false
       prefix: genomeSize=
-  - id: stopOnReadQuality
-    type: string
-    default: "true"
-    inputBinding:
-      position: 4
-      separate: false
-      prefix: stopOnReadQuality=
+#  - id: stopOnReadQuality
+#    type: string
+#    default: "true"
+#    inputBinding:
+#      position: 4
+#      separate: false
+#      prefix: stopOnReadQuality=
   - id: minReadLen
     type: int
     default: 6000
@@ -36,16 +36,22 @@ inputs:
       position: 5
       separate: false
       prefix: minReadLength=
-  - id: pacbio-corrected
+  - id: pacbio
     type: File
     inputBinding:
       position: 6
-      prefix: -pacbio-corrected
+      prefix: -pacbio
+  - id: corrected
+    type: boolean
+    default: true
+    inputBinding:
+      prefix: -corrected
+      position: 7
   - id: corMaxEvidenceErate
     type: float
     default: 0.20
     inputBinding:
-      position: 7
+      position: 8
       separate: false
       prefix: corMaxEvidenceErate=
   - id: useGrid
@@ -136,5 +142,13 @@ baseCommand: ["canu", "-trim-assemble"]
 arguments: []
 stdout: out
 hints:
-  - class: DockerRequirement
-    dockerPull: quay.io/biocontainers/canu:1.8--pl526h470a237_0
+  SoftwareRequirement:
+    packages:
+    - package: canu
+      version:
+      - "2.1.1"
+
+#hints:
+#  - class: DockerRequirement
+#    dockerPull: quay.io/biocontainers/canu:2.1.1--he1b5a44_0
+#    #dockerPull: quay.io/biocontainers/canu:1.8--pl526h470a237_0

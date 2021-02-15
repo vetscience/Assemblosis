@@ -56,4 +56,6 @@ baseCommand: [bowtie2-build]
 
 hints:
   - class: DockerRequirement
-    dockerPull: quay.io/biocontainers/bowtie2:2.2.5--py36h2d50403_3
+    dockerPull: quay.io/biocontainers/bowtie2:2.4.2--py38h1c8e9b9_1
+    #dockerPull: quay.io/biocontainers/bowtie2:2.2.5--py36h2d50403_3
+    

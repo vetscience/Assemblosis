@@ -6,7 +6,8 @@ requirements:
   - class: InlineJavascriptRequirement
   - class: EnvVarRequirement
     envDef:
-      CLASSPATH: /usr/local/share/pilon-1.22-0/pilon-1.22.jar
+      CLASSPATH: /usr/local/share/pilon-1.23-2/pilon-1.23.jar
+      #CLASSPATH: /usr/local/share/pilon-1.22-0/pilon-1.22.jar
  
 inputs:
   - id: reference
@@ -64,4 +65,5 @@ outputs:
 baseCommand: [java,com.simontuffs.onejar.Boot]
 hints:
   - class: DockerRequirement
-    dockerPull: quay.io/biocontainers/pilon:1.22--py36_0
+    dockerPull: quay.io/biocontainers/pilon:1.23--2
+    #dockerPull: quay.io/biocontainers/pilon:1.22--py36_0

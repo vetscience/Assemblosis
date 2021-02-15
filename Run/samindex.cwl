@@ -31,4 +31,5 @@ baseCommand: [samtools, index]
 
 hints:
   - class: DockerRequirement
-    dockerPull: quay.io/biocontainers/samtools:1.6--0
+    dockerPull: quay.io/biocontainers/samtools:1.11--h6270b1f_0
+    #dockerPull: quay.io/biocontainers/samtools:1.6--0

@@ -7,7 +7,7 @@ requirements:
   - class: InlineJavascriptRequirement
   - class: EnvVarRequirement
     envDef:
-      CLASSPATH: /usr/local/share/trimmomatic-0.36-5/trimmomatic.jar
+      CLASSPATH: /usr/local/share/trimmomatic-0.39-1/trimmomatic.jar
 
 inputs:
   - id: phred
@@ -119,4 +119,4 @@ outputs:
 baseCommand: [java,org.usadellab.trimmomatic.TrimmomaticPE]
 hints:
   - class: DockerRequirement
-    dockerPull: "quay.io/biocontainers/trimmomatic:0.36--5"
+    dockerPull: quay.io/biocontainers/trimmomatic:0.39--1

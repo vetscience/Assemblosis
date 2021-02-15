@@ -72,4 +72,4 @@ baseCommand: [bowtie2]
 stdout: $(inputs.reads1.basename.slice(0,-9)).sam
 hints:
   - class: DockerRequirement
-    dockerPull: quay.io/biocontainers/bowtie2:2.2.5--py36h2d50403_3
+    dockerPull: quay.io/biocontainers/bowtie2:2.4.2--py38h1c8e9b9_1

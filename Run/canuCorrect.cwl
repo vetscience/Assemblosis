@@ -22,18 +22,18 @@ inputs:
       position: 3
       separate: false
       prefix: genomeSize=
-  - id: stopOnReadQuality
-    type: string
-    default: "true"
-    inputBinding:
-      position: 4
-      separate: false
-      prefix: stopOnReadQuality=
-  - id: pacbio-raw
+#  - id: stopOnReadQuality
+#    type: string
+#    default: "true"
+#    inputBinding:
+#      position: 4
+#      separate: false
+#      prefix: stopOnReadQuality=
+  - id: pacbio
     type: File
     inputBinding:
       position: 6
-      prefix: -pacbio-raw
+      prefix: -pacbio
   - id: corMaxEvidenceErate
     type: float
     default: 0.20
@@ -90,5 +90,13 @@ baseCommand: ["canu", "-correct"]
 arguments: []
 stdout: out
 hints:
-  - class: DockerRequirement
-    dockerPull: quay.io/biocontainers/canu:1.8--pl526h470a237_0
+  SoftwareRequirement:
+    packages:
+    - package: canu
+      version:
+      - "2.1.1"
+      
+#hints:
+#  - class: DockerRequirement
+#    dockerPull: quay.io/biocontainers/canu:2.1.1--he1b5a44_0
+#    #dockerPull: quay.io/biocontainers/canu:1.8--pl526h470a237_0

@@ -14,20 +14,20 @@ chmod uog+x ~/miniconda3/bin/proot*
 echo "###########################"
 echo "# Installing containers ..."
 udocker pull pakorhon/arrow:v0.0.7-beta
-udocker pull quay.io/biocontainers/bowtie2:2.2.5--py36h2d50403_3
-udocker pull quay.io/biocontainers/canu:1.8--pl526h470a237_0
+udocker pull quay.io/biocontainers/bowtie2:2.4.2--py38h1c8e9b9_1
+udocker pull quay.io/biocontainers/canu:2.1.1--he1b5a44_0
 udocker pull quay.io/biocontainers/centrifuge:1.0.3--py27pl5.22.0_3
 udocker pull pakorhon/combinecats:v0.0.4-beta
 udocker pull pakorhon/decon:v0.0.5-beta
 udocker pull pakorhon/haplomerger:v0.0.7-beta
 udocker pull pakorhon/hdf5check:v0.0.6-beta
 udocker pull quay.io/biocontainers/repeatmodeler:1.0.11--pl526_1
-udocker pull quay.io/biocontainers/pilon:1.22--py36_0
+udocker pull quay.io/biocontainers/pilon:1.23--2
 udocker pull pakorhon/renamereads:v0.0.4-beta
-udocker pull quay.io/biocontainers/repeatmasker:4.0.6--pl5.22.0_10
+udocker pull quay.io/biocontainers/repeatmasker:4.0.9_p2--pl526_2
 udocker pull pakorhon/repeatmodeler:v0.0.6-beta
-udocker pull quay.io/biocontainers/samtools:1.6--0
-udocker pull quay.io/biocontainers/trimmomatic:0.36--5
+udocker pull quay.io/biocontainers/samtools:1.11--h6270b1f_0
+udocker pull quay.io/biocontainers/trimmomatic:0.39--1
 
 echo "###########################"
 echo "# Finished udocker installation ..."

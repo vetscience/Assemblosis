@@ -80,4 +80,6 @@ baseCommand: ["RepeatMasker"]
 arguments: ["-dir", $(runtime.outdir)]
 hints:
   - class: DockerRequirement
-    dockerPull: quay.io/biocontainers/repeatmasker:4.0.6--pl5.22.0_10
+    dockerPull: quay.io/biocontainers/repeatmasker:4.0.9_p2--pl526_2
+    #dockerPull: quay.io/biocontainers/repeatmasker:4.0.7--pl526_13
+    #dockerPull: quay.io/biocontainers/repeatmasker:4.0.6--pl5.22.0_10

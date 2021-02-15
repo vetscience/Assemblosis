@@ -115,7 +115,7 @@ steps:
     in:
       prefix: prefix
       genomeSize: genomeSize
-      pacbio-raw: hdf5check/pbFastqReads
+      pacbio: hdf5check/pbFastqReads
       corMaxEvidenceErate: corMaxEvidenceErate
       minThreads: minThreads
       maxThreads: threads
@@ -154,7 +154,7 @@ steps:
       prefix: prefix
       genomeSize: genomeSize
       minReadLen: minReadLen
-      pacbio-corrected: decontaminate/deconReads
+      pacbio: decontaminate/deconReads
       corMaxEvidenceErate: corMaxEvidenceErate
       minThreads: minThreads
       maxThreads: threads
@@ -166,12 +166,18 @@ steps:
       utgovlConcurrency: canuConcurrency
     out: [trimmedReads, assembly]
 
+  removeBubbles:
+    run: removeBubbles.cwl
+    in:
+      contigs: assemble/assembly
+    out: [assembly]
+    
   arrow:
     run: arrow.cwl
     in:
       dataDir: pacBioDataDir
       tmpDir: pacBioTmpDir
-      assembly: assemble/assembly
+      assembly: removeBubbles/assembly
       prefix: prefix
       bam: pacBioInBam
     out: [arrowPolishedAssembly]
