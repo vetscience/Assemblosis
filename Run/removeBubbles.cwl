@@ -16,7 +16,5 @@ outputs:
 arguments:
  - shellQuote: false
    valueFrom: >
-     awk '{ if ((NR>1)&&($0~/^>/)) printf("\\n%s", $0); else if (NR==1) printf("%s", $0); else printf("\\t%s", $0); }' $(inputs.contigs.path) |
-     grep -F suggestBubble=no - |
-     tr "\\t" "\\n"
+     awk '{if (($0~/^>/) && ($0~/suggestBubble=no/)) s=1; else if ($0~/^>/) s=0; if (s==1) print $0;}' ${inputs.contigs.path}
 stdout: filtered.$(inputs.contigs.basename)
