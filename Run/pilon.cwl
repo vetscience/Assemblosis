@@ -62,7 +62,8 @@ outputs:
     outputBinding:
       glob: $(inputs.output).changes
 
-baseCommand: [java,com.simontuffs.onejar.Boot]
+#baseCommand: [java,com.simontuffs.onejar.Boot]
+baseCommand: [java,-jar,/usr/local/share/pilon-1.23-2/pilon-1.23.jar]
 hints:
   - class: DockerRequirement
     dockerPull: quay.io/biocontainers/pilon:1.23--2
