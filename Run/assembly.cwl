@@ -248,6 +248,7 @@ steps:
       output: polishedAssembly
       diploidOrganism: diploidOrganism
       fix: fix
+      threads: threads
     out: [pilonPolishedAssembly, pilonPolishedAssemblyChanges]
 
   indexAssembly:
