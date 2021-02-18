@@ -6,7 +6,7 @@ key="$1"
 
 case $key in
     -a|--assembly)
-    ASSEMBLY="$1"
+    ASSEMBLY="$2"
     shift # past argument
     shift # past value
     ;;
