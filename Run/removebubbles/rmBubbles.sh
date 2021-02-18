@@ -19,4 +19,5 @@ done
 set -- "${POSITIONAL[@]}" # restore positional parameters
 
 echo ASSEMBLY = "${ASSEMBLY}"
-awk '{if (($0~/^>/) && ($0~/suggestBubble=no/)) s=1; else if ($0~/^>/) s=0; if (s==1) print $0;}' ${ASSEMBLY} > filtered.${ASSEMBLY}
+ASSEMBLYFILE=`basename $ASSEMBLY`
+awk '{if (($0~/^>/) && ($0~/suggestBubble=no/)) s=1; else if ($0~/^>/) s=0; if (s==1) print $0;}' ${ASSEMBLY} > filtered.${ASSEMBLYFILE}
