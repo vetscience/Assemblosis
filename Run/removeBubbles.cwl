@@ -10,6 +10,9 @@ hints:
 inputs:
   - id: contigs
     type: File
+    inputBinding:
+      prefix: -a
+      position: 1
 outputs:
   - id: assembly
     type: File
