@@ -35,7 +35,8 @@ inputs:
       position: 6
       prefix: -pacbio
   - id: pacbioHiFi
-    type: File
+    type: boolean
+    default: false
     inputBinding:
       position: 7
       prefix: -pacbio-hifi
