@@ -86,6 +86,9 @@ pacBioTmpDir: /home/<username>/PacBioTmp
 ## PacBio files are in bam format as returned from Sequel platform
 pacBioInBam: true
 
+## PacBio files are of HiFi quality
+pacBioHiFi: true
+
 ## Prefix for the resultant assembly files
 prefix: cele
 

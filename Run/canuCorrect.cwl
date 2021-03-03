@@ -34,11 +34,16 @@ inputs:
     inputBinding:
       position: 6
       prefix: -pacbio
+  - id: pacbioHiFi
+    type: File
+    inputBinding:
+      position: 7
+      prefix: -pacbio-hifi
   - id: corMaxEvidenceErate
     type: float
     default: 0.20
     inputBinding:
-      position: 7
+      position: 8
       separate: false
       prefix: corMaxEvidenceErate=
   - id: useGrid
