@@ -11,7 +11,6 @@ inputs:
   pacBioDataDir: Directory
   pacBioTmpDir: string
   pacBioInBam: boolean
-  pacBioHiFi: boolean
   prefix: string
   genomeSize: string
   minReadLen: int
@@ -117,7 +116,6 @@ steps:
       prefix: prefix
       genomeSize: genomeSize
       pacbio: hdf5check/pbFastqReads
-      pacbioHiFi: pacBioHiFi
       corMaxEvidenceErate: corMaxEvidenceErate
       minThreads: minThreads
       maxThreads: threads
@@ -157,7 +155,6 @@ steps:
       genomeSize: genomeSize
       minReadLen: minReadLen
       pacbio: decontaminate/deconReads
-      pacbioHiFi: pacBioHiFi
       corMaxEvidenceErate: corMaxEvidenceErate
       minThreads: minThreads
       maxThreads: threads

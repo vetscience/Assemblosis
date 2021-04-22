@@ -41,23 +41,17 @@ inputs:
     inputBinding:
       position: 6
       prefix: -pacbio
-  - id: pacbioHiFi
-    type: boolean
-    default: false
-    inputBinding:
-      position: 7
-      prefix: -pacbio-hifi
   - id: corrected
     type: boolean
     default: true
     inputBinding:
       prefix: -corrected
-      position: 8
+      position: 7
   - id: corMaxEvidenceErate
     type: float
     default: 0.20
     inputBinding:
-      position: 9
+      position: 8
       separate: false
       prefix: corMaxEvidenceErate=
   - id: useGrid
