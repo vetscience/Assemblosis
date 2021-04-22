@@ -51,36 +51,26 @@ echo PREFIX      = "${PREFIX}"
 echo BAM         = "${BAM}"
 echo TEMPDIR     = "${TEMPDIR}"
 
-# First set up the environment parameters to 4 parallel chunks running all available cpus
-cp /home/Assemblosis/preset.xml preset.tmp
-NPROC=$((`nproc`/4))
+NPROC=$((`nproc`))
 mkdir -p $TEMPDIR
-sed "s/NPROC/$NPROC/1;s+MYTMPDIR+$TEMPDIR+1" preset.tmp > preset.xml
-rm preset.tmp
 
 # Create RW reference data for smrtlink
-echo "fasta-to-reference $ASSEMBLY /home/smrtlink/install/smrtlink-release_7.0.1.66975/bundles/smrttools/install/smrttools-release_7.0.1.66768/private/pacbio/pythonpkgs/pbcore/lib/python2.7/site-packages/pbcore/data/datasets $PREFIX"
-fasta-to-reference $ASSEMBLY $PWD/datasets $PREFIX
+echo "dataset create --force --type ReferenceSet reference.dataset.xml assembly.fofn"
+samtools faidx $ASSEMBLY
+sawriter $ASSEMBLY
+echo "$ASSEMBLY" > assembly.fofn
+dataset create --force --type ReferenceSet reference.dataset.xml assembly.fofn
+#dataset create --force --type ReferenceSet $PWD/datasets/reference.dataset.xml assembly.fofn
 
-# Convert hdf5 files to subread format understood by pbsmrtpipe
-if [ $BAM = "false" ]; then
-echo "python /home/Assemblosis/createFofn.py -d $DATADIR -f baxFiles.fofn"
-python /home/Assemblosis/createFofn.py -d $DATADIR -f baxFiles.fofn
-echo "dataset create --force --type HdfSubreadSet baxFiles.hdfsubreadset.xml baxFiles.fofn"
-dataset create --force --type HdfSubreadSet baxFiles.hdfsubreadset.xml baxFiles.fofn
-echo "pbsmrtpipe pipeline-id pbsmrtpipe.pipelines.sa3_hdfsubread_to_subread --preset-xml preset.xml -e eid_hdfsubread:baxFiles.hdfsubreadset.xml"
-pbsmrtpipe pipeline-id pbsmrtpipe.pipelines.sa3_hdfsubread_to_subread --preset-xml preset.xml -e eid_hdfsubread:baxFiles.hdfsubreadset.xml
-echo "pbsmrtpipe pipeline-id pbsmrtpipe.pipelines.sa3_ds_resequencing --preset-xml preset.xml -e eid_subread:tasks/pbcoretools.tasks.gather_subreadset-1/file.subreadset.xml -e eid_ref_dataset:/home/smrtlink/install/smrtlink-release_7.0.1.66975/bundles/smrttools/install/smrttools-release_7.0.1.66768/private/pacbio/pythonpkgs/pbcore/lib/python2.7/site-packages/pbcore/data/datasets/$PREFIX/referenceset.xml"
-pbsmrtpipe pipeline-id pbsmrtpipe.pipelines.sa3_ds_resequencing --preset-xml preset.xml -e eid_subread:tasks/pbcoretools.tasks.gather_subreadset-1/file.subreadset.xml -e eid_ref_dataset:$PWD/datasets/$PREFIX/referenceset.xml
-else
-echo "dataset create --force --type SubreadSet subreadset.xml baxFiles.fofn"
+echo "dataset create --force --type SubreadSet allTheSubreads.subreadset.xml $DATADIR/*.bam"
 ls $DATADIR/*.bam | while read line; do samtools index $line; done
 ls $DATADIR/*.bam | while read line; do pbindex $line; done
 dataset create --force --type SubreadSet allTheSubreads.subreadset.xml $DATADIR/*.bam
-echo "pbsmrtpipe pipeline-id pbsmrtpipe.pipelines.sa3_ds_resequencing --preset-xml preset.xml -e eid_subread:allTheSubreads.subreadset.xml -e eid_ref_dataset:/home/smrtlink/install/smrtlink-release_7.0.1.66975/bundles/smrttools/install/smrttools-release_7.0.1.66768/private/pacbio/pythonpkgs/pbcore/lib/python2.7/site-packages/pbcore/data/datasets/$PREFIX/referenceset.xml"
-pbsmrtpipe pipeline-id pbsmrtpipe.pipelines.sa3_ds_resequencing --preset-xml preset.xml -e eid_subread:allTheSubreads.subreadset.xml -e eid_ref_dataset:$PWD/datasets/$PREFIX/referenceset.xml
-fi
+echo "pbcromwell run cromwell.workflows.pb_resequencing --overwrite -c 8 --tmp-dir $TEMPDIR -n $NPROC -e eid_subread:allTheSubreads.subreadset.xml -e eid_ref_dataset:reference.dataset.xml"
+rm -rf cromwell_out/
+pbcromwell run cromwell.workflows.pb_resequencing --overwrite -c 1 --tmp-dir $TEMPDIR -n $NPROC -e eid_subread:allTheSubreads.subreadset.xml -e eid_ref_dataset:reference.dataset.xml
 
 # Convert created consensus FASTQ file to a FASTA file
-awk '{if (cnt % 4 == 0 || cnt % 4 == 1) print $0; cnt += 1}' tasks/pbcoretools.tasks.gather_fastq-1/file.fastq | sed 's/^@/>/1;s/^\-\-//1;/^$/d' > $PREFIX.contigs.arrowed.fasta
-
+cp cromwell_out/outputs/consensus.fasta $PREFIX.contigs.arrowed.fasta
+#awk '{if (c%4==0||c%4==1) print $0; c+=1}' tasks/pbcoretools.tasks.gather_fastq-1/file.fastq | sed 's/^@/>/1;s/^\-\-//1;/^$/d' > $PREFIX.contigs.arrowed.fasta
+#find . -name consensus.fasta -exec ls {} \; | grep genomic_consensus | grep -v "\->" | while read line; do cp $line $PREFIX.contigs.arrowed.fasta; done
