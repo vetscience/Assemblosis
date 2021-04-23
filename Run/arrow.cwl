@@ -6,7 +6,7 @@ requirements:
   - class: InlineJavascriptRequirement
 hints:
   - class: DockerRequirement
-    dockerPull: pakorhon/arrow:v0.0.7-beta
+    dockerPull: pakorhon/arrow:v0.0.8-beta
 inputs:
   - id: dataDir
     type: Directory
@@ -30,7 +30,7 @@ inputs:
       prefix: -p
   - id: bam
     type: boolean
-    default: false
+    default: true
     inputBinding:
       prefix: -b
       position: 5
@@ -40,5 +40,5 @@ outputs:
     format: edam:format_1929  # fasta
     outputBinding:
       glob: "$(inputs.prefix).contigs.arrowed.fasta"
-baseCommand: ["/home/Assemblosis/smrtpipe.sh"]
+baseCommand: ["/home/smrtpipe.sh"]
 arguments: []
