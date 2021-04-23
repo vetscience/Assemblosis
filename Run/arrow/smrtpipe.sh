@@ -1,8 +1,8 @@
 #!/bin/bash
 
 PATH=/home/smrtlink/smrtcmds/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-PYTHONPATH=/home/Assemblosis
-cp -r /home/Assemblosis/datasets $PWD
+PYTHONPATH=/home
+cp -r /home/datasets $PWD
 
 POSITIONAL=()
 while [[ $# -gt 0 ]]
